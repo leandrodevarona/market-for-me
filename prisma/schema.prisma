@@ -43,11 +43,21 @@ type Contact {
 }
 
 model Product {
-  id          String   @id @default(uuid()) @map("_id") @db.ObjectId
-  name        String
+  id   String @id @default(uuid()) @map("_id") @db.ObjectId
+  name String
+
+  price    Float
+  currency Currency @default(USD)
+
   description String
   imageUrls   String[]
 
   market   Market @relation(fields: [marketId], references: [id])
   marketId String @db.ObjectId
+}
+
+enum Currency {
+  USD
+  EUR
+  CUP
 }
