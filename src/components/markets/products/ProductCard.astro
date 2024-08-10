@@ -1,5 +1,5 @@
 ---
-import type { Product } from "@prisma/client";
+import { type Product } from "@prisma/client";
 import LinkCard from "../../LinkCard.astro";
 import { Routes } from "../../../lib/utils/routes";
 import ProductImage from "./ProductImage.astro";
@@ -18,6 +18,9 @@ const defaultImage = product.imageUrls[0] || null;
     <ProductImage url={defaultImage} />
     <div class="product_card__info">
       <span>{product.name}</span>
+      <span class="product_card__priceInfo"
+        >{product.price} {product.currency}
+      </span>
     </div>
   </LinkCard>
 </li>
@@ -31,5 +34,15 @@ const defaultImage = product.imageUrls[0] || null;
   .product_card__content {
     display: flex;
     gap: 1rem;
+  }
+
+  .product_card__info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product_card__priceInfo {
+    font-size: large;
+    font-weight: 600;
   }
 </style>
