@@ -1,0 +1,21 @@
+---
+import Layout from "./Layout.astro";
+import Sidebar from "../components/admin/sidebar/Sidebar.astro";
+---
+
+<Layout
+  title="Market Administration"
+  description="Managing your marketplace content"
+>
+  <div class="admin_layout__content">
+    <Sidebar />
+    <slot />
+  </div>
+</Layout>
+
+<style>
+  .admin_layout__content {
+    display: grid;
+    grid-template-columns: 0.2fr 1fr;
+  }
+</style>

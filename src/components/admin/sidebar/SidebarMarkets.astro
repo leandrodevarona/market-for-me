@@ -1,0 +1,46 @@
+---
+export const prerender = false;
+
+import { getMarketByUser } from "../../../lib/data/markets";
+import { Routes } from "../../../lib/utils/routes";
+
+// Por ahora es fijo, pero debe venir de los datos de sesión
+const userId = "66b753cb66f63dbc3129c858";
+
+const markets = await getMarketByUser(userId);
+
+if (!markets || markets.length <= 0) return;
+---
+
+<details class="sidebar_markets">
+  <summary>Markets</summary>
+  <div>
+    <ol class="sidebar_markets__list">
+      {
+        markets.map((market) => (
+          <li>
+            <a href={Routes.adminMarkets(market.id)}>{market.name}</a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</details>
+
+<style>
+  .sidebar_markets summary {
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .sidebar_markets__list {
+    margin-top: 1rem;
+    padding-left: 1rem;
+  }
+
+  .sidebar_markets__list li {
+    list-style: none;
+
+    margin-bottom: 0.5rem;
+  }
+</style>

@@ -1,0 +1,25 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+
+import { getMarkets, getMarketById } from "../../../lib/data/markets";
+
+export async function getStaticPaths() {
+  const markets = await getMarkets();
+
+  if (!markets) return [];
+
+  return markets.map((market) => ({ params: { marketId: market.id } }));
+}
+
+const { marketId } = Astro.params;
+
+const market = await getMarketById(marketId);
+
+if (!market) return;
+---
+
+<AdminLayout>
+  <main>{market.name}</main>
+</AdminLayout>
+
+<style></style>

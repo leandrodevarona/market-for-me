@@ -16,7 +16,7 @@ const { marketId } = Astro.params;
 
 const market = await getMarketById(marketId);
 
-if (!market) return null;
+if (!market) return;
 
 const marketProducts = market.products;
 ---
@@ -33,7 +33,8 @@ const marketProducts = market.products;
     max-width: 800px;
     width: 100%;
     margin: 0 auto;
-    padding: 1rem;
+    padding-inline: 1rem;
+    padding-top: 3rem;
     padding-bottom: 10rem;
 
     display: flex;
