@@ -1,0 +1,35 @@
+---
+import type { Product } from "@prisma/client";
+import LinkCard from "../../LinkCard.astro";
+import { Routes } from "../../../lib/utils/routes";
+import ProductImage from "./ProductImage.astro";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+const defaultImage = product.imageUrls[0] || null;
+---
+
+<li class="product_card">
+  <LinkCard class="product_card__content" href={Routes.products(product.id)}>
+    <ProductImage url={defaultImage} />
+    <div class="product_card__info">
+      <span>{product.name}</span>
+    </div>
+  </LinkCard>
+</li>
+
+<style>
+  .product_card {
+    list-style: none;
+    margin-bottom: 1rem;
+  }
+
+  .product_card__content {
+    display: flex;
+    gap: 1rem;
+  }
+</style>

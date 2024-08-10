@@ -1,0 +1,46 @@
+---
+import type { Market } from "@prisma/client";
+import MarketImage from "./MarketImage.astro";
+import MarketContacts from "./MarketContacts.astro";
+
+interface Props {
+  market: Market;
+}
+
+const {
+  market: { name, description, imageUrl, contact },
+} = Astro.props;
+---
+
+<header class="header_market">
+  <MarketImage url={imageUrl} />
+  <section class="header_market__info">
+    <div class="header_market__generalInfo">
+      <h1>{name}</h1>
+      {description && <p>{description}</p>}
+    </div>
+    {contact && <MarketContacts contact={contact} />}
+  </section>
+</header>
+
+<style>
+  .header_market {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    padding-bottom: 3rem;
+
+    border-bottom: 1px solid rgba(var(--callout-border-rgb), 0.3);
+  }
+
+  .header_market__info {
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    gap: 1rem;
+  }
+
+  .header_market__generalInfo h1 {
+    font-size: 48px;
+  }
+</style>

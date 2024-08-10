@@ -1,0 +1,61 @@
+---
+import MarketHeader from "../../components/markets/presentation/MarketHeader.astro";
+import MarketProductList from "../../components/markets/products/MarketProductList.astro";
+import Layout from "../../layouts/Layout.astro";
+import { getMarkets, getMarketById } from "../../lib/data/markets";
+
+export async function getStaticPaths() {
+  /**
+   * Aqui debo cargar todas los market desde un endpoint que debo crear
+   * en el mismo astro que se conecte a mi base de datos y obtenga los markets creados.
+   * De esta forma se generará un página única para cada market
+   */
+  const markets = await getMarkets();
+
+  if (!markets) return [];
+
+  return markets.map((market) => ({ params: { marketId: market.id } }));
+}
+
+/**
+ * Aquí con el id del market busco la data completa del mismo
+ * con todos sus productos y entonces los listo en el html
+ */
+const { marketId } = Astro.params;
+
+const market = await getMarketById(marketId);
+
+if (!market) return null;
+
+const marketProducts = market.products;
+---
+
+<Layout title={market.name} description={market.description}>
+  <main class="market">
+    <MarketHeader market={market} />
+    <MarketProductList products={marketProducts} />
+  </main>
+</Layout>
+
+<style>
+  .market {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    padding-bottom: 10rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    overflow-y: auto;
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .market::-webkit-scrollbar {
+    display: none;
+  }
+</style>

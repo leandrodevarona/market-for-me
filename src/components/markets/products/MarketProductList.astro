@@ -1,0 +1,18 @@
+---
+import { type Product } from "@prisma/client";
+import ProductCard from "./ProductCard.astro";
+
+interface Props {
+  products: Product[];
+}
+
+const { products } = Astro.props;
+---
+
+{(!products || products.length <= 0) && <div>No products</div>}
+
+<ul class="market_product__list">
+  {products.map((product) => <ProductCard product={product} />)}
+</ul>
+
+<style></style>
