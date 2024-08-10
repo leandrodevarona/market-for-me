@@ -11,8 +11,6 @@ const { products } = Astro.props;
 
 {(!products || products.length <= 0) && <div>No products</div>}
 
-<ul class="market_product__list">
+<ul>
   {products.map((product) => <ProductCard product={product} />)}
 </ul>
-
-<style></style>

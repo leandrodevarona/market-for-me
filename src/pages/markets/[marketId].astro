@@ -5,11 +5,6 @@ import Layout from "../../layouts/Layout.astro";
 import { getMarkets, getMarketById } from "../../lib/data/markets";
 
 export async function getStaticPaths() {
-  /**
-   * Aqui debo cargar todas los market desde un endpoint que debo crear
-   * en el mismo astro que se conecte a mi base de datos y obtenga los markets creados.
-   * De esta forma se generará un página única para cada market
-   */
   const markets = await getMarkets();
 
   if (!markets) return [];
@@ -17,10 +12,6 @@ export async function getStaticPaths() {
   return markets.map((market) => ({ params: { marketId: market.id } }));
 }
 
-/**
- * Aquí con el id del market busco la data completa del mismo
- * con todos sus productos y entonces los listo en el html
- */
 const { marketId } = Astro.params;
 
 const market = await getMarketById(marketId);
