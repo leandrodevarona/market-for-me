@@ -1,0 +1,44 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  class?: string;
+  url?: string | null;
+}
+
+const { class: className, url } = Astro.props;
+---
+
+<div class:list={["product_image", className]}>
+  {
+    url ? (
+      <Image src={url} alt="Product image" width={400} height={400} />
+    ) : (
+      <p class="product_image__noImage">No hay imagen</p>
+    )
+  }
+</div>
+
+<style>
+  .product_image {
+    width: 150px;
+
+    aspect-ratio: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(var(--callout-rgb), 0.2);
+    border-radius: var(--border-radius);
+
+    overflow: hidden;
+  }
+
+  .product_image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+</style>

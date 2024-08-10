@@ -1,0 +1,26 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getProducts, getProductById } from "../../lib/data/products";
+
+export async function getStaticPaths() {
+  const products = await getProducts();
+
+  if (!products) return [];
+
+  return products.map((product) => ({ params: { productId: product.id } }));
+}
+
+const { productId } = Astro.params;
+
+const product = await getProductById(productId);
+
+if (!product) return null;
+---
+
+<Layout title={product.name}>
+  <main>
+    {product.name}
+  </main>
+</Layout>
+
+<style></style>

@@ -1,0 +1,60 @@
+---
+import { type Contact } from "@prisma/client";
+
+interface Props {
+  contact: Contact;
+}
+
+const {
+  contact: { phone1, phone2, address },
+} = Astro.props;
+---
+
+<div class="market_contacts">
+  <h4>Contacto</h4>
+  <ol class="market_contacts__list">
+    <li>
+      {
+        phone1 && (
+          <span>
+            <strong>Teléfono 1:</strong> {phone1}
+          </span>
+        )
+      }
+    </li>
+    <li>
+      {
+        phone2 && (
+          <span>
+            <strong>Teléfono 2:</strong> {phone2}
+          </span>
+        )
+      }
+    </li>
+    <li>
+      {
+        address && (
+          <span>
+            <strong>Dirección:</strong> {address}
+          </span>
+        )
+      }
+    </li>
+  </ol>
+</div>
+
+<style>
+  .market_contacts {
+    font-size: small;
+  }
+
+  .market_contacts h4 {
+    margin-bottom: 0.6rem;
+    font-size: medium;
+  }
+
+  .market_contacts__list li {
+    list-style: none;
+    margin-bottom: 0.5rem;
+  }
+</style>
