@@ -7,4 +7,10 @@ export default defineConfig({
   output: "hybrid",
   adapter: netlify(),
   scopedStyleStrategy: "class",
+  experimental: {
+    serverIslands: true,
+  },
+  security: {
+    checkOrigin: true,
+  },
 });

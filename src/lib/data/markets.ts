@@ -10,6 +10,20 @@ export async function getMarkets() {
   }
 }
 
+export async function getMarketByUser(userId: string) {
+  try {
+    const markets = await db.market.findMany({
+      where: {
+        userId,
+      },
+    });
+
+    return markets;
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function getMarketById(id: string) {
   try {
     const market = await db.market.findUnique({

@@ -14,7 +14,7 @@ const { productId } = Astro.params;
 
 const product = await getProductById(productId);
 
-if (!product) return null;
+if (!product) return;
 ---
 
 <Layout title={product.name}>
