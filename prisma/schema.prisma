@@ -18,6 +18,9 @@ model User {
   email String @unique
   name  String
 
+  username     String @unique
+  passwordHash String
+
   markets Market[]
 
   sessions Session[]
