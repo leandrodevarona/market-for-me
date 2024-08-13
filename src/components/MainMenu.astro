@@ -1,0 +1,41 @@
+---
+import DropdownMenu from "./common/menus/DropdownMenu.astro";
+import UserAvatar from "./auth/UserAvatar.astro";
+import Signout from "./auth/buttons/Signout.astro";
+
+interface Props {
+  userName?: string | null;
+  userImage?: string | null;
+}
+
+const { userName, userImage } = Astro.props;
+---
+
+<DropdownMenu
+  id="main_menu"
+  contentStyle="top: calc(100% + 1rem); right: 10px;"
+>
+  <div slot="button_content" class="main_menu__avatar">
+    <p>{userName}</p>
+    <UserAvatar image={userImage} />
+  </div>
+  <div>
+    <Signout />
+  </div>
+</DropdownMenu>
+
+<style>
+  .main_menu__content {
+    bottom: calc(100% + 1rem);
+    right: calc(100% - 130px);
+  }
+
+  .main_menu__avatar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    user-select: none;
+    cursor: pointer;
+  }
+</style>

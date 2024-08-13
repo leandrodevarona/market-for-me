@@ -1,0 +1,106 @@
+---
+interface Props {
+  id: string;
+  class?: string;
+  contentClassName?: string;
+  buttonClassName?: string;
+  contentStyle?: string;
+  buttonStyle?: string;
+  open?: boolean;
+  title?: string;
+}
+
+const {
+  id,
+  class: className,
+  contentClassName,
+  buttonClassName,
+  contentStyle,
+  buttonStyle,
+  open,
+  title,
+} = Astro.props;
+---
+
+<div class:list={["dropdown_menu", className]} style={`--dropdown-id: ${id}`}>
+  <input
+    id={`dropdown-${id}`}
+    class="dropdown_menu__open"
+    type="checkbox"
+    hidden
+    checked={open}
+  />
+  <label
+    class={buttonClassName}
+    style={buttonStyle}
+    for={`dropdown-${id}`}
+    title={title}
+  >
+    <slot name="button_content" />
+  </label>
+  <menu
+    class:list={["dropdown_menu__content", contentClassName]}
+    style={contentStyle}
+  >
+    <header class="dropdown_menu__content-close">
+      <label
+        class:list={["primary_button", "centered_button"]}
+        for={`dropdown-${id}`}
+        title="Close menu"
+      >
+        X
+      </label>
+    </header>
+    <slot />
+  </menu>
+</div>
+
+<style>
+  .dropdown_menu {
+    --dropdown-id: "";
+
+    position: relative;
+  }
+
+  /* Selector único basado en la variable */
+  [id^="dropdown-"]:checked ~ .dropdown_menu__content {
+    display: block;
+
+    max-width: 400px;
+
+    position: absolute;
+
+    padding: 0.8rem;
+
+    border-radius: var(--border-radius);
+    border: 2px solid rgba(var(--callout-border-rgb), 0.5);
+
+    background-color: rgb(var(--callout-rgb));
+
+    z-index: 999999;
+  }
+
+  .dropdown_menu__content-close {
+    display: flex;
+    justify-content: flex-end;
+
+    position: relative;
+  }
+
+  .dropdown_menu__content-close label {
+    position: absolute;
+
+    top: -1.5rem;
+    right: -1.5rem;
+
+    padding: 0.3rem;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+  }
+
+  .dropdown_menu__content {
+    display: none;
+  }
+</style>
