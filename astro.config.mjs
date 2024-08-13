@@ -10,7 +10,4 @@ export default defineConfig({
   experimental: {
     serverIslands: true,
   },
-  security: {
-    checkOrigin: true,
-  },
 });
