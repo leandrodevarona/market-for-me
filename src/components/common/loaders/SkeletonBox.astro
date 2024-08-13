@@ -1,13 +1,14 @@
 ---
 interface Props {
+  class?: string;
   width?: string;
   height?: string;
 }
 
-const { width, height } = Astro.props;
+const { class: className, width, height } = Astro.props;
 ---
 
-<div class="skeleton_box"></div>
+<div class:list={["skeleton_box", className]}></div>
 
 <style define:vars={{ width, height }}>
   .skeleton_box {

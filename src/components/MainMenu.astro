@@ -1,0 +1,54 @@
+---
+import DropdownMenu from "./common/menus/DropdownMenu.astro";
+import UserAvatar from "./auth/UserAvatar.astro";
+import Signout from "./auth/buttons/Signout.astro";
+import { Routes } from "../lib/utils/routes";
+
+interface Props {
+  userName?: string | null;
+  userImage?: string | null;
+}
+
+const { userName, userImage } = Astro.props;
+---
+
+<DropdownMenu
+  id="main_menu"
+  contentStyle="top: calc(100% + 1rem); right: 10px;"
+>
+  <div slot="button_content" class="main_menu__avatar">
+    <p>{userName}</p>
+    <UserAvatar image={userImage} />
+  </div>
+  <div class="main_menu__container">
+    <a class="primary_button" href={Routes.adminHome}>Panel de control</a>
+    <Signout />
+  </div>
+</DropdownMenu>
+
+<style>
+  .main_menu__content {
+    bottom: calc(100% + 1rem);
+    right: calc(100% - 130px);
+  }
+
+  .main_menu__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .main_menu__container a {
+    padding: 0.5rem;
+  }
+
+  .main_menu__avatar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    user-select: none;
+    cursor: pointer;
+  }
+</style>

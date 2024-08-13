@@ -1,12 +1,25 @@
 ---
-
+import GoogleSignin from "./auth/buttons/GoogleSignin.astro";
+import SkeletonBox from "./common/loaders/SkeletonBox.astro";
 ---
 
-<header class="header"></header>
+<header class="header">
+  <section></section>
+  <section>
+    <GoogleSignin server:defer>
+      <SkeletonBox slot="fallback" width="180px" />
+    </GoogleSignin>
+  </section>
+</header>
 
 <style>
   .header {
     width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     padding: 1rem;
 
     border-bottom: 1px solid rgba(var(--callout-border-rgb), 0.3);
