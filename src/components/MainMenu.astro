@@ -2,6 +2,7 @@
 import DropdownMenu from "./common/menus/DropdownMenu.astro";
 import UserAvatar from "./auth/UserAvatar.astro";
 import Signout from "./auth/buttons/Signout.astro";
+import { Routes } from "../lib/utils/routes";
 
 interface Props {
   userName?: string | null;
@@ -19,7 +20,8 @@ const { userName, userImage } = Astro.props;
     <p>{userName}</p>
     <UserAvatar image={userImage} />
   </div>
-  <div>
+  <div class="main_menu__container">
+    <a class="primary_button" href={Routes.adminHome}>Panel de control</a>
     <Signout />
   </div>
 </DropdownMenu>

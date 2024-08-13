@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   image?: string | null;
@@ -13,7 +14,7 @@ const { image } = Astro.props;
     image ? (
       <Image src={image} alt="User avatar image" width={40} height={40} />
     ) : (
-      <div />
+      <Icon name="mdi:account" size={40} />
     )
   }
 </div>
@@ -22,6 +23,10 @@ const { image } = Astro.props;
   .user_avatar {
     width: 40px;
     height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     border-radius: 50%;
 

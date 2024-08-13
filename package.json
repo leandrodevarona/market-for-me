@@ -14,8 +14,10 @@
     "@astrojs/netlify": "^5.5.0",
     "@auth/core": "^0.32.0",
     "@fontsource-variable/montserrat": "^5.0.19",
+    "@iconify-json/mdi": "^1.1.68",
     "@prisma/client": "^5.18.0",
     "astro": "^4.13.1",
+    "astro-icon": "^1.1.0",
     "auth-astro": "^4.1.2",
     "typescript": "^5.5.4"
   },
@@ -23,5 +25,10 @@
     "@types/node": "^22.2.0",
     "prisma": "^5.18.0",
     "ts-node": "^10.9.2"
+  },
+  "overrides": {
+    "astro-icon": {
+      "@iconify/tools": "^4.0.0"
+    }
   }
 }

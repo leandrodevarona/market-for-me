@@ -1,4 +1,6 @@
 ---
+import { Icon } from "astro-icon/components";
+
 interface Props {
   id: string;
   class?: string;
@@ -48,7 +50,7 @@ const {
         for={`dropdown-${id}`}
         title="Close menu"
       >
-        X
+        <Icon name="mdi:close" size={15} />
       </label>
     </header>
     <slot />
