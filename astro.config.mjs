@@ -10,7 +10,7 @@ export default defineConfig({
   adapter: netlify(),
   scopedStyleStrategy: "class",
   experimental: {
-    serverIslands: true
+    serverIslands: true,
   },
-  integrations: [auth(), icon()]
+  integrations: [auth(), icon()],
 });

@@ -2,12 +2,13 @@
 import { SignOut } from "auth-astro/components";
 ---
 
-<SignOut class:list={["signout_button", "primary_button"]}
-  >Cerrar sesión</SignOut
->
+<SignOut class="signout_button">Cerrar sesión</SignOut>
 
 <style>
   .signout_button {
-    padding: 0.5rem;
+    background-color: transparent;
+    border: none;
+    font-size: medium;
+    cursor: pointer;
   }
 </style>

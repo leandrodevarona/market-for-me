@@ -1,11 +1,14 @@
 ---
 import GoogleSignin from "./auth/buttons/GoogleSignin.astro";
+import SkeletonBox from "./common/loaders/SkeletonBox.astro";
 ---
 
 <header class="header">
   <section></section>
   <section>
-    <GoogleSignin server:defer />
+    <GoogleSignin server:defer>
+      <SkeletonBox slot="fallback" width="180px" />
+    </GoogleSignin>
   </section>
 </header>
 
