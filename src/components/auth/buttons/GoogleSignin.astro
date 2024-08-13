@@ -1,0 +1,38 @@
+---
+export const prerender = false;
+
+import { SignIn } from "auth-astro/components";
+import { getSession } from "auth-astro/server";
+import MainMenu from "../../MainMenu.astro";
+
+const session = await getSession(Astro.request);
+---
+
+<div class="google_signin">
+  {
+    session ? (
+      <MainMenu userName={session.user?.name} userImage={session.user?.image} />
+    ) : (
+      <SignIn
+        class:list={["primary_button", "centered_button", "google_signin"]}
+        provider="google"
+      >
+        Crear mi mercado
+      </SignIn>
+    )
+  }
+</div>
+
+<style>
+  .google_signin {
+    padding: 0.5rem;
+
+    font-size: medium;
+  }
+
+  .google_signin__avatar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+</style>
