@@ -1,5 +1,6 @@
 import Google from "@auth/core/providers/google";
 import { defineConfig } from "auth-astro";
+import { adapter } from "./src/lib/auth-astro/adapter";
 
 export default defineConfig({
   providers: [
@@ -8,4 +9,5 @@ export default defineConfig({
       clientSecret: import.meta.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  adapter,
 });
