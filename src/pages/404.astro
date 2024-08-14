@@ -1,0 +1,26 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+interface Props {
+  error: unknown;
+}
+
+const { error } = Astro.props;
+---
+
+<Layout title="Page not found" header={false}>
+  <main class="page_404">
+    <h1>Esta página no existe o aún no se ha terminado de crear</h1>
+    <code>{error}</code>
+  </main>
+</Layout>
+
+<style>
+  .page_404 {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
