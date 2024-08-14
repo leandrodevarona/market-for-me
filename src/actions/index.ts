@@ -13,12 +13,14 @@ export const server = {
       { name, description, image, address, phone1, phone2 },
       context
     ) => {
+      let mutateMarket = null;
+
       const user = await currentUser(context.request);
 
       if (!user?.id) return context.redirect(Routes.home);
 
       try {
-        await db.market.create({
+        mutateMarket = await db.market.create({
           data: {
             name,
             description,
@@ -36,6 +38,8 @@ export const server = {
       }
 
       await buildProject();
+
+      return mutateMarket ?? 0;
     },
   }),
   updateMarket: defineAction({
@@ -50,8 +54,10 @@ export const server = {
       phone1,
       phone2,
     }) => {
+      let mutateMarket = null;
+
       try {
-        await db.market.update({
+        mutateMarket = await db.market.update({
           where: {
             id: marketId,
           },
@@ -70,6 +76,8 @@ export const server = {
       }
 
       await buildProject();
+
+      return mutateMarket ?? 0;
     },
   }),
 };

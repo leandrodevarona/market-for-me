@@ -3,6 +3,7 @@ export const prerender = false;
 
 import type { Market } from "@prisma/client";
 import GenericFormMarket from "./GenericFormMarket.astro";
+import FormWarning from "../warnings/FormWarning.astro";
 
 interface Props {
   market: Market;
@@ -13,6 +14,7 @@ const { market } = Astro.props;
 
 <div class="update_market__form">
   <GenericFormMarket market={market} />
+  <FormWarning />
 </div>
 
 <style>

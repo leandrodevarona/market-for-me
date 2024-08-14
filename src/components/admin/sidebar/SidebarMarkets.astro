@@ -1,24 +1,22 @@
 ---
 export const prerender = false;
 
-import { getMarketByUser } from "../../../lib/data/markets";
+import { getMarketsByUser } from "../../../lib/data/markets";
 import { Routes } from "../../../lib/utils/routes";
 import { currentUser } from "../../../lib/auth-astro/session";
 import { Icon } from "astro-icon/components";
 
 const user = await currentUser(Astro.request);
-
-// Por ahora es fijo, pero debe venir de los datos de sesión
 const userId = user?.id;
 
 if (!userId) return;
 
-const markets = await getMarketByUser(userId);
+const markets = await getMarketsByUser(userId);
 ---
 
 <details class="sidebar_markets">
-  <summary
-    >Mercados
+  <summary>
+    Mercados
     <a
       href={Routes.adminCreateMarket}
       aria-label="Add market"
