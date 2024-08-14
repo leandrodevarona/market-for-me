@@ -1,0 +1,22 @@
+---
+import { Routes } from "../../../../lib/utils/routes";
+
+const { marketId } = Astro.params;
+
+if (!marketId) return;
+---
+
+<a
+  class:list={["primary_button", "centered_button", "market_link"]}
+  href={Routes.markets(marketId)}
+  target="_blank">Ver mercado</a
+>
+
+<style>
+  .market_link {
+    max-width: 150px;
+
+    padding: 0.5rem;
+    margin-left: auto;
+  }
+</style>

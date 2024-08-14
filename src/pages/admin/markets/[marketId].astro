@@ -2,6 +2,7 @@
 export const prerender = true;
 
 import UpdateMarket from "../../../components/admin/markets/forms/UpdateMarket.astro";
+import MarketLink from "../../../components/admin/markets/links/MarketLink.astro";
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 
 import { getMarkets, getMarketById } from "../../../lib/data/markets";
@@ -24,6 +25,9 @@ if (!market) return;
 <AdminLayout>
   <main class="update_market">
     <section>
+      <MarketLink />
+    </section>
+    <section class="update_market__content">
       <UpdateMarket server:defer market={market} />
     </section>
   </main>
@@ -32,5 +36,10 @@ if (!market) return;
 <style>
   .update_market {
     padding: 2rem;
+  }
+
+  .update_market__content {
+    display: grid;
+    grid-template-columns: 0.4fr 1fr;
   }
 </style>

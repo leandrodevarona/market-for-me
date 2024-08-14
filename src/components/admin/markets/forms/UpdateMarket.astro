@@ -11,4 +11,14 @@ interface Props {
 const { market } = Astro.props;
 ---
 
-<GenericFormMarket market={market} />
+<div class="update_market__form">
+  <GenericFormMarket market={market} />
+</div>
+
+<style>
+  .update_market__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+</style>
