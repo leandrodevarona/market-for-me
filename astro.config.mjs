@@ -11,6 +11,7 @@ export default defineConfig({
   scopedStyleStrategy: "class",
   experimental: {
     serverIslands: true,
+    actions: true,
   },
   integrations: [auth(), icon()],
 });

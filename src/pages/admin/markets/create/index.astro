@@ -1,0 +1,14 @@
+---
+import AdminLayout from "../../../../layouts/AdminLayout.astro";
+import CreateMarket from "../../../../components/markets/forms/CreateMarket.astro";
+---
+
+<AdminLayout>
+  <main>
+    <section>
+      <CreateMarket server:defer />
+    </section>
+  </main>
+</AdminLayout>
+
+<style></style>

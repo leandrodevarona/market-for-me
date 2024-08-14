@@ -3,25 +3,40 @@ export const prerender = false;
 
 import { getMarketByUser } from "../../../lib/data/markets";
 import { Routes } from "../../../lib/utils/routes";
+import { currentUser } from "../../../lib/auth-astro/session";
+import { Icon } from "astro-icon/components";
+
+const user = await currentUser(Astro.request);
 
 // Por ahora es fijo, pero debe venir de los datos de sesión
-const userId = "66b753cb66f63dbc3129c858";
+const userId = user?.id;
+
+if (!userId) return;
 
 const markets = await getMarketByUser(userId);
-
-if (!markets || markets.length <= 0) return;
 ---
 
 <details class="sidebar_markets">
-  <summary>Markets</summary>
+  <summary
+    >Mercados
+    <a
+      href={Routes.adminCreateMarket}
+      aria-label="Add market"
+      title="Add new market"
+    >
+      <Icon name="mdi:plus" size={20} />
+    </a>
+  </summary>
   <div>
     <ol class="sidebar_markets__list">
       {
-        markets.map((market) => (
-          <li>
-            <a href={Routes.adminMarkets(market.id)}>{market.name}</a>
-          </li>
-        ))
+        markets &&
+          markets.length > 0 &&
+          markets.map((market) => (
+            <li>
+              <a href={Routes.adminMarkets(market.id)}>{market.name}</a>
+            </li>
+          ))
       }
     </ol>
   </div>
@@ -31,6 +46,18 @@ if (!markets || markets.length <= 0) return;
   .sidebar_markets summary {
     user-select: none;
     cursor: pointer;
+
+    position: relative;
+  }
+
+  .sidebar_markets summary a {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
   }
 
   .sidebar_markets__list {

@@ -1,0 +1,35 @@
+---
+export const prerender = false;
+
+import { actions, isInputError } from "astro:actions";
+import { Routes } from "../../../lib/utils/routes";
+
+const result = Astro.getActionResult(actions.createMarket);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+---
+
+<form method="POST" action={Routes.adminHome + actions.createMarket}>
+  <section>
+    <label>
+      Nombre
+      <input required type="text" name="name" />
+    </label>
+    {inputErrors.name && <p class="error">{inputErrors.name.join(",")}</p>}
+    <label>
+      Descripción
+      <textarea name="description"></textarea>
+    </label>
+    <label>
+      <input type="file" accept="image/*" />
+    </label>
+  </section>
+  <section>
+    <h4>Contacto</h4>
+    <input type="text" name="address" />
+    <input type="tel" name="phone1" />
+    <input type="tel" name="phone2" />
+  </section>
+  <button>Crear nuevo mercado</button>
+</form>
+
+<style></style>
