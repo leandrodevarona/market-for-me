@@ -1,12 +1,18 @@
 ---
 import AdminLayout from "../../../../layouts/AdminLayout.astro";
-import CreateMarket from "../../../../components/markets/forms/CreateMarket.astro";
+import CreateMarket from "../../../../components/admin/markets/forms/CreateMarket.astro";
 ---
 
 <AdminLayout>
-  <main>
+  <main class="create_market">
     <section>
       <CreateMarket server:defer />
     </section>
   </main>
 </AdminLayout>
+
+<style>
+  .create_market {
+    padding: 2rem;
+  }
+</style>

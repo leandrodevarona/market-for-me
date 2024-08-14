@@ -1,0 +1,117 @@
+---
+import { actions, isInputError } from "astro:actions";
+import { Routes } from "../../../../lib/utils/routes";
+import type { Market } from "@prisma/client";
+
+interface Props {
+  market?: Market;
+}
+
+const result = Astro.getActionResult(actions.createMarket);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+
+const { market } = Astro.props;
+
+const isCreating = market === undefined;
+
+const contact = market?.contact;
+
+const action = isCreating ? actions.createMarket : actions.updateMarket;
+
+const buttonText = isCreating ? "Crear nuevo mercado" : "Actualizar mercado";
+---
+
+<form
+  class="create_market__form"
+  method="POST"
+  action={Routes.adminHome + action}
+>
+  <input type="text" name="marketId" value={market?.id} hidden required />
+  <section class="create_market__form-general">
+    <h4>Información general</h4>
+    <label>
+      Nombre
+      <input
+        class="primary_text__input"
+        required
+        type="text"
+        name="name"
+        maxlength={30}
+        value={market?.name}
+      />
+    </label>
+    {inputErrors.name && <p class="error">{inputErrors.name.join(",")}</p>}
+    <label>
+      Descripción
+      <textarea class="primary_text__input" name="description" maxlength={100}
+        >{market?.description}</textarea
+      >
+    </label>
+    <label>
+      <input class="primary_text__input" type="file" accept="image/*" />
+    </label>
+  </section>
+  <section class="create_market__form-contact">
+    <h4>Contacto</h4>
+    <label>
+      Dirección
+      <input
+        class="primary_text__input"
+        type="text"
+        name="address"
+        maxlength={100}
+        value={contact?.address}
+      />
+    </label>
+    <label>
+      Teléfono 1
+      <input
+        class="primary_text__input"
+        type="tel"
+        name="phone1"
+        maxlength={20}
+        value={contact?.phone1}
+      />
+    </label>
+    <label>
+      Teléfono 2
+      <input
+        class="primary_text__input"
+        type="tel"
+        name="phone2"
+        maxlength={20}
+        value={contact?.phone2}
+      />
+    </label>
+  </section>
+  <button class="primary_button">{buttonText}</button>
+</form>
+
+<style>
+  .create_market__form {
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    gap: 2rem;
+  }
+
+  .create_market__form > section {
+    display: grid;
+    grid-template-rows: 0.3fr 1fr 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .create_market__form label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .create_market__form textarea {
+    resize: none;
+  }
+
+  .create_market__form button {
+    padding: 0.5rem;
+    margin: 0 auto;
+    font-size: medium;
+  }
+</style>

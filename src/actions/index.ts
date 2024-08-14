@@ -1,5 +1,5 @@
 import { defineAction } from "astro:actions";
-import { marketSchema } from "../lib/zod/schemas";
+import { createMarketSchema, updateMarketSchema } from "../lib/zod/schemas";
 import { db } from "../lib/db";
 import { currentUser } from "../lib/auth-astro/session";
 import { Routes } from "../lib/utils/routes";
@@ -8,7 +8,7 @@ import { buildProject } from "../lib/build/build";
 export const server = {
   createMarket: defineAction({
     accept: "form",
-    input: marketSchema,
+    input: createMarketSchema,
     handler: async (
       { name, description, image, address, phone1, phone2 },
       context
@@ -39,13 +39,37 @@ export const server = {
     },
   }),
   updateMarket: defineAction({
-    // accept form requests
     accept: "form",
-    input: marketSchema,
-    handler: async ({ name, description, image, address, phone1, phone2 }) => {
-      // insert comments in db
+    input: updateMarketSchema,
+    handler: async ({
+      marketId,
+      name,
+      description,
+      image,
+      address,
+      phone1,
+      phone2,
+    }) => {
+      try {
+        await db.market.update({
+          where: {
+            id: marketId,
+          },
+          data: {
+            name,
+            description,
+            contact: {
+              address,
+              phone1,
+              phone2,
+            },
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
 
-      return null;
+      await buildProject();
     },
   }),
 };

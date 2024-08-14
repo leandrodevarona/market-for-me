@@ -1,0 +1,14 @@
+---
+export const prerender = false;
+
+import type { Market } from "@prisma/client";
+import GenericFormMarket from "./GenericFormMarket.astro";
+
+interface Props {
+  market: Market;
+}
+
+const { market } = Astro.props;
+---
+
+<GenericFormMarket market={market} />
