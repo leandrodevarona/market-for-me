@@ -1,0 +1,138 @@
+---
+export const prerender = false;
+
+import { actions, isInputError } from "astro:actions";
+import { Routes } from "../../../../lib/utils/routes";
+import type { Market } from "@prisma/client";
+
+interface Props {
+  market?: Market;
+}
+
+const result = Astro.getActionResult(actions.createMarket);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+
+const { market } = Astro.props;
+
+const isCreating = market === undefined;
+
+const contact = market?.contact;
+
+const action = isCreating ? actions.createMarket : actions.updateMarket;
+
+const buttonText = isCreating ? "Crear nuevo mercado" : "Actualizar mercado";
+---
+
+<form
+  class="generic_form__market"
+  method="POST"
+  action={Routes.adminHome + action}
+>
+  <input type="text" name="marketId" value={market?.id} hidden />
+  <section>
+    <h4>Información general</h4>
+    <label>
+      Nombre
+      <input
+        class="primary_text__input"
+        required
+        type="text"
+        name="name"
+        maxlength={30}
+        value={market?.name}
+      />
+    </label>
+    {inputErrors.name && <p class="error">{inputErrors.name.join(",")}</p>}
+    <label>
+      Descripción
+      <textarea class="primary_text__input" name="description" maxlength={100}
+        >{market?.description}</textarea
+      >
+    </label>
+    {
+      inputErrors.description && (
+        <p class="error">{inputErrors.description.join(",")}</p>
+      )
+    }
+    <label>
+      Imagen de presentación
+      <input
+        class="primary_text__input"
+        type="file"
+        name="image"
+        accept="image/*"
+      />
+    </label>
+    {inputErrors.image && <p class="error">{inputErrors.image.join(",")}</p>}
+  </section>
+  <section>
+    <h4>Contacto</h4>
+    <label>
+      Dirección
+      <input
+        class="primary_text__input"
+        type="text"
+        name="address"
+        maxlength={100}
+        value={contact?.address}
+      />
+    </label>
+    {
+      inputErrors.address && (
+        <p class="error">{inputErrors.address.join(",")}</p>
+      )
+    }
+    <label>
+      Teléfono 1
+      <input
+        class="primary_text__input"
+        type="tel"
+        name="phone1"
+        maxlength={20}
+        value={contact?.phone1}
+      />
+    </label>
+    {inputErrors.phone1 && <p class="error">{inputErrors.phone1.join(",")}</p>}
+    <label>
+      Teléfono 2
+      <input
+        class="primary_text__input"
+        type="tel"
+        name="phone2"
+        maxlength={20}
+        value={contact?.phone2}
+      />
+    </label>
+    {inputErrors.phone2 && <p class="error">{inputErrors.phone2.join(",")}</p>}
+  </section>
+  <button class="primary_button">{buttonText}</button>
+</form>
+
+<style>
+  .generic_form__market {
+    display: grid;
+    grid-template-rows: 1fr 0.8fr;
+    gap: 2rem;
+  }
+
+  .generic_form__market > section {
+    display: grid;
+    grid-template-rows: 0.3fr 1fr 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .generic_form__market label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .generic_form__market textarea {
+    resize: none;
+  }
+
+  .generic_form__market button {
+    padding: 0.5rem;
+    margin: 0 auto;
+    font-size: medium;
+  }
+</style>

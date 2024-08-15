@@ -1,0 +1,18 @@
+---
+export const prerender = false;
+
+import GenericFormMarket from "./GenericFormMarket.astro";
+import FormWarning from "../warnings/FormWarning.astro";
+---
+
+<div class="create_market__form">
+  <GenericFormMarket />
+  <FormWarning />
+</div>
+
+<style>
+  .create_market__form p {
+    margin-top: 2rem;
+    text-wrap: pretty;
+  }
+</style>

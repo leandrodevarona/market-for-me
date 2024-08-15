@@ -10,7 +10,7 @@ export async function getMarkets() {
   }
 }
 
-export async function getMarketByUser(userId: string) {
+export async function getMarketsByUser(userId: string) {
   try {
     const markets = await db.market.findMany({
       where: {

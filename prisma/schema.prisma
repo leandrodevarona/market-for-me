@@ -71,7 +71,7 @@ model VerificationToken {
 }
 
 model Market {
-  id          String  @id @default(cuid()) @map("_id") @db.ObjectId
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   description String?
   imageUrl    String?
@@ -92,7 +92,7 @@ type Contact {
 }
 
 model Product {
-  id   String @id @default(uuid()) @map("_id") @db.ObjectId
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
   name String
 
   price    Float

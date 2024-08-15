@@ -6,9 +6,10 @@ import "@fontsource-variable/montserrat";
 interface Props {
   title: string;
   description?: string | null;
+  header?: boolean;
 }
 
-const { title, description = "Astro description" } = Astro.props;
+const { title, description = "Astro description", header = true } = Astro.props;
 ---
 
 <!doctype html>
@@ -22,7 +23,7 @@ const { title, description = "Astro description" } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <Header />
+    {header && <Header />}
     <slot />
   </body>
 </html>
@@ -152,6 +153,12 @@ const { title, description = "Astro description" } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .primary_text__input {
+    padding: 0.4rem;
+    font-size: medium;
+    border-radius: 5px;
   }
 
   @media (prefers-color-scheme: dark) {
