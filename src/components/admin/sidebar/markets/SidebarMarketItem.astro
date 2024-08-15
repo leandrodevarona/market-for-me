@@ -1,0 +1,35 @@
+---
+import { Routes } from "../../../../lib/utils/routes";
+import DeployedMarketInfo from "../../markets/info/DeployedMarketInfo.astro";
+
+interface Props {
+  marketId: string;
+  marketName: string;
+}
+
+const { marketId, marketName } = Astro.props;
+---
+
+<li class="sidebar_market__item">
+  <a href={Routes.adminMarkets(marketId)}>{marketName}</a>
+  <DeployedMarketInfo
+    class="sidebar_market__point"
+    server:defer
+    marketId={marketId}
+  />
+</li>
+
+<style>
+  .sidebar_market__item {
+    list-style: none;
+
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 0.5rem;
+  }
+
+  .sidebar_market__point {
+    margin-left: auto;
+  }
+</style>

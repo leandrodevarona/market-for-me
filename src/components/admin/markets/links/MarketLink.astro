@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { Routes } from "../../../../lib/utils/routes";
 
 const { marketId } = Astro.params;
@@ -9,12 +10,19 @@ if (!marketId) return;
 <a
   class:list={["primary_button", "centered_button", "market_link"]}
   href={Routes.markets(marketId)}
-  target="_blank">Ver mercado</a
+  target="_blank"
 >
+  <span>Ver mercado</span>
+  <Icon name="mdi:format-horizontal-align-right" size={20}/>
+</a>
 
 <style>
   .market_link {
     max-width: 150px;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 
     padding: 0.5rem;
     margin-left: auto;
