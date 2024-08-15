@@ -1,0 +1,22 @@
+---
+export const prerender = false;
+
+import { actions } from "astro:actions";
+
+interface Props {
+  marketId: string;
+}
+
+const { marketId } = Astro.props;
+---
+
+<form class="create_product__form" method="POST" action={actions.createProduct}>
+  <input type="text" name="marketId" value={marketId} hidden />
+  <button class="primary_button">Crear producto</button>
+</form>
+
+<style>
+  .create_product__form button {
+    padding: 0.5rem;
+  }
+</style>

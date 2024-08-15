@@ -1,10 +1,11 @@
 ---
 export const prerender = true;
 
-import UpdateMarket from "../../../components/admin/markets/forms/UpdateMarket.astro";
-import MarketLink from "../../../components/admin/markets/links/MarketLink.astro";
-import AdminLayout from "../../../layouts/AdminLayout.astro";
-import { getMarkets, getMarketById } from "../../../lib/data/markets";
+import UpdateMarket from "@components/admin/markets/forms/UpdateMarket.astro";
+import MarketLink from "@components/admin/markets/links/MarketLink.astro";
+import AdminLayout from "@layouts/AdminLayout.astro";
+import { getMarkets, getMarketById } from "@data/markets";
+import MarketProductList from "@components/admin/markets/products/MarketProductList.astro";
 
 export async function getStaticPaths() {
   const markets = await getMarkets();
@@ -28,6 +29,9 @@ if (!market) return;
     </section>
     <section class="update_market__content">
       <UpdateMarket server:defer market={market} />
+      <div class="update_market__products">
+        <MarketProductList marketId={market.id} products={market.products} />
+      </div>
     </section>
   </main>
 </AdminLayout>
@@ -40,5 +44,17 @@ if (!market) return;
   .update_market__content {
     display: grid;
     grid-template-columns: 0.4fr 1fr;
+    gap: 4rem;
+  }
+
+  .update_market__products {
+    max-height: 60vh;
+
+    margin-top: 3rem;
+
+    overflow-y: auto;
+
+    -ms-overflow-style: thin; /* IE and Edge */
+    scrollbar-width: thin; /* Firefox */
   }
 </style>

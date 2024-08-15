@@ -1,0 +1,152 @@
+---
+export const prerender = false;
+
+import type { Product } from "@prisma/client";
+import { actions, isInputError } from "astro:actions";
+import Currencies from "../selects/Currencies.astro";
+import DeleteProduct from "./DeleteProduct.astro";
+import { Routes } from "@utils/routes";
+
+interface Props {
+  product: Product;
+}
+
+const result = Astro.getActionResult(actions.updateProduct);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+
+const { product } = Astro.props;
+---
+
+<li class="update_product">
+  <header class="update_product__header">
+    <a href={Routes.products(product.id)}>Ver producto</a>
+    <DeleteProduct productId={product.id} />
+  </header>
+  <form
+    class="update_product__form"
+    method="POST"
+    action={actions.updateProduct}
+    enctype="multipart/form-data"
+  >
+    <input
+      class="secondary_text__input"
+      type="text"
+      name="productId"
+      value={product.id}
+      hidden
+    />
+    <section>
+      <label>
+        Nombre
+        <input
+          class="secondary_text__input"
+          type="text"
+          name="name"
+          required
+          maxlength={150}
+          value={product.name}
+        />
+      </label>
+      {inputErrors.name && <p class="error">{inputErrors.name.join(",")}</p>}
+      <label>
+        Precio
+        <input
+          class="secondary_text__input"
+          type="number"
+          name="price"
+          required
+          min={0}
+          value={product.price}
+        />
+      </label>
+      {inputErrors.price && <p class="error">{inputErrors.price.join(",")}</p>}
+      <Currencies />
+      {
+        inputErrors.currency && (
+          <p class="error">{inputErrors.currency.join(",")}</p>
+        )
+      }
+    </section>
+    <section>
+      <label>
+        Descripción
+        <textarea
+          class="secondary_text__input"
+          name="description"
+          maxlength={1000}>{product.description}</textarea
+        >
+      </label>
+      {
+        inputErrors.description && (
+          <p class="error">{inputErrors.description.join(",")}</p>
+        )
+      }
+      <label>
+        Imágenes
+        <input
+          class="secondary_text__input"
+          type="file"
+          name="images"
+          multiple
+          accept="image/*"
+        />
+      </label>
+      {
+        inputErrors.images && (
+          <p class="error">{inputErrors.images.join(",")}</p>
+        )
+      }
+    </section>
+    <button class="primary_button">Editar producto</button>
+  </form>
+</li>
+
+<style>
+  .update_product {
+    list-style: none;
+
+    width: 100%;
+
+    display: grid;
+    grid-template-rows: 0.2fr 1fr;
+
+    line-height: 1.4;
+    padding: calc(1.5rem - 1px);
+    border-radius: 8px;
+    background-color: rgb(var(--card-rgb));
+    opacity: 0.8;
+
+    margin-bottom: 2rem;
+  }
+
+  .update_product__header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .update_product__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .update_product__form > section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .update_product__form label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .update_product__form textarea {
+    resize: none;
+  }
+
+  .update_product__form button {
+    padding: 0.5rem;
+  }
+</style>

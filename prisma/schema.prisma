@@ -93,12 +93,12 @@ type Contact {
 
 model Product {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  name String @default("New product")
 
-  price    Float
+  price    Float    @default(1.0)
   currency Currency @default(USD)
 
-  description String
+  description String?
   imageUrls   String[]
 
   market   Market @relation(fields: [marketId], references: [id])

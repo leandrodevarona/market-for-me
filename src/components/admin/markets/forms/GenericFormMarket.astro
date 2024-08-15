@@ -2,7 +2,7 @@
 export const prerender = false;
 
 import { actions, isInputError } from "astro:actions";
-import { Routes } from "../../../../lib/utils/routes";
+import { Routes } from "@utils/routes";
 import type { Market } from "@prisma/client";
 
 interface Props {
@@ -27,6 +27,7 @@ const buttonText = isCreating ? "Crear nuevo mercado" : "Actualizar mercado";
   class="generic_form__market"
   method="POST"
   action={Routes.adminHome + action}
+  enctype="multipart/form-data"
 >
   <input type="text" name="marketId" value={market?.id} hidden />
   <section>
