@@ -1,10 +1,11 @@
 ---
 export const prerender = false;
 
-import { getMarketsByUser } from "../../../lib/data/markets";
-import { Routes } from "../../../lib/utils/routes";
-import { currentUser } from "../../../lib/auth-astro/session";
+import { getMarketsByUser } from "../../../../lib/data/markets";
+import { Routes } from "../../../../lib/utils/routes";
+import { currentUser } from "../../../../lib/auth-astro/session";
 import { Icon } from "astro-icon/components";
+import SidebarMarketItem from "./SidebarMarketItem.astro";
 
 const user = await currentUser(Astro.request);
 const userId = user?.id;
@@ -31,9 +32,7 @@ const markets = await getMarketsByUser(userId);
         markets &&
           markets.length > 0 &&
           markets.map((market) => (
-            <li>
-              <a href={Routes.adminMarkets(market.id)}>{market.name}</a>
-            </li>
+            <SidebarMarketItem marketId={market.id} marketName={market.name} />
           ))
       }
     </ol>
@@ -61,11 +60,5 @@ const markets = await getMarketsByUser(userId);
   .sidebar_markets__list {
     margin-top: 1rem;
     padding-left: 1rem;
-  }
-
-  .sidebar_markets__list li {
-    list-style: none;
-
-    margin-bottom: 0.5rem;
   }
 </style>

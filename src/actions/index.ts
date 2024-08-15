@@ -13,8 +13,6 @@ export const server = {
       { name, description, image, address, phone1, phone2 },
       context
     ) => {
-      console.log(image);
-
       let mutateMarket = null;
 
       const user = await currentUser(context.request);

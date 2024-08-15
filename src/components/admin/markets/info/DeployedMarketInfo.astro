@@ -1,0 +1,32 @@
+---
+import { Icon } from "astro-icon/components";
+import { Routes } from "../../../../lib/utils/routes";
+import { isDeployedMarket } from "../../../../lib/build/markets";
+
+export const prerender = false;
+
+interface Props {
+  class?: string;
+  marketId: string;
+}
+
+const { class: className, marketId } = Astro.props;
+
+const base_url = Astro.url.origin;
+const marketUrl = base_url + Routes.adminMarkets(marketId);
+
+const isDeployed = await isDeployedMarket(marketUrl);
+
+const iconColor = isDeployed ? "green" : "red";
+const iconTitle = isDeployed
+  ? "Este mercado ya ha sido despelgado"
+  : "Este mercado no ha sido desplegado aún";
+---
+
+<Icon
+  class={className}
+  name="mdi:checkbox-blank-circle"
+  size={10}
+  color={iconColor}
+  title={iconTitle}
+/>
