@@ -1,11 +1,16 @@
-import { defineAction } from "astro:actions";
-import { createMarketSchema, updateMarketSchema } from "../lib/zod/schemas";
+import { defineAction, z } from "astro:actions";
+import {
+  createMarketSchema,
+  updateMarketSchema,
+  updateProductSchema,
+} from "../lib/zod/schemas";
 import { db } from "../lib/db";
 import { currentUser } from "../lib/auth-astro/session";
 import { Routes } from "../lib/utils/routes";
 import { buildProject } from "../lib/build/build";
 
 export const server = {
+  // Mercados
   createMarket: defineAction({
     accept: "form",
     input: createMarketSchema,
@@ -13,14 +18,14 @@ export const server = {
       { name, description, image, address, phone1, phone2 },
       context
     ) => {
-      let mutateMarket = null;
+      let createdMarket = null;
 
       const user = await currentUser(context.request);
 
       if (!user?.id) return context.redirect(Routes.home);
 
       try {
-        mutateMarket = await db.market.create({
+        createdMarket = await db.market.create({
           data: {
             name,
             description,
@@ -39,7 +44,7 @@ export const server = {
 
       await buildProject();
 
-      return mutateMarket ?? 0;
+      return createdMarket ?? 0;
     },
   }),
   updateMarket: defineAction({
@@ -78,6 +83,82 @@ export const server = {
       await buildProject();
 
       return mutateMarket ?? 0;
+    },
+  }),
+  // Productos
+  createProduct: defineAction({
+    accept: "form",
+    input: z.object({
+      marketId: z.string(),
+    }),
+    handler: async ({ marketId }) => {
+      console.log(marketId);
+      let createdProduct = null;
+
+      try {
+        createdProduct = await db.product.create({
+          data: {
+            marketId,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
+
+      return createdProduct ?? 0;
+    },
+  }),
+  updateProduct: defineAction({
+    accept: "form",
+    input: updateProductSchema,
+    handler: async ({
+      productId,
+      name,
+      price,
+      currency,
+      description,
+      images,
+    }) => {
+      let mutateProduct = null;
+
+      try {
+        mutateProduct = await db.product.update({
+          where: {
+            id: productId,
+          },
+          data: {
+            name,
+            price,
+            currency,
+            description,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
+
+      return mutateProduct ?? 0;
+    },
+  }),
+  deleteProduct: defineAction({
+    accept: "form",
+    input: z.object({
+      productId: z.string(),
+    }),
+    handler: async ({ productId }) => {
+      let deletedProduct = null;
+
+      try {
+        deletedProduct = await db.product.delete({
+          where: {
+            id: productId,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
+
+      return deletedProduct ?? 0;
     },
   }),
 };

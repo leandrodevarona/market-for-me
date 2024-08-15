@@ -1,9 +1,9 @@
 ---
 export const prerender = false;
 
-import { getMarketsByUser } from "../../../../lib/data/markets";
-import { Routes } from "../../../../lib/utils/routes";
-import { currentUser } from "../../../../lib/auth-astro/session";
+import { getMarketsByUser } from "@data/markets";
+import { Routes } from "@utils/routes";
+import { currentUser } from "@auth-astro/session";
 import { Icon } from "astro-icon/components";
 import SidebarMarketItem from "./SidebarMarketItem.astro";
 

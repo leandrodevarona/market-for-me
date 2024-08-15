@@ -1,12 +1,16 @@
 ---
-import AdminLayout from "../../../../layouts/AdminLayout.astro";
-import CreateMarket from "../../../../components/admin/markets/forms/CreateMarket.astro";
+import AdminLayout from "@layouts/AdminLayout.astro";
+import CreateMarket from "@components/admin/markets/forms/CreateMarket.astro";
+import MarketProductList from "@components/admin/markets/products/MarketProductList.astro";
 ---
 
 <AdminLayout>
   <main class="create_market">
     <section>
       <CreateMarket server:defer />
+    </section>
+    <section>
+      <MarketProductList />
     </section>
   </main>
 </AdminLayout>
@@ -15,6 +19,7 @@ import CreateMarket from "../../../../components/admin/markets/forms/CreateMarke
   .create_market {
     display: grid;
     grid-template-columns: 0.4fr 1fr;
+    gap: 2rem;
 
     padding: 2rem;
   }

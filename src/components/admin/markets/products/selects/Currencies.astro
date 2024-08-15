@@ -1,0 +1,16 @@
+---
+import { Currency } from "@prisma/client";
+---
+
+<label>
+  Moneda
+  <select name="currency">
+    {
+      Object.values(Currency).map((value) => (
+        <option value={value}>{value}</option>
+      ))
+    }
+  </select>
+</label>
+
+<style></style>
