@@ -14,4 +14,7 @@ export default defineConfig({
     actions: true,
   },
   integrations: [auth(), icon()],
+  image: {
+    domains: ["lh3.googleusercontent.com"],
+  },
 });
