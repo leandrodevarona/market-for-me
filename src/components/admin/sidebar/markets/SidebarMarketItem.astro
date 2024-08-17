@@ -12,11 +12,7 @@ const { marketId, marketName } = Astro.props;
 
 <li class="sidebar_market__item">
   <a href={Routes.adminMarkets(marketId)}>{marketName}</a>
-  <DeployedMarketInfo
-    class="sidebar_market__point"
-    server:defer
-    marketId={marketId}
-  />
+  <DeployedMarketInfo class="sidebar_market__point" marketId={marketId} />
 </li>
 
 <style>
