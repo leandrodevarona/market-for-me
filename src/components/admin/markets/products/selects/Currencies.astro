@@ -1,13 +1,21 @@
 ---
 import { Currency } from "@prisma/client";
+
+interface Props {
+  value?: Currency;
+}
+
+const { value } = Astro.props;
 ---
 
 <label>
   Moneda
   <select name="currency">
     {
-      Object.values(Currency).map((value) => (
-        <option value={value}>{value}</option>
+      Object.values(Currency).map((currency) => (
+        <option value={currency} selected={currency === value}>
+          {currency}
+        </option>
       ))
     }
   </select>

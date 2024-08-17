@@ -58,7 +58,7 @@ const { product } = Astro.props;
         />
       </label>
       {inputErrors.price && <p class="error">{inputErrors.price.join(",")}</p>}
-      <Currencies />
+      <Currencies value={product.currency} />
       {
         inputErrors.currency && (
           <p class="error">{inputErrors.currency.join(",")}</p>
