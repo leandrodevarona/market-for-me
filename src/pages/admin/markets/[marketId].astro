@@ -1,6 +1,4 @@
 ---
-export const prerender = true;
-
 import UpdateMarket from "@components/admin/markets/forms/UpdateMarket.astro";
 import MarketLink from "@components/admin/markets/links/MarketLink.astro";
 import AdminLayout from "@layouts/AdminLayout.astro";
@@ -28,7 +26,7 @@ if (!market) return;
       <MarketLink />
     </section>
     <section class="update_market__content">
-      <UpdateMarket server:defer market={market} />
+      <UpdateMarket market={market} />
       <div class="update_market__products">
         <MarketProductList marketId={market.id} products={market.products} />
       </div>

@@ -1,8 +1,8 @@
 ---
 export const prerender = true;
 
-import Layout from "../../layouts/Layout.astro";
-import { getProducts, getProductById } from "../../lib/data/products";
+import Layout from "@layouts/Layout.astro";
+import { getProducts, getProductById } from "@data/products";
 
 export async function getStaticPaths() {
   const products = await getProducts();

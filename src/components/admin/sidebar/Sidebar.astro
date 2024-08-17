@@ -1,6 +1,5 @@
 ---
 import { Routes } from "@utils/routes";
-import SkeletonBox from "@components/common/loaders/SkeletonBox.astro";
 import SidebarMarkets from "./markets/SidebarMarkets.astro";
 ---
 
@@ -11,9 +10,7 @@ import SidebarMarkets from "./markets/SidebarMarkets.astro";
     </a>
   </header>
   <nav class="sidebar_nav">
-    <SidebarMarkets server:defer>
-      <SkeletonBox slot="fallback" width="150px" />
-    </SidebarMarkets>
+    <SidebarMarkets />
   </nav>
 </div>
 

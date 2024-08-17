@@ -15,16 +15,14 @@ const { marketId, products } = Astro.props;
 {
   !products || products.length === 0 ? (
     <div>
-      <CreateProduct server:defer marketId={marketId}>
+      <CreateProduct marketId={marketId}>
         <SkeletonBox slot="fallback" width="150px" height="20px" />
       </CreateProduct>
     </div>
   ) : (
     <ul class="market_product__list">
       {products.map((product) => (
-        <UpdateProduct server:defer product={product}>
-          <SkeletonBox slot="fallback" width="100%" height="100px" />
-        </UpdateProduct>
+        <UpdateProduct product={product} />
       ))}
     </ul>
   )
