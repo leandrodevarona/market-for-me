@@ -1,25 +1,16 @@
 ---
 import { type Product } from "@prisma/client";
 import UpdateProduct from "./forms/UpdateProduct.astro";
-import SkeletonBox from "@components/common/loaders/SkeletonBox.astro";
-import CreateProduct from "./forms/CreateProduct.astro";
 
 interface Props {
-  marketId: string;
   products?: Product[];
 }
 
-const { marketId, products } = Astro.props;
+const { products } = Astro.props;
 ---
 
 {
-  !products || products.length === 0 ? (
-    <div>
-      <CreateProduct marketId={marketId}>
-        <SkeletonBox slot="fallback" width="150px" height="20px" />
-      </CreateProduct>
-    </div>
-  ) : (
+  products && products.length > 0 && (
     <ul class="market_product__list">
       {products.map((product) => (
         <UpdateProduct product={product} />

@@ -17,8 +17,6 @@ const isCreating = market === undefined;
 const contact = market?.contact;
 
 const action = isCreating ? actions.createMarket : actions.updateMarket;
-
-const buttonText = isCreating ? "Crear nuevo mercado" : "Actualizar mercado";
 ---
 
 <form
@@ -104,7 +102,7 @@ const buttonText = isCreating ? "Crear nuevo mercado" : "Actualizar mercado";
     </label>
     {inputErrors.phone2 && <p class="error">{inputErrors.phone2.join(",")}</p>}
   </section>
-  <button class="primary_button">{buttonText}</button>
+  <button class="primary_button">Publicar mercado</button>
 </form>
 
 <style>

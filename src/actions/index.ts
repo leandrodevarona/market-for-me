@@ -8,6 +8,7 @@ import { db } from "../lib/db";
 import { currentUser } from "../lib/auth-astro/session";
 import { Routes } from "../lib/utils/routes";
 import { buildProject } from "../lib/build/build";
+import { uploadMarketImage } from "@utils/cloudinary";
 
 export const server = {
   // Mercados
@@ -61,6 +62,10 @@ export const server = {
     }) => {
       let mutateMarket = null;
 
+      let marketImage = null;
+
+      if (image) marketImage = await uploadMarketImage(image);
+
       try {
         mutateMarket = await db.market.update({
           where: {
@@ -74,6 +79,7 @@ export const server = {
               phone1,
               phone2,
             },
+            imageUrl: marketImage,
           },
         });
       } catch (error) {
