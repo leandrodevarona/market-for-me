@@ -107,7 +107,7 @@ export async function deleteMultipleImages(imageUrls?: (string | null)[]) {
       });
 
       if (!!publicIds.length) {
-        cloudinary.api.delete_resources(publicIds, (error, result) => {
+        cloudinary.api.delete_resources(publicIds, (error) => {
           if (error) {
             console.error(
               "Error al eliminar los recursos de Cloudinary:",
