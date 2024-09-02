@@ -21,7 +21,9 @@ export const server = {
     ) => {
       let createdMarket = null;
 
-      console.log(image);
+      let marketImage = null;
+
+      if (image) marketImage = await uploadMarketImage(image);
 
       const user = await currentUser(context.request);
 
@@ -32,7 +34,7 @@ export const server = {
           data: {
             name,
             description,
-            imageUrl: null,
+            imageUrl: marketImage,
             userId: user.id,
             contact: {
               address,
