@@ -21,6 +21,8 @@ export const server = {
     ) => {
       let createdMarket = null;
 
+      console.log(image);
+
       const user = await currentUser(context.request);
 
       if (!user?.id) return context.redirect(Routes.home);
@@ -126,6 +128,8 @@ export const server = {
       images,
     }) => {
       let mutateProduct = null;
+
+      console.log(images);
 
       try {
         mutateProduct = await db.product.update({
