@@ -8,7 +8,7 @@ import { db } from "../lib/db";
 import { currentUser } from "../lib/auth-astro/session";
 import { Routes } from "../lib/utils/routes";
 import { buildProject } from "../lib/build/build";
-import { uploadMarketImage } from "@utils/cloudinary";
+import { uploadMarketImage, uploadProductImage } from "@utils/cloudinary";
 
 export const server = {
   // Mercados
@@ -21,7 +21,9 @@ export const server = {
     ) => {
       let createdMarket = null;
 
-      console.log(image);
+      let marketImage = null;
+
+      if (image) marketImage = await uploadMarketImage(image);
 
       const user = await currentUser(context.request);
 
@@ -32,7 +34,7 @@ export const server = {
           data: {
             name,
             description,
-            imageUrl: null,
+            imageUrl: marketImage,
             userId: user.id,
             contact: {
               address,
@@ -64,9 +66,12 @@ export const server = {
     }) => {
       let mutateMarket = null;
 
-      let marketImage = null;
+      let marketImage = undefined;
 
-      if (image) marketImage = await uploadMarketImage(image);
+      if (image) {
+        const newMarketImage = await uploadMarketImage(image);
+        if (newMarketImage) marketImage = newMarketImage;
+      }
 
       try {
         mutateMarket = await db.market.update({
@@ -100,7 +105,6 @@ export const server = {
       marketId: z.string(),
     }),
     handler: async ({ marketId }) => {
-      console.log(marketId);
       let createdProduct = null;
 
       try {
@@ -129,7 +133,19 @@ export const server = {
     }) => {
       let mutateProduct = null;
 
-      console.log(images);
+      let imageUrls = undefined;
+
+      // Hay que hacer esto porque aunque no se cargue ninguna imagen llega un File en "images"
+      let newImagesUrls = [];
+      for (let index = 0; index < images.length; index++) {
+        const element = images[index];
+        if (element) {
+          const newUrl = await uploadProductImage(element);
+          if (newUrl) newImagesUrls.push(newUrl);
+        }
+      }
+
+      if (newImagesUrls.length > 0) imageUrls = newImagesUrls;
 
       try {
         mutateProduct = await db.product.update({
@@ -141,6 +157,7 @@ export const server = {
             price,
             currency,
             description,
+            imageUrls,
           },
         });
       } catch (error) {
