@@ -157,7 +157,9 @@ export const server = {
             price,
             currency,
             description,
-            imageUrls,
+            imageUrls: {
+              push: imageUrls,
+            },
           },
         });
       } catch (error) {

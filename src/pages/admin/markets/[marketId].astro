@@ -5,6 +5,7 @@ import AdminLayout from "@layouts/AdminLayout.astro";
 import { getMarkets, getMarketById } from "@data/markets";
 import MarketProductList from "@components/admin/markets/products/MarketProductList.astro";
 import CreateProduct from "@components/admin/markets/products/forms/CreateProduct.astro";
+import PublishMarket from "@components/admin/markets/forms/buttons/PublishMarket.astro";
 
 export async function getStaticPaths() {
   const markets = await getMarkets();
@@ -23,8 +24,9 @@ if (!market) return;
 
 <AdminLayout>
   <main class="update_market">
-    <section>
+    <section class="update_market__buttons">
       <MarketLink />
+      <PublishMarket />
     </section>
     <section class="update_market__content">
       <UpdateMarket market={market} />
@@ -38,6 +40,13 @@ if (!market) return;
   <style>
     .update_market {
       padding: 2rem;
+    }
+
+    .update_market__buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1rem;
     }
 
     .update_market__content {
