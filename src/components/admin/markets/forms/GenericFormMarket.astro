@@ -20,6 +20,7 @@ const action = isCreating ? actions.createMarket : actions.updateMarket;
 ---
 
 <form
+  id="generic_form__market"
   class="generic_form__market"
   method="POST"
   action={Routes.adminHome + action}
@@ -102,7 +103,6 @@ const action = isCreating ? actions.createMarket : actions.updateMarket;
     </label>
     {inputErrors.phone2 && <p class="error">{inputErrors.phone2.join(",")}</p>}
   </section>
-  <button class="primary_button">Publicar mercado</button>
 </form>
 
 <style>
