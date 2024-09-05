@@ -11,7 +11,6 @@ export const cart = {
       productId: z.string(),
     }),
     handler: async ({ productId }, context) => {
-      console.log("El producto...", productId);
       try {
         const currCart = await getUserCartOrCreate(context);
 

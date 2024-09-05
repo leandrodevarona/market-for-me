@@ -23,7 +23,6 @@ const { class: className, modalId, href } = Astro.props;
     if (modalId) {
       const dialog = document.getElementById(modalId);
       if (dialog) {
-        console.log(dialog);
         dialog.showModal();
       }
     }
