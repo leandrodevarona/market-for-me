@@ -38,6 +38,8 @@ const { productId } = Astro.props;
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = new FormData(form);
-    const { error } = await actions.cart.addProductToCart(formData);
+    await actions.cart.addProductToCart(formData);
+
+    location.reload();
   });
 </script>

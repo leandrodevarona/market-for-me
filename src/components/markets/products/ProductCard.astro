@@ -3,6 +3,7 @@ import { type Product } from "@prisma/client";
 import LinkCard from "../../LinkCard.astro";
 import { Routes } from "@utils/routes";
 import ProductImage from "./ProductImage.astro";
+import AddProductToCart from "../cart/forms/AddProductToCart.astro";
 
 interface Props {
   product: Product;
@@ -44,5 +45,12 @@ const defaultImage = product.imageUrls[0] || null;
   .product_card__priceInfo {
     font-size: large;
     font-weight: 600;
+  }
+
+  .product_card__add {
+    margin-left: auto;
+
+    display: flex;
+    align-items: flex-end;
   }
 </style>
