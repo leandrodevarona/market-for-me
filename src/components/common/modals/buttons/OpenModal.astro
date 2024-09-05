@@ -1,0 +1,31 @@
+---
+interface Props {
+  class?: string;
+  modalId?: string;
+  href?: string;
+}
+
+const { class: className, modalId, href } = Astro.props;
+---
+
+<button id="open_modal" class={className}>
+  <slot />
+</button>
+
+<script is:inline define:vars={{ modalId, href }}>
+  const button = document.getElementById("open_modal");
+
+  button.addEventListener("click", () => {
+    if (href) {
+      Astro.redirect(href);
+    }
+
+    if (modalId) {
+      const dialog = document.getElementById(modalId);
+      if (dialog) {
+        console.log(dialog);
+        dialog.showModal();
+      }
+    }
+  });
+</script>

@@ -1,4 +1,4 @@
-import { defineAction, z } from "astro:actions";
+import { defineAction } from "astro:actions";
 import { db } from "../lib/db";
 import { createMarketSchema, updateMarketSchema } from "src/lib/zod/schemas";
 import { uploadMarketImage } from "@utils/cloudinary";
@@ -22,7 +22,7 @@ export const markets = {
 
       const user = await currentUser(context.request);
 
-      if (!user?.id) return context.redirect(Routes.home);
+      if (!user?.id) return context.rewrite(Routes.home);
 
       try {
         createdMarket = await db.market.create({

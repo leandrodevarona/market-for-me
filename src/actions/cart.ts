@@ -1,4 +1,5 @@
-import { defineAction, z } from "astro:actions";
+import { defineAction } from "astro:actions";
+import { z } from "astro:schema";
 import { db } from "../lib/db";
 import { getUserCart, getUserCartOrCreate } from "@data/cart";
 import { CART_COOKIES_KEY } from "@utils/constants";
@@ -10,12 +11,13 @@ export const cart = {
       productId: z.string(),
     }),
     handler: async ({ productId }, context) => {
+      console.log("El producto...", productId);
       try {
         const currCart = await getUserCartOrCreate(context);
 
         if (currCart) {
           const cookieStore = context.cookies;
-          cookieStore.set(CART_COOKIES_KEY, currCart.id);
+          cookieStore.set(CART_COOKIES_KEY, currCart.id, { path: "/" });
         }
 
         const existingProduct = currCart?.products.some(

@@ -3,14 +3,18 @@ export const prerender = true;
 
 import GoogleSignin from "./auth/buttons/GoogleSignin.astro";
 import SkeletonBox from "./common/loaders/SkeletonBox.astro";
+import Cart from "./markets/cart/Cart.astro";
 ---
 
 <header class="header">
   <section></section>
-  <section>
+  <section class="header_rigth">
     <GoogleSignin server:defer>
       <SkeletonBox slot="fallback" width="180px" />
     </GoogleSignin>
+    <Cart server:defer>
+      <SkeletonBox slot="fallback" width="50px" height="30px"/>
+    </Cart>
   </section>
 </header>
 
@@ -25,5 +29,11 @@ import SkeletonBox from "./common/loaders/SkeletonBox.astro";
     padding: 1rem;
 
     border-bottom: 1px solid rgba(var(--callout-border-rgb), 0.3);
+  }
+
+  .header_rigth {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 </style>

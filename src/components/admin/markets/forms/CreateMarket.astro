@@ -1,14 +1,22 @@
 ---
 import GenericFormMarket from "./GenericFormMarket.astro";
 import FormWarning from "../warnings/FormWarning.astro";
+import PublishMarket from "./buttons/PublishMarket.astro";
 ---
 
 <div class="create_market__form">
   <GenericFormMarket />
+  <PublishMarket />
   <FormWarning />
 </div>
 
 <style>
+  .create_market__form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
   .create_market__form p {
     margin-top: 2rem;
     text-wrap: pretty;

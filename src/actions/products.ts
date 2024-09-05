@@ -1,4 +1,5 @@
-import { defineAction, z } from "astro:actions";
+import { defineAction } from "astro:actions";
+import { z } from "astro:schema";
 import { db } from "../lib/db";
 import { updateProductSchema } from "src/lib/zod/schemas";
 import { uploadProductImage } from "@utils/cloudinary";
@@ -38,19 +39,15 @@ export const products = {
     }) => {
       let mutateProduct = null;
 
-      let imageUrls = undefined;
+      let imageUrls: string[] = [];
 
-      // Hay que hacer esto porque aunque no se cargue ninguna imagen llega un File en "images"
-      let newImagesUrls = [];
       for (let index = 0; index < images.length; index++) {
         const element = images[index];
         if (element) {
           const newUrl = await uploadProductImage(element);
-          if (newUrl) newImagesUrls.push(newUrl);
+          if (newUrl) imageUrls.push(newUrl);
         }
       }
-
-      if (newImagesUrls.length > 0) imageUrls = newImagesUrls;
 
       try {
         mutateProduct = await db.product.update({

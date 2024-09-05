@@ -1,0 +1,29 @@
+---
+import Modal from "./Modal.astro";
+
+interface Props {
+  id: string;
+  title?: string;
+  position?: "left" | "right";
+}
+
+const { id, position, title } = Astro.props;
+
+const marginStyle =
+  position === "left" ? "margin-right: auto" : "margin-left: auto";
+---
+
+<Modal id={id} class="slide_out__modal" title={title} style={marginStyle}>
+  <slot />
+</Modal>
+
+<style>
+  .slide_out__modal {
+    min-height: 100vh;
+    max-width: 70%;
+
+    border: none;
+
+    padding: 1rem;
+  }
+</style>
