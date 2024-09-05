@@ -26,7 +26,7 @@ const { title, description = "Astro description", header = true } = Astro.props;
   <body>
     {header && <Header />}
     <slot />
-    <CartModal />
+    <CartModal server:defer />
   </body>
 </html>
 <style is:global>

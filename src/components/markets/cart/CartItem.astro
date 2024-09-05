@@ -1,0 +1,31 @@
+---
+import type { Product } from "@prisma/client";
+import ProductCard from "../products/ProductCard.astro";
+import DeleteProductFromCart from "./forms/DeleteProductFromCart.astro";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+---
+
+<ProductCard class="product_card__incart" product={product}>
+  <div class="product_card__actions">
+    <DeleteProductFromCart productId={product.id} />
+  </div>
+</ProductCard>
+
+<style>
+  .product_card__incart {
+    max-width: 400px;
+  }
+
+  .product_card__actions {
+    margin-left: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+</style>
