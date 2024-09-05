@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  id: string;
+  imageId: string;
+  imageUrl?: string;
+}
+
+const { id, imageId, imageUrl = "" } = Astro.props;
+---
+
+<li id={id} class="product_image__item" tabindex={-1}>
+  <Image src={imageUrl} alt="Product image thumbnail" width={60} height={60} />
+</li>
+
+<style>
+  .product_image__item {
+    list-style: none;
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: var(--border-radius);
+
+    overflow: hidden;
+
+    cursor: pointer;
+  }
+
+  .product_image__item:focus {
+    outline: 3px solid rgb(var(--callout-border-rgb));
+    outline-offset: 2px;
+  }
+</style>
+
+<script is:inline define:vars={{ id, imageId, imageUrl }}>
+  const liElem = document.getElementById(id);
+
+  if (liElem) {
+    liElem.addEventListener("click", () => {
+      const imageElem = document.getElementById(imageId);
+      if (imageElem) {
+        imageElem.src = imageUrl;
+      }
+    });
+  }
+</script>
