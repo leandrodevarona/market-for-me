@@ -7,8 +7,7 @@ interface Props {
   market?: Market;
 }
 
-const result = Astro.getActionResult(actions.createMarket);
-const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+
 
 const { market } = Astro.props;
 
@@ -16,7 +15,10 @@ const isCreating = market === undefined;
 
 const contact = market?.contact;
 
-const action = isCreating ? actions.createMarket : actions.updateMarket;
+const action = isCreating ? actions.markets.createMarket : actions.markets.updateMarket;
+
+const result = Astro.getActionResult(action);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 ---
 
 <form

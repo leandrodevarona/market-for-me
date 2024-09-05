@@ -9,7 +9,9 @@ interface Props {
   product: Product;
 }
 
-const result = Astro.getActionResult(actions.updateProduct);
+const action = actions.products.updateProduct;
+
+const result = Astro.getActionResult(action);
 const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 
 const { product } = Astro.props;
@@ -23,7 +25,7 @@ const { product } = Astro.props;
   <form
     class="update_product__form"
     method="POST"
-    action={actions.updateProduct}
+    action={action}
     enctype="multipart/form-data"
   >
     <input
@@ -147,5 +149,7 @@ const { product } = Astro.props;
 
   .update_product__form button {
     padding: 0.5rem;
+
+    font-size: medium;
   }
 </style>

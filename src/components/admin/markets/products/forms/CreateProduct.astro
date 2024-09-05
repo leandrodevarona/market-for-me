@@ -8,7 +8,11 @@ interface Props {
 const { marketId } = Astro.props;
 ---
 
-<form class="create_product__form" method="POST" action={actions.createProduct}>
+<form
+  class="create_product__form"
+  method="POST"
+  action={actions.products.createProduct}
+>
   <input type="text" name="marketId" value={marketId} hidden />
   <button class="primary_button">Crear producto</button>
 </form>
