@@ -1,5 +1,5 @@
 import { Currency } from "@prisma/client";
-import { z } from "astro/zod";
+import { z } from "astro:schema";
 
 export const createMarketSchema = z.object({
   name: z.string({ required_error: "The name is required" }).max(30),

@@ -1,0 +1,46 @@
+---
+import OpenModal from "@components/common/modals/buttons/OpenModal.astro";
+import { getProductsOnCart } from "@data/cart";
+import { Icon } from "astro-icon/components";
+
+export const prerender = false;
+
+const products = await getProductsOnCart(Astro);
+---
+
+<OpenModal modalId="cart" class="cart">
+  <Icon name="mdi:cart-outline" size={30} />
+  <div class="cart_amount">{products?.length || 0}</div>
+</OpenModal>
+
+<style>
+  .cart {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+
+    background-color: transparent;
+    border: none;
+
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .cart_amount {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: red;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    aspect-ratio: 1;
+
+    font-size: small;
+    font-weight: 500;
+
+    margin-left: -5px;
+  }
+</style>

@@ -8,7 +8,11 @@ interface Props {
 const { productId } = Astro.props;
 ---
 
-<form class="delete_product__form" method="POST" action={actions.deleteProduct}>
+<form
+  class="delete_product__form"
+  method="POST"
+  action={actions.products.deleteProduct}
+>
   <input type="text" name="productId" value={productId} hidden />
   <button>Eliminar</button>
 </form>

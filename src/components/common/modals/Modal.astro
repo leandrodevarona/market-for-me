@@ -1,0 +1,45 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  id: string;
+  class?: string;
+  style?: string;
+  title?: string;
+  backHref?: string;
+}
+
+const { id, class: className, style, title } = Astro.props;
+---
+
+<dialog id={id} class={className} style={style}>
+  <form class="modal_close" method="dialog">
+    <span>{title}</span>
+    <button
+      class:list={["close_modal", "primary_button", "centered_button"]}
+      type="submit"
+    >
+      <Icon name="mdi:close" size={20} />
+    </button>
+  </form>
+  <div class="modal_content">
+    <slot />
+  </div>
+</dialog>
+
+<style>
+  .modal_close {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    margin-bottom: 1rem;
+  }
+
+  .close_modal {
+    padding: 0.2rem;
+  }
+</style>

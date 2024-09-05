@@ -7,8 +7,7 @@ interface Props {
   market?: Market;
 }
 
-const result = Astro.getActionResult(actions.createMarket);
-const inputErrors = isInputError(result?.error) ? result.error.fields : {};
+
 
 const { market } = Astro.props;
 
@@ -16,10 +15,14 @@ const isCreating = market === undefined;
 
 const contact = market?.contact;
 
-const action = isCreating ? actions.createMarket : actions.updateMarket;
+const action = isCreating ? actions.markets.createMarket : actions.markets.updateMarket;
+
+const result = Astro.getActionResult(action);
+const inputErrors = isInputError(result?.error) ? result.error.fields : {};
 ---
 
 <form
+  id="generic_form__market"
   class="generic_form__market"
   method="POST"
   action={Routes.adminHome + action}
@@ -102,7 +105,6 @@ const action = isCreating ? actions.createMarket : actions.updateMarket;
     </label>
     {inputErrors.phone2 && <p class="error">{inputErrors.phone2.join(",")}</p>}
   </section>
-  <button class="primary_button">Publicar mercado</button>
 </form>
 
 <style>
