@@ -16,7 +16,7 @@
     "@auth/prisma-adapter": "^2.4.2",
     "@fontsource-variable/montserrat": "^5.0.19",
     "@iconify-json/mdi": "^1.1.68",
-    "@prisma/client": "^5.18.0",
+    "@prisma/client": "^5.19.1",
     "astro": "^4.14.2",
     "astro-icon": "^1.1.0",
     "auth-astro": "^4.1.2",
@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.2.0",
-    "prisma": "^5.18.0",
+    "prisma": "^5.19.1",
     "ts-node": "^10.9.2"
   },
   "overrides": {
