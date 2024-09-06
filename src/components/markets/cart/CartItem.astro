@@ -28,4 +28,14 @@ const { product } = Astro.props;
     flex-direction: column;
     justify-content: space-between;
   }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .product_card__incart {
+      padding: 0.5rem;
+      gap: 0.3rem;
+
+      font-size: small;
+    }
+  }
 </style>
