@@ -17,28 +17,34 @@ export const cart = {
         if (currCart) {
           const cookieStore = context.cookies;
           cookieStore.set(CART_COOKIES_KEY, currCart.id, { path: "/" });
-        }
 
-        const existingProduct = currCart?.products.some(
-          (product) => product.id === productId
-        );
+          const existingProduct = currCart.cartItems.some(
+            (cartItem) => cartItem.product.id === productId
+          );
 
-        if (existingProduct) {
-          // Aqui debo aumentar la cantidad del producto y no agregarlo nuevamente
-          return;
-        }
-
-        if (currCart) {
-          await db.cart.update({
-            data: {
-              products: {
-                connect: {
-                  id: productId,
+          if (existingProduct) {
+            // Aqui debo aumentar la cantidad del producto y no agregarlo nuevamente
+            await db.cartItem.update({
+              data: {
+                quantity: {
+                  increment: 1,
                 },
               },
-            },
-            where: {
-              id: currCart.id,
+              where: {
+                cartId_productId: {
+                  cartId: currCart.id,
+                  productId,
+                },
+              },
+            });
+            return;
+          }
+
+          await db.cartItem.create({
+            data: {
+              cartId: currCart.id,
+              productId,
+              quantity: 1,
             },
           });
         }
@@ -62,16 +68,12 @@ export const cart = {
         const currCart = await getUserCart(context);
 
         if (currCart) {
-          await db.cart.update({
-            data: {
-              products: {
-                disconnect: {
-                  id: productId,
-                },
-              },
-            },
+          await db.cartItem.delete({
             where: {
-              id: currCart.id,
+              cartId_productId: {
+                cartId: currCart.id,
+                productId,
+              },
             },
           });
         }

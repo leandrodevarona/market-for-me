@@ -22,8 +22,9 @@ const defaultImage = product.imageUrls[0] || null;
   <ProductImage url={defaultImage} />
   <div class="product_card__info">
     <span>{product.name}</span>
-    <span class="product_card__priceInfo"
-      >{product.price} {product.currency}
+    <span class="product_card__priceInfo">
+      {product.price}
+      {product.currency}
     </span>
   </div>
   <slot />

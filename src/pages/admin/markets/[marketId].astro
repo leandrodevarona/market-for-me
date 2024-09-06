@@ -2,20 +2,14 @@
 import UpdateMarket from "@components/admin/markets/forms/UpdateMarket.astro";
 import MarketLink from "@components/admin/markets/links/MarketLink.astro";
 import AdminLayout from "@layouts/AdminLayout.astro";
-import { getMarkets, getMarketById } from "@data/markets";
+import { getMarketById } from "@data/markets";
 import MarketProductList from "@components/admin/markets/products/MarketProductList.astro";
 import CreateProduct from "@components/admin/markets/products/forms/CreateProduct.astro";
 import PublishMarket from "@components/admin/markets/forms/buttons/PublishMarket.astro";
 
-export async function getStaticPaths() {
-  const markets = await getMarkets();
-
-  if (!markets) return [];
-
-  return markets.map((market) => ({ params: { marketId: market.id } }));
-}
-
 const { marketId } = Astro.params;
+
+if (!marketId) return;
 
 const market = await getMarketById(marketId);
 

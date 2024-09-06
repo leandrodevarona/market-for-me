@@ -1,14 +1,14 @@
 ---
 import OpenModal from "@components/common/modals/buttons/OpenModal.astro";
-import { getProductsOnCart } from "@data/cart";
+import { getCartItems } from "@data/cart";
 import { Icon } from "astro-icon/components";
 
-const products = await getProductsOnCart(Astro);
+const cartItems = await getCartItems(Astro);
 ---
 
 <OpenModal modalId="cart" class="cart">
   <Icon name="mdi:cart-outline" size={30} />
-  <div class="cart_amount">{products?.length || 0}</div>
+  <div class="cart_amount">{cartItems?.length || 0}</div>
 </OpenModal>
 
 <style>

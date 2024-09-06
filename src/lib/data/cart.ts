@@ -15,7 +15,11 @@ export async function getUserCart(context: ActionAPIContext) {
     if (cartId) {
       const currCart = await db.cart.findUnique({
         include: {
-          products: true,
+          cartItems: {
+            include: {
+              product: true,
+            },
+          },
         },
         where: {
           id: cartId,
@@ -32,7 +36,11 @@ export async function getUserCart(context: ActionAPIContext) {
 
     const currCart = await db.cart.findUnique({
       include: {
-        products: true,
+        cartItems: {
+          include: {
+            product: true,
+          },
+        },
       },
       where: {
         userId,
@@ -56,7 +64,11 @@ export async function getUserCartOrCreate(context: ActionAPIContext) {
     if (!currCart) {
       currCart = await db.cart.create({
         include: {
-          products: true,
+          cartItems: {
+            include: {
+              product: true,
+            },
+          },
         },
         data: {
           userId,
@@ -70,11 +82,11 @@ export async function getUserCartOrCreate(context: ActionAPIContext) {
   }
 }
 
-export async function getProductsOnCart(context: ActionAPIContext) {
+export async function getCartItems(context: ActionAPIContext) {
   try {
     const currCart = await getUserCart(context);
 
-    return currCart?.products;
+    return currCart?.cartItems;
   } catch (error) {
     return null;
   }

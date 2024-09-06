@@ -1,19 +1,19 @@
 ---
 import SlideOutModal from "@components/common/modals/SlideOutModal.astro";
-import { getProductsOnCart } from "@data/cart";
+import { getCartItems } from "@data/cart";
 import CartItem from "./CartItem.astro";
 import { Icon } from "astro-icon/components";
 
-const products = await getProductsOnCart(Astro);
+const cartItems = await getCartItems(Astro);
 ---
 
 <SlideOutModal id="cart" title="Productos en el carro">
   <div class="cart_modal__content">
     {
-      products && products.length > 0 ? (
+      cartItems && cartItems.length > 0 ? (
         <ul>
-          {products.map((product) => (
-            <CartItem product={product} />
+          {cartItems.map((carItem) => (
+            <CartItem cartItem={carItem} />
           ))}
         </ul>
       ) : (

@@ -1,18 +1,21 @@
 ---
-import type { Product } from "@prisma/client";
 import ProductCard from "../products/ProductCard.astro";
 import DeleteProductFromCart from "./forms/DeleteProductFromCart.astro";
+import { type CartItemWithProduct } from "@customTypes/cart";
 
 interface Props {
-  product: Product;
+  cartItem: CartItemWithProduct;
 }
 
-const { product } = Astro.props;
+const { cartItem } = Astro.props;
+
+const product = cartItem.product;
 ---
 
 <ProductCard class="product_card__incart" product={product}>
   <div class="product_card__actions">
     <DeleteProductFromCart productId={product.id} />
+    <span>Cant: {cartItem.quantity}</span>
   </div>
 </ProductCard>
 
