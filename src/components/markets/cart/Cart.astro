@@ -3,8 +3,6 @@ import OpenModal from "@components/common/modals/buttons/OpenModal.astro";
 import { getProductsOnCart } from "@data/cart";
 import { Icon } from "astro-icon/components";
 
-export const prerender = false;
-
 const products = await getProductsOnCart(Astro);
 ---
 
