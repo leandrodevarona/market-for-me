@@ -2,6 +2,7 @@
 import SlideOutModal from "@components/common/modals/SlideOutModal.astro";
 import { getProductsOnCart } from "@data/cart";
 import CartItem from "./CartItem.astro";
+import { Icon } from "astro-icon/components";
 
 const products = await getProductsOnCart(Astro);
 ---
@@ -16,7 +17,10 @@ const products = await getProductsOnCart(Astro);
           ))}
         </ul>
       ) : (
-        <p>No posees productos en el carro de compras.</p>
+        <div class="cart_modal__noItems">
+          <Icon name="mdi:cart-off" size={100} />
+          <p>No posees productos en el carro de compras.</p>
+        </div>
       )
     }
   </div>
@@ -32,5 +36,19 @@ const products = await getProductsOnCart(Astro);
 
     -ms-overflow-style: thin; /* IE and Edge */
     scrollbar-width: thin; /* Firefox */
+  }
+
+  .cart_modal__noItems {
+    min-height: 80vh;
+
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
   }
 </style>
