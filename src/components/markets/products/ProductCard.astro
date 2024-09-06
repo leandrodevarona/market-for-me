@@ -14,26 +14,26 @@ const { class: className, product } = Astro.props;
 const defaultImage = product.imageUrls[0] || null;
 ---
 
-<li class:list={["product_card", className]}>
-  <LinkCard class="product_card__content" href={Routes.products(product.id)}>
-    <ProductImage url={defaultImage} />
-    <div class="product_card__info">
-      <span>{product.name}</span>
-      <span class="product_card__priceInfo"
-        >{product.price} {product.currency}
-      </span>
-    </div>
-    <slot />
-  </LinkCard>
-</li>
+<LinkCard
+  class:list={["product_card", className]}
+  href={Routes.products(product.id)}
+  role="listitem"
+>
+  <ProductImage url={defaultImage} />
+  <div class="product_card__info">
+    <span>{product.name}</span>
+    <span class="product_card__priceInfo"
+      >{product.price} {product.currency}
+    </span>
+  </div>
+  <slot />
+</LinkCard>
 
 <style>
   .product_card {
     list-style: none;
     margin-bottom: 1rem;
-  }
 
-  .product_card__content {
     display: flex;
     gap: 1rem;
   }
