@@ -1,6 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
 
+import { actions } from "astro:actions";
+
 interface Props {
   productId: string;
 }
@@ -8,7 +10,11 @@ interface Props {
 const { productId } = Astro.props;
 ---
 
-<form id="delete_product__fromcart">
+<form
+  id="delete_product__fromcart"
+  method="POST"
+  action={actions.cart.deleteProductFromCart}
+>
   <input type="text" name="productId" value={productId} hidden />
   <button
     class:list={["delete_product", "primary_button", "centered_button"]}
@@ -29,19 +35,3 @@ const { productId } = Astro.props;
     cursor: pointer;
   }
 </style>
-
-<script>
-  import { actions } from "astro:actions";
-
-  const form = document.getElementById(
-    "delete_product__fromcart"
-  ) as HTMLFormElement;
-
-  form?.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const formData = new FormData(form);
-    await actions.cart.deleteProductFromCart(formData);
-
-    location.reload();
-  });
-</script>

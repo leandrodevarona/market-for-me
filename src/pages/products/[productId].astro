@@ -1,20 +1,12 @@
 ---
-export const prerender = true;
-
 import Layout from "@layouts/Layout.astro";
-import { getProducts, getProductById } from "@data/products";
+import { getProductById } from "@data/products";
 import ProductImageViewer from "@components/markets/products/images/ProductImageViewer.astro";
 import AddProductToCart from "@components/markets/cart/forms/AddProductToCart.astro";
 
-export async function getStaticPaths() {
-  const products = await getProducts();
-
-  if (!products) return [];
-
-  return products.map((product) => ({ params: { productId: product.id } }));
-}
-
 const { productId } = Astro.params;
+
+if (!productId) return;
 
 const product = await getProductById(productId);
 

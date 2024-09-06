@@ -4,7 +4,6 @@ import { createMarketSchema, updateMarketSchema } from "src/lib/zod/schemas";
 import { uploadMarketImage } from "@utils/cloudinary";
 import { currentUser } from "@auth-astro/session";
 import { Routes } from "@utils/routes";
-import { buildProject } from "@build/build";
 
 export const markets = {
   createMarket: defineAction({
@@ -41,8 +40,6 @@ export const markets = {
       } catch (error) {
         console.error(error);
       }
-
-      await buildProject();
 
       return createdMarket ?? 0;
     },
@@ -87,8 +84,6 @@ export const markets = {
       } catch (error) {
         console.error(error);
       }
-
-      await buildProject();
 
       return mutateMarket ?? 0;
     },

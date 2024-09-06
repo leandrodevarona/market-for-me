@@ -1,20 +1,12 @@
 ---
-export const prerender = true;
-
 import MarketHeader from "@components/markets/presentation/MarketHeader.astro";
 import MarketProductList from "@components/markets/products/MarketProductList.astro";
 import Layout from "@layouts/Layout.astro";
-import { getMarkets, getMarketById } from "@data/markets";
-
-export async function getStaticPaths() {
-  const markets = await getMarkets();
-
-  if (!markets) return [];
-
-  return markets.map((market) => ({ params: { marketId: market.id } }));
-}
+import { getMarketById } from "@data/markets";
 
 const { marketId } = Astro.params;
+
+if (!marketId) return;
 
 const market = await getMarketById(marketId);
 
