@@ -1,6 +1,7 @@
 ---
 import type { Market } from "@prisma/client";
 import GenericFormMarket from "./GenericFormMarket.astro";
+import PublishMarket from "./buttons/PublishMarket.astro";
 
 interface Props {
   market: Market;
@@ -11,12 +12,13 @@ const { market } = Astro.props;
 
 <div class="update_market__form">
   <GenericFormMarket market={market} />
+  <PublishMarket />
 </div>
 
 <style>
   .update_market__form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
   }
 </style>

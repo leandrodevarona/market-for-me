@@ -5,7 +5,6 @@ import AdminLayout from "@layouts/AdminLayout.astro";
 import { getMarketById } from "@data/markets";
 import MarketProductList from "@components/admin/markets/products/MarketProductList.astro";
 import CreateProduct from "@components/admin/markets/products/forms/CreateProduct.astro";
-import PublishMarket from "@components/admin/markets/forms/buttons/PublishMarket.astro";
 
 const { marketId } = Astro.params;
 
@@ -20,7 +19,6 @@ if (!market) return;
   <main class="update_market">
     <section class="update_market__buttons">
       <MarketLink />
-      <PublishMarket />
     </section>
     <section class="update_market__content">
       <UpdateMarket market={market} />

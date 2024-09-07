@@ -45,9 +45,9 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
     {inputErrors.name && <p class="error">{inputErrors.name.join(",")}</p>}
     <label>
       Descripción
-      <textarea class="primary_text__input" name="description" maxlength={100}
-        >{market?.description}</textarea
-      >
+      <textarea class="primary_text__input" name="description" maxlength={100}>
+        {market?.description}
+      </textarea>
     </label>
     {
       inputErrors.description && (
