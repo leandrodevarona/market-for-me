@@ -2,6 +2,7 @@
 import ProductCard from "../products/ProductCard.astro";
 import DeleteProductFromCart from "./forms/DeleteProductFromCart.astro";
 import { type CartItemWithProduct } from "@customTypes/cart";
+import IncrDecrProductFromCart from "./forms/IncrDecrProductFromCart.astro";
 
 interface Props {
   cartItem: CartItemWithProduct;
@@ -15,7 +16,10 @@ const product = cartItem.product;
 <ProductCard class="product_card__incart" product={product}>
   <div class="product_card__actions">
     <DeleteProductFromCart productId={product.id} />
-    <span>Cant: {cartItem.quantity}</span>
+    <IncrDecrProductFromCart
+      productId={product.id}
+      quantity={cartItem.quantity}
+    />
   </div>
 </ProductCard>
 
@@ -30,6 +34,7 @@ const product = cartItem.product;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: flex-end;
   }
 
   /* Mobile */

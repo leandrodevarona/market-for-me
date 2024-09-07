@@ -99,6 +99,8 @@ model Product {
   price    Float    @default(1.0)
   currency Currency @default(USD)
 
+  stock Int @default(0)
+
   description String?
   imageUrls   String[]
 

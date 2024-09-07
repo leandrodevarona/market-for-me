@@ -63,8 +63,6 @@ export const cart = {
     }),
     handler: async ({ productId }, context) => {
       try {
-        if (!productId) return null;
-
         const currCart = await getUserCart(context);
 
         if (currCart) {
@@ -80,6 +78,61 @@ export const cart = {
       } catch (error) {
         console.error(
           "Ocurrió un error al eliminar un producto de un carrito. ",
+          error
+        );
+      }
+    },
+  }),
+  incrDecrProductFromCart: defineAction({
+    accept: "form",
+    input: z.object({
+      productId: z.string(),
+      action: z.enum(["INCR", "DECR"]),
+    }),
+    handler: async ({ productId, action }, context) => {
+      try {
+        const currCart = await getUserCart(context);
+
+        if (currCart) {
+          const item = currCart.cartItems.find(
+            (cartItem) => cartItem.product.id === productId
+          );
+
+          if (!item) return;
+
+          if (action === "INCR" && item.quantity + 1 > item.product.stock)
+            return null;
+          else if (action === "DECR" && item.quantity - 1 <= 0) {
+            await db.cartItem.delete({
+              where: {
+                cartId_productId: {
+                  cartId: currCart.id,
+                  productId,
+                },
+              },
+            });
+
+            return;
+          }
+
+          await db.cartItem.update({
+            data: {
+              quantity: {
+                increment: action === "INCR" ? 1 : undefined,
+                decrement: action === "DECR" ? 1 : undefined,
+              },
+            },
+            where: {
+              cartId_productId: {
+                cartId: currCart.id,
+                productId,
+              },
+            },
+          });
+        }
+      } catch (error) {
+        console.error(
+          "Ocurrió un error al incrementar/decrementar la cantidad de un producto en un carrito. ",
           error
         );
       }

@@ -7,15 +7,15 @@ interface Props {
   market?: Market;
 }
 
-
-
 const { market } = Astro.props;
 
 const isCreating = market === undefined;
 
 const contact = market?.contact;
 
-const action = isCreating ? actions.markets.createMarket : actions.markets.updateMarket;
+const action = isCreating
+  ? actions.markets.createMarket
+  : actions.markets.updateMarket;
 
 const result = Astro.getActionResult(action);
 const inputErrors = isInputError(result?.error) ? result.error.fields : {};
@@ -25,7 +25,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
   id="generic_form__market"
   class="generic_form__market"
   method="POST"
-  action={Routes.adminHome + action}
+  action={action}
   enctype="multipart/form-data"
 >
   <input type="text" name="marketId" value={market?.id} hidden />

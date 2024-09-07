@@ -34,6 +34,7 @@ export const products = {
       name,
       price,
       currency,
+      stock,
       description,
       images,
     }) => {
@@ -58,6 +59,7 @@ export const products = {
             name,
             price,
             currency,
+            stock,
             description,
             imageUrls: {
               push: imageUrls,

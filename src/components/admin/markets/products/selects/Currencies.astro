@@ -8,7 +8,7 @@ interface Props {
 const { value } = Astro.props;
 ---
 
-<label>
+<label class="currency">
   Moneda
   <select name="currency">
     {
@@ -21,4 +21,9 @@ const { value } = Astro.props;
   </select>
 </label>
 
-<style></style>
+<style>
+  .currency {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
