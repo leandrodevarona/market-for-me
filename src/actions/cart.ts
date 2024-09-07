@@ -18,16 +18,25 @@ export const cart = {
           const cookieStore = context.cookies;
           cookieStore.set(CART_COOKIES_KEY, currCart.id, { path: "/" });
 
-          const existingProduct = currCart.cartItems.some(
+          const item = currCart.cartItems.find(
             (cartItem) => cartItem.product.id === productId
           );
 
-          if (existingProduct) {
+          if (item) {
+            if (item.quantity + 1 > item.product.stock + item.quantity) return;
+
             // Aqui debo aumentar la cantidad del producto y no agregarlo nuevamente
             await db.cartItem.update({
               data: {
                 quantity: {
                   increment: 1,
+                },
+                product: {
+                  update: {
+                    stock: {
+                      decrement: 1,
+                    },
+                  },
                 },
               },
               where: {
@@ -40,11 +49,31 @@ export const cart = {
             return;
           }
 
+          const product = await db.product.findUnique({
+            where: {
+              id: productId,
+            },
+          });
+
+          if (!product) return;
+          if (product.stock <= 0) return;
+
           await db.cartItem.create({
             data: {
               cartId: currCart.id,
               productId,
               quantity: 1,
+            },
+          });
+
+          await db.product.update({
+            data: {
+              stock: {
+                decrement: 1,
+              },
+            },
+            where: {
+              id: productId,
             },
           });
         }
@@ -66,12 +95,23 @@ export const cart = {
         const currCart = await getUserCart(context);
 
         if (currCart) {
-          await db.cartItem.delete({
+          const deletedItem = await db.cartItem.delete({
             where: {
               cartId_productId: {
                 cartId: currCart.id,
                 productId,
               },
+            },
+          });
+
+          await db.product.update({
+            data: {
+              stock: {
+                increment: deletedItem.quantity,
+              },
+            },
+            where: {
+              id: productId,
             },
           });
         }
@@ -100,8 +140,11 @@ export const cart = {
 
           if (!item) return;
 
-          if (action === "INCR" && item.quantity + 1 > item.product.stock)
-            return null;
+          if (
+            action === "INCR" &&
+            item.quantity + 1 > item.product.stock + item.quantity
+          )
+            return;
           else if (action === "DECR" && item.quantity - 1 <= 0) {
             await db.cartItem.delete({
               where: {
@@ -109,6 +152,17 @@ export const cart = {
                   cartId: currCart.id,
                   productId,
                 },
+              },
+            });
+
+            await db.product.update({
+              data: {
+                stock: {
+                  increment: 1,
+                },
+              },
+              where: {
+                id: productId,
               },
             });
 
@@ -120,6 +174,14 @@ export const cart = {
               quantity: {
                 increment: action === "INCR" ? 1 : undefined,
                 decrement: action === "DECR" ? 1 : undefined,
+              },
+              product: {
+                update: {
+                  stock: {
+                    increment: action === "DECR" ? 1 : undefined,
+                    decrement: action === "INCR" ? 1 : undefined,
+                  },
+                },
               },
             },
             where: {

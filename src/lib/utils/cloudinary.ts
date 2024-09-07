@@ -72,6 +72,10 @@ export async function uploadProductImage(image: File) {
   return fileUrl;
 }
 
+export async function uploadClientInvoice(pdfFile: File) {
+  return upload(pdfFile, "client_invoices", "raw", "pdf");
+}
+
 export async function deleteImage(imageUrl?: string | null) {
   try {
     if (imageUrl) {

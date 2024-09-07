@@ -24,14 +24,27 @@ export async function getMarketsByUser(userId: string) {
   }
 }
 
-export async function getMarketById(id: string) {
+export async function getMarketById(
+  id: string,
+  productsInStock: boolean = false
+) {
   try {
+    const query = productsInStock
+      ? {
+          where: {
+            stock: {
+              gt: 0,
+            },
+          },
+        }
+      : true;
+
     const market = await db.market.findUnique({
       where: {
         id,
       },
       include: {
-        products: true,
+        products: query,
       },
     });
 

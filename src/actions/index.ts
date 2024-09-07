@@ -1,6 +1,7 @@
 import { cart } from "./cart";
 import { markets } from "./markets";
 import { products } from "./products";
+import { invoices } from "./invoices";
 
 export const server = {
   // Mercados
@@ -9,4 +10,6 @@ export const server = {
   products,
   // Carrito de compras
   cart,
+  // Facturas
+  invoices,
 };

@@ -15,7 +15,7 @@ const { productId, quantity } = Astro.props;
     <input type="text" name="productId" value={productId} hidden />
     <input type="text" name="action" value="DECR" hidden />
     <button class:list={["primary_button", "centered_button"]}>
-      <Icon name="mdi:minus" size={20} />
+      <Icon name="mdi:minus" size={25} />
     </button>
   </form>
   <span>{quantity}</span>
@@ -23,7 +23,7 @@ const { productId, quantity } = Astro.props;
     <input type="text" name="productId" value={productId} hidden />
     <input type="text" name="action" value="INCR" hidden />
     <button class:list={["primary_button", "centered_button"]}>
-      <Icon name="mdi:plus" size={20} />
+      <Icon name="mdi:plus" size={25} />
     </button>
   </form>
 </div>
