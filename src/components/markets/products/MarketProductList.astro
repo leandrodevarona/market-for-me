@@ -1,6 +1,7 @@
 ---
 import { type Product } from "@prisma/client";
 import ProductCard from "./ProductCard.astro";
+import AddProductToCart from "../cart/forms/AddProductToCart.astro";
 
 interface Props {
   products: Product[];
@@ -12,5 +13,22 @@ const { products } = Astro.props;
 {(!products || products.length <= 0) && <div>No products</div>}
 
 <ul>
-  {products.map((product) => <ProductCard product={product} />)}
+  {
+    products.map((product) => (
+      <ProductCard product={product}>
+        <div class="product_card__actions">
+          <AddProductToCart productId={product.id} />
+        </div>
+      </ProductCard>
+    ))
+  }
 </ul>
+
+<style>
+  .product_card__actions {
+    margin-left: auto;
+
+    display: flex;
+    align-items: flex-end;
+  }
+</style>

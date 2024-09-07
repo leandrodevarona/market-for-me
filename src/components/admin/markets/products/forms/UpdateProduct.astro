@@ -61,12 +61,25 @@ const { product } = Astro.props;
         />
       </label>
       {inputErrors.price && <p class="error">{inputErrors.price.join(",")}</p>}
-      <Currencies value={product.currency} />
-      {
-        inputErrors.currency && (
-          <p class="error">{inputErrors.currency.join(",")}</p>
-        )
-      }
+      <div class="update_product__currencyAndStock">
+        <Currencies value={product.currency} />
+        {
+          inputErrors.currency && (
+            <p class="error">{inputErrors.currency.join(",")}</p>
+          )
+        }
+        <label>
+          Stock
+          <input
+            class=""
+            type="number"
+            name="stock"
+            min={0}
+            value={product.stock}
+            required
+          />
+        </label>
+      </div>
     </section>
     <section>
       <label>
@@ -152,5 +165,15 @@ const { product } = Astro.props;
     padding: 0.5rem;
 
     font-size: medium;
+  }
+
+  .update_product__currencyAndStock {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .update_product__currencyAndStock input {
+    max-width: 65px;
   }
 </style>

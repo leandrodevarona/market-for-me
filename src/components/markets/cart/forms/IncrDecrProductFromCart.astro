@@ -1,0 +1,38 @@
+---
+import { Icon } from "astro-icon/components";
+import { actions } from "astro:actions";
+
+interface Props {
+  productId: string;
+  quantity: number;
+}
+
+const { productId, quantity } = Astro.props;
+---
+
+<div class="incr_decr__product">
+  <form method="POST" action={actions.cart.incrDecrProductFromCart}>
+    <input type="text" name="productId" value={productId} hidden />
+    <input type="text" name="action" value="DECR" hidden />
+    <button class:list={["primary_button", "centered_button"]}>
+      <Icon name="mdi:minus" size={20} />
+    </button>
+  </form>
+  <span>{quantity}</span>
+  <form method="POST" action={actions.cart.incrDecrProductFromCart}>
+    <input type="text" name="productId" value={productId} hidden />
+    <input type="text" name="action" value="INCR" hidden />
+    <button class:list={["primary_button", "centered_button"]}>
+      <Icon name="mdi:plus" size={20} />
+    </button>
+  </form>
+</div>
+
+<style>
+  .incr_decr__product {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.2rem;
+  }
+</style>

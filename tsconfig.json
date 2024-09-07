@@ -8,7 +8,8 @@
       "@data/*": ["src/lib/data/*"],
       "@auth-astro/*": ["src/lib/auth-astro/*"],
       "@utils/*": ["src/lib/utils/*"],
-      "@build/*": ["src/lib/build/*"]
+      "@build/*": ["src/lib/build/*"],
+      "@customTypes/*": ["src/lib/customTypes/*"]
     }
   }
 }

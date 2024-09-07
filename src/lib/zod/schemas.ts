@@ -25,6 +25,7 @@ export const updateProductSchema = z.object({
   name: z.string({ required_error: "The name is required" }).max(150),
   price: z.number({ required_error: "The price is required" }).min(0),
   currency: z.nativeEnum(Currency).default(Currency.USD),
+  stock: z.number().min(0),
   description: z.string().max(1000).optional(),
   images: z.array(z.instanceof(File).optional()),
 });
