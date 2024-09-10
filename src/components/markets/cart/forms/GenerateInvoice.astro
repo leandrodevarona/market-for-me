@@ -11,6 +11,7 @@ const { disabled } = Astro.props;
 
 <form id="generate_invoice" class="generate_invoice">
   <button
+    id="generate_invoice__button"
     type="submit"
     class:list={[
       "generate_invoice__button",
@@ -20,7 +21,7 @@ const { disabled } = Astro.props;
     disabled={disabled}
   >
     <Icon name="mdi:wallet-bifold" size={25} />
-    <span>Generar factura</span>
+    <span class="loader">Generar factura</span>
   </button>
   <Currencies title="Moneda con la que desea pagar" />
   <p>
@@ -59,15 +60,19 @@ const { disabled } = Astro.props;
   import { actions } from "astro:actions";
   import { navigate } from "astro:transitions/client";
   import easyinvoice from "easyinvoice";
+  import { showLoaderOnContainer } from "@utils/utils";
 
   const form = document.getElementById("generate_invoice") as HTMLFormElement;
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = new FormData(form);
+    const loaderSpan = showLoaderOnContainer("generate_invoice__button");
     const { data, error } = await actions.invoices.generateInvoice(formData);
     if (data) {
       easyinvoice.download("myInvoice.pdf", data);
     }
+
+    if (loaderSpan) loaderSpan.innerHTML = "Generar factura";
 
     if (!error) navigate(`${Routes.cart}?${CART_CONFIRMATION_KEY}=true`);
   });

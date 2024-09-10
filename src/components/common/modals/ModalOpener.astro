@@ -7,9 +7,7 @@ interface Props {
 const { menuId, open: openMenu } = Astro.props;
 ---
 
-<div hidden></div>
-
-<script define:vars={{ menuId, openMenu }}>
+<script is:inline define:vars={{ menuId, openMenu }}>
   if (menuId) {
     const dialog = document.getElementById(menuId);
     if (dialog) {
