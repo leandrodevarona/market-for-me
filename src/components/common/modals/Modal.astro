@@ -1,26 +1,25 @@
 ---
 import { Icon } from "astro-icon/components";
+import ModalOpener from "./ModalOpener.astro";
+import CloseModal from "./buttons/CloseModal.astro";
 
 interface Props {
   id: string;
   class?: string;
   style?: string;
+  open?: boolean;
   title?: string;
   backHref?: string;
 }
 
-const { id, class: className, style, title } = Astro.props;
+const { id, class: className, style, open, title, backHref } = Astro.props;
 ---
 
 <dialog id={id} class={className} style={style}>
+  <ModalOpener menuId={id} open={open || false} />
   <form class="modal_close" method="dialog">
     <span>{title}</span>
-    <button
-      class:list={["close_modal", "primary_button", "centered_button"]}
-      type="submit"
-    >
-      <Icon name="mdi:close" size={20} />
-    </button>
+    <CloseModal backHref={backHref} />
   </form>
   <div class="modal_content">
     <slot />
@@ -37,9 +36,5 @@ const { id, class: className, style, title } = Astro.props;
     gap: 1rem;
 
     margin-bottom: 1rem;
-  }
-
-  .close_modal {
-    padding: 0.2rem;
   }
 </style>

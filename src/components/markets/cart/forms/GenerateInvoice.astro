@@ -23,6 +23,10 @@ const { disabled } = Astro.props;
     <span>Generar factura</span>
   </button>
   <Currencies title="Moneda con la que desea pagar" />
+  <p>
+    <Icon name="mdi:lightbulb-question" size={25} color="yellow" />
+    Se hará el cambio a esta moneda según la tasa de cambio actual.
+  </p>
 </form>
 
 <style>
@@ -50,16 +54,21 @@ const { disabled } = Astro.props;
 </style>
 
 <script>
+  import { CART_CONFIRMATION_KEY } from "@utils/constants/cart";
+  import { Routes } from "@utils/routes";
   import { actions } from "astro:actions";
+  import { navigate } from "astro:transitions/client";
   import easyinvoice from "easyinvoice";
 
   const form = document.getElementById("generate_invoice") as HTMLFormElement;
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = new FormData(form);
-    const { data } = await actions.invoices.generateInvoice(formData);
+    const { data, error } = await actions.invoices.generateInvoice(formData);
     if (data) {
       easyinvoice.download("myInvoice.pdf", data);
     }
+
+    if (!error) navigate(`${Routes.cart}?${CART_CONFIRMATION_KEY}=true`);
   });
 </script>

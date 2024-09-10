@@ -2,14 +2,20 @@
 import CartListItems from "@components/markets/cart/CartListItems.astro";
 import CartResume from "@components/markets/cart/CartResume.astro";
 import GenerateInvoice from "@components/markets/cart/forms/GenerateInvoice.astro";
+import BuyConfirmationModal from "@components/markets/cart/modals/BuyConfirmationModal.astro";
 import { getCartItems, getCartSubtotal } from "@data/cart";
 import Layout from "@layouts/Layout.astro";
+import { CART_CONFIRMATION_KEY } from "@utils/constants/cart";
 
 const cartItems = await getCartItems(Astro);
 
 const subtotalByCurrency = await getCartSubtotal(Astro);
 
 const itemsCount = cartItems?.length || 0;
+
+const params = Astro.url.searchParams;
+
+const confirmation = Boolean(params.get(CART_CONFIRMATION_KEY));
 ---
 
 <Layout title="Mi carro de compras">
@@ -27,48 +33,50 @@ const itemsCount = cartItems?.length || 0;
       <h3 class="cart_items__title">Productos</h3>
       <CartListItems cartItems={cartItems} />
     </section>
+    <BuyConfirmationModal open={confirmation} />
   </main>
-
-  <style>
-    .cart {
-      max-width: 900px;
-      width: 100%;
-
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-
-      margin: 0 auto;
-      padding-inline: 1rem;
-      padding-top: 3rem;
-      padding-bottom: 10rem;
-    }
-
-    .cart_actions {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .cart_actions p {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .cart_items {
-      background-color: rgb(var(--callout-rgb));
-      padding: 1rem;
-      border-radius: var(--border-radius);
-    }
-
-    .cart_items__title {
-      padding-bottom: 1rem;
-
-      font-size: larger;
-      font-weight: 500;
-    }
-  </style>
 </Layout>
+
+<style>
+  .cart {
+    max-width: 900px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    margin: 0 auto;
+    padding-inline: 1rem;
+    padding-top: 3rem;
+    padding-bottom: 10rem;
+  }
+
+  .cart_actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .cart_actions p {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .cart_items {
+    background-color: rgb(var(--callout-rgb));
+    padding: 1rem;
+    border-radius: var(--border-radius);
+  }
+
+  .cart_items__title {
+    padding-bottom: 1rem;
+
+    font-size: larger;
+    font-weight: 500;
+  }
+</style>
+f
