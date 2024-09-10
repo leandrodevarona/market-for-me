@@ -79,6 +79,8 @@ model Market {
 
   contact Contact?
 
+  exchangeRates ExchangeRates
+
   user   User   @relation(fields: [userId], references: [id])
   userId String @db.ObjectId
 
@@ -90,6 +92,18 @@ type Contact {
   address String?
   phone1  String?
   phone2  String?
+}
+
+type ExchangeRateCurrency {
+  value        Float
+  editedByUser Boolean @default(false)
+}
+
+type ExchangeRates {
+  USD ExchangeRateCurrency
+  EUR ExchangeRateCurrency
+  MLC ExchangeRateCurrency
+  CUP ExchangeRateCurrency
 }
 
 model Product {
@@ -113,6 +127,7 @@ model Product {
 enum Currency {
   USD
   EUR
+  MLC
   CUP
 }
 

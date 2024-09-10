@@ -1,0 +1,61 @@
+---
+import UpdateMarket from "@components/admin/markets/forms/UpdateMarket.astro";
+import MarketLink from "@components/admin/markets/links/MarketLink.astro";
+import AdminLayout from "@layouts/AdminLayout.astro";
+import { getMarketById } from "@data/markets";
+import MarketProductList from "@components/admin/markets/products/MarketProductList.astro";
+import CreateProduct from "@components/admin/markets/products/forms/CreateProduct.astro";
+
+const { marketId } = Astro.params;
+
+if (!marketId) return;
+
+const market = await getMarketById(marketId);
+
+if (!market) return;
+---
+
+<AdminLayout>
+  <main class="update_market">
+    <section class="update_market__buttons">
+      <MarketLink />
+    </section>
+    <section class="update_market__content">
+      <UpdateMarket market={market} />
+      <div class="update_market__products">
+        <CreateProduct marketId={market.id} />
+        <MarketProductList products={market.products} />
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .update_market {
+      padding: 2rem;
+    }
+
+    .update_market__buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .update_market__content {
+      display: grid;
+      grid-template-columns: 0.4fr 1fr;
+      gap: 4rem;
+    }
+
+    .update_market__products {
+      max-height: 60vh;
+
+      margin-top: 3rem;
+
+      overflow-y: auto;
+
+      -ms-overflow-style: thin; /* IE and Edge */
+      scrollbar-width: thin; /* Firefox */
+    }
+  </style>
+</AdminLayout>

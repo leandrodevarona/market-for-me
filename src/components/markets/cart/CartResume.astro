@@ -1,5 +1,6 @@
 ---
 import type { SubtotalByCurrency } from "@customTypes/cart";
+import { Currency } from "@prisma/client";
 
 interface Props {
   itemsCount: number;
@@ -15,9 +16,11 @@ const { itemsCount, subtotalByCurrency } = Astro.props;
     {itemsCount > 1 ? "productos" : "producto"})
   </span>
   <div class="cart_resume__subtotal">
-    <span>{subtotalByCurrency.USD}</span>
-    <span>{subtotalByCurrency.EUR}</span>
-    <span>{subtotalByCurrency.CUP}</span>
+    {
+      Object.values(Currency).map((currency) => (
+        <span>{subtotalByCurrency[currency]}</span>
+      ))
+    }
   </div>
 </div>
 

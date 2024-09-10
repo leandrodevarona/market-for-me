@@ -53,3 +53,20 @@ export async function getMarketById(
     return null;
   }
 }
+
+export async function getMarketByProductId(productId: string) {
+  try {
+    const product = await db.product.findUnique({
+      select: {
+        market: true,
+      },
+      where: {
+        id: productId,
+      },
+    });
+
+    return product?.market;
+  } catch (error) {
+    return null;
+  }
+}
