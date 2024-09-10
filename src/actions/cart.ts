@@ -200,4 +200,33 @@ export const cart = {
       }
     },
   }),
+  completeBuy: defineAction({
+    accept: "form",
+    handler: async (_, context) => {
+      try {
+        const currCart = await getUserCart(context);
+
+        const cartItemsToDelete =
+          currCart?.cartItems.map((item) => item.id) || [];
+
+        await db.cartItem.deleteMany({
+          where: {
+            id: {
+              in: cartItemsToDelete,
+            },
+          },
+        });
+
+        await db.cart.delete({
+          where: {
+            id: currCart?.id,
+          },
+        });
+
+        context.cookies.delete(CART_COOKIES_KEY);
+      } catch (error) {
+        console.error("Hubo un error al terminar una compra. ", error);
+      }
+    },
+  }),
 };

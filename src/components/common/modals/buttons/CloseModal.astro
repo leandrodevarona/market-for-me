@@ -1,0 +1,36 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  backHref?: string;
+}
+
+const { backHref } = Astro.props;
+---
+
+{
+  backHref ? (
+    <a
+      id="close_modal"
+      class:list={["close_modal", "primary_button", "centered_button"]}
+      role="button"
+      href={backHref}
+    >
+      <Icon name="mdi:close" size={20} />
+    </a>
+  ) : (
+    <button
+      id="close_modal"
+      class:list={["close_modal", "primary_button", "centered_button"]}
+      type="submit"
+    >
+      <Icon name="mdi:close" size={20} />
+    </button>
+  )
+}
+
+<style>
+  .close_modal {
+    padding: 0.2rem;
+  }
+</style>

@@ -1,0 +1,23 @@
+---
+interface Props {
+  menuId: string;
+  open: boolean;
+}
+
+const { menuId, open: openMenu } = Astro.props;
+---
+
+<script is:inline define:vars={{ menuId, openMenu }}>
+  if (menuId) {
+    const dialog = document.getElementById(menuId);
+    if (dialog) {
+      if (openMenu) {
+        dialog.showModal();
+      } else {
+        dialog.close();
+      }
+
+      return () => dialog.close();
+    }
+  }
+</script>
