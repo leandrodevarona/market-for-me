@@ -4,10 +4,14 @@ import CartResume from "@components/markets/cart/CartResume.astro";
 import GenerateInvoice from "@components/markets/cart/forms/GenerateInvoice.astro";
 import BuyConfirmationModal from "@components/markets/cart/modals/BuyConfirmationModal.astro";
 import { getCartItems, getCartSubtotal } from "@data/cart";
+import { getMarketByProductId } from "@data/markets";
 import Layout from "@layouts/Layout.astro";
 import { CART_CONFIRMATION_KEY } from "@utils/constants/cart";
+import { Routes } from "@utils/routes";
 
 const cartItems = await getCartItems(Astro);
+
+if (!cartItems || cartItems.length <= 0) return Astro.redirect(Routes.home);
 
 const subtotalByCurrency = await getCartSubtotal(Astro);
 
@@ -16,6 +20,12 @@ const itemsCount = cartItems?.length || 0;
 const params = Astro.url.searchParams;
 
 const confirmation = Boolean(params.get(CART_CONFIRMATION_KEY));
+
+const productId = cartItems[0].productId;
+
+const market = await getMarketByProductId(productId);
+
+if (!market || !market.contact) return Astro.redirect(Routes.home);
 ---
 
 <Layout title="Mi carro de compras">
@@ -33,7 +43,10 @@ const confirmation = Boolean(params.get(CART_CONFIRMATION_KEY));
       <h3 class="cart_items__title">Productos</h3>
       <CartListItems cartItems={cartItems} />
     </section>
-    <BuyConfirmationModal open={confirmation} />
+    <BuyConfirmationModal
+      open={confirmation}
+      marketPhone={market.contact.phone1}
+    />
   </main>
 </Layout>
 

@@ -77,7 +77,7 @@ model Market {
   description String?
   imageUrl    String?
 
-  contact Contact?
+  contact Contact
 
   exchangeRates ExchangeRates
 
@@ -90,7 +90,7 @@ model Market {
 // Address is an embedded document
 type Contact {
   address String?
-  phone1  String?
+  phone1  String
   phone2  String?
 }
 

@@ -8,7 +8,7 @@ const { marketId } = Astro.params;
 
 if (!marketId) return;
 
-const market = await getMarketById(marketId);
+const market = await getMarketById(marketId, true);
 
 if (!market) return;
 

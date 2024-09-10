@@ -1,6 +1,7 @@
 ---
 import { actions, isInputError } from "astro:actions";
 import type { Market } from "@prisma/client";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   market?: Market;
@@ -44,7 +45,7 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
     {inputErrors.name && <p class="error">{inputErrors.name.join(",")}</p>}
     <label>
       Descripción
-      <textarea class="primary_text__input" name="description" maxlength={100}>
+      <textarea class="primary_text__input" name="description" maxlength={250}>
         {market?.description}
       </textarea>
     </label>
@@ -82,13 +83,14 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
       )
     }
     <label>
-      Teléfono 1
+      Teléfono móvil
       <input
         class="primary_text__input"
         type="tel"
         name="phone1"
         maxlength={20}
         value={contact?.phone1}
+        required
       />
     </label>
     {inputErrors.phone1 && <p class="error">{inputErrors.phone1.join(",")}</p>}
@@ -104,6 +106,10 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
     </label>
     {inputErrors.phone2 && <p class="error">{inputErrors.phone2.join(",")}</p>}
   </section>
+  <button class:list={["primary_button", "centered_button"]} type="submit">
+    <span>Publicar mercado</span>
+    <Icon name="mdi:publish" size={20} />
+  </button>
 </form>
 
 <style>
@@ -129,8 +135,13 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
   }
 
   .generic_form__market button {
-    padding: 0.5rem;
     margin: 0 auto;
-    font-size: medium;
+
+    padding: 0.5rem;
+
+    gap: 0.5rem;
+
+    font-size: large;
+    font-style: normal;
   }
 </style>

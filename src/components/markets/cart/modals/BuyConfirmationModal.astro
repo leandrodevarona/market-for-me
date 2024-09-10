@@ -6,9 +6,10 @@ import { actions } from "astro:actions";
 
 interface Props {
   open: boolean;
+  marketPhone: string;
 }
 
-const { open } = Astro.props;
+const { open, marketPhone } = Astro.props;
 ---
 
 <Modal
@@ -29,7 +30,7 @@ const { open } = Astro.props;
       >
       la factura descargada a este número:
     </p>
-    <span class="buy_confirmation__phone">+53 59757731</span>
+    <span class="buy_confirmation__phone">{marketPhone}</span>
     <button class:list={["buy_confirmation__button", "primary_button"]}>
       Terminar compra
     </button>
