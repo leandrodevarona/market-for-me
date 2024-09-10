@@ -4,6 +4,7 @@ import CartResume from "@components/markets/cart/CartResume.astro";
 import GenerateInvoice from "@components/markets/cart/forms/GenerateInvoice.astro";
 import { getCartItems, getCartSubtotal } from "@data/cart";
 import Layout from "@layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
 
 const cartItems = await getCartItems(Astro);
 

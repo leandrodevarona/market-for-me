@@ -14,7 +14,6 @@
     "@astrojs/netlify": "^5.5.1",
     "@auth/core": "^0.32.0",
     "@auth/prisma-adapter": "^2.4.2",
-    "@cloudinary/url-gen": "^1.20.0",
     "@fontsource-variable/montserrat": "^5.0.19",
     "@iconify-json/mdi": "^1.1.68",
     "@prisma/client": "^5.19.1",
