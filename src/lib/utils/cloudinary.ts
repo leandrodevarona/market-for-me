@@ -14,8 +14,9 @@ export async function upload(
   tag?: string,
   resource_type: ResourceType = "image",
   format?: string
-): Promise<string | null> {
+): Promise<{ fileUrl: string | null; publicId: string | null } | null> {
   let fileUrl = null;
+  let publicId = null;
   try {
     if (file && !!file.size) {
       const arrayBuffer = await file.arrayBuffer();
@@ -34,6 +35,7 @@ export async function upload(
                 return;
               }
               fileUrl = result?.secure_url;
+              publicId = result?.public_id;
 
               resolve(result);
             }
@@ -45,23 +47,25 @@ export async function upload(
     console.error("Hubo un error al subir el archivo.", error);
     return null;
   }
-  return fileUrl;
+
+  return { fileUrl, publicId };
 }
 
 export async function uploadMarketImage(image: File) {
-  return upload(image, "market_images");
+  let result = await upload(image, "market_images");
+  return result?.fileUrl;
 }
 
 export async function uploadProductImage(image: File) {
-  let fileUrl = await upload(image, "product_images");
+  let result = await upload(image, "product_images");
 
-  if (fileUrl) {
-    fileUrl = cloudinary.url(fileUrl, {
+  if (result?.fileUrl) {
+    result.fileUrl = cloudinary.url(result.fileUrl, {
       fetch_format: "auto",
       quality: "auto",
     });
 
-    fileUrl = cloudinary.url(fileUrl, {
+    result.fileUrl = cloudinary.url(result?.fileUrl, {
       crop: "auto",
       gravity: "auto",
       width: 500,
@@ -69,11 +73,12 @@ export async function uploadProductImage(image: File) {
     });
   }
 
-  return fileUrl;
+  return result?.fileUrl;
 }
 
 export async function uploadClientInvoice(pdfFile: File) {
-  return upload(pdfFile, "client_invoices", "raw", "pdf");
+  const result = await upload(pdfFile, "client_invoices", "raw", "pdf");
+  return result?.publicId;
 }
 
 export async function deleteImage(imageUrl?: string | null) {

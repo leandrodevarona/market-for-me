@@ -1,0 +1,42 @@
+---
+import type { CartItemWithProduct } from "@customTypes/cart";
+import CartItem from "./CartItem.astro";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  cartItems: CartItemWithProduct[] | null | undefined;
+}
+
+const { cartItems } = Astro.props;
+---
+
+{
+  cartItems && cartItems.length > 0 ? (
+    <ul>
+      {cartItems.map((carItem) => (
+        <CartItem cartItem={carItem} />
+      ))}
+    </ul>
+  ) : (
+    <div class="cart_modal__noItems">
+      <Icon name="mdi:cart-off" size={100} />
+      <p>No posees productos en el carro de compras.</p>
+    </div>
+  )
+}
+
+<style>
+  .cart_modal__noItems {
+    min-height: 70vh;
+
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+  }
+</style>

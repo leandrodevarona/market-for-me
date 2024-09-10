@@ -1,6 +1,5 @@
 import { getUserCart } from "@data/cart";
-import { uploadClientInvoice } from "@utils/cloudinary";
-import { ActionError, defineAction } from "astro:actions";
+import { defineAction } from "astro:actions";
 
 import easyinvoice, {
   type InvoiceData,
@@ -8,7 +7,7 @@ import easyinvoice, {
 } from "easyinvoice";
 
 export const invoices = {
-  createAndSendInvoice: defineAction({
+  generateInvoice: defineAction({
     accept: "form",
     handler: async (_, context) => {
       try {
@@ -24,31 +23,16 @@ export const invoices = {
 
           const data: InvoiceData = {
             apiKey: import.meta.env.INVOICES_API_KEY,
-            mode: "development",
+            mode: import.meta.env.INVOICES_MODE,
             products,
           };
 
           const invoice = await easyinvoice.createInvoice(data);
 
-          const binaryString = Buffer.from(invoice.pdf, "base64");
-
-          // Paso 2: Crear un Blob con los datos binarios
-          const blob = new Blob([binaryString], { type: "application/pdf" });
-
-          // Paso 3: Convertir el Blob en un objeto File
-          const pdfFile = new File([blob], "invoice.pdf", {
-            type: "application/pdf",
-          });
-
-          const pdfUrl = await uploadClientInvoice(pdfFile);
-
-          return pdfUrl;
+          return invoice.pdf;
         }
       } catch (error) {
-        throw new ActionError({
-          code: "NOT_FOUND",
-          message: String(error),
-        });
+        console.error("Hubo un error al terminar una compra. ", error);
       }
     },
   }),

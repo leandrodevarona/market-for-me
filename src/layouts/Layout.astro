@@ -26,7 +26,7 @@ const { title, description = "Astro description", header = true } = Astro.props;
   <body>
     {header && <Header />}
     <slot />
-    <CartModal server:defer />
+    <CartModal />
   </body>
 </html>
 <style is:global>
@@ -149,6 +149,10 @@ const { title, description = "Astro description", header = true } = Astro.props;
 
     user-select: none;
     cursor: pointer;
+  }
+
+  .primary_button:disabled {
+    cursor: no-drop;
   }
 
   .centered_button {

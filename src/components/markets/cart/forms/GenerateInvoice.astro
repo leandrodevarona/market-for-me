@@ -1,0 +1,53 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  disabled?: boolean;
+}
+
+const { disabled } = Astro.props;
+---
+
+<form id="generate_invoice">
+  <button
+    type="submit"
+    class:list={["generate_invoice", "primary_button", "centered_button"]}
+    disabled={disabled}
+  >
+    <Icon name="mdi:wallet-bifold" size={25} />
+    <span>Generar factura</span>
+  </button>
+</form>
+
+<style>
+  .generate_invoice {
+    gap: 0.5rem;
+
+    padding: 0.6rem;
+
+    font-size: larger;
+
+    background-color: #ffd54c;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .generate_invoice {
+      background-color: #5a4605;
+    }
+  }
+</style>
+
+<script>
+  import { actions } from "astro:actions";
+  import easyinvoice from "easyinvoice";
+
+  const form = document.getElementById("generate_invoice") as HTMLFormElement;
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const { data } = await actions.invoices.generateInvoice(formData);
+    if (data) {
+      easyinvoice.download("myInvoice.pdf", data);
+    }
+  });
+</script>
