@@ -1,12 +1,12 @@
 import { c as createComponent, r as renderTemplate, m as maybeRenderHead, a as renderComponent, b as createAstro, d as addAttribute } from '../../../chunks/astro/server_DgnCfmSJ.mjs';
 import 'kleur/colors';
-import { $ as $$GenericFormMarket, a as $$PublishMarket } from '../../../chunks/PublishMarket_Dx09NybO.mjs';
+import { $ as $$GenericFormMarket, a as $$PublishMarket } from '../../../chunks/PublishMarket_BxS2S2nT.mjs';
 /* empty css                                            */
 import { $ as $$Icon } from '../../../chunks/Icon_Ch9NK6yf.mjs';
 import { R as Routes } from '../../../chunks/routes_DG_8Jzi8.mjs';
-import { $ as $$AdminLayout } from '../../../chunks/AdminLayout_CxSOFlco.mjs';
+import { $ as $$AdminLayout } from '../../../chunks/AdminLayout_DiFKTT-7.mjs';
 import { g as getMarketById } from '../../../chunks/markets_e5lH11HN.mjs';
-import { a as actions } from '../../../chunks/_astro_actions_eApNQ-9a.mjs';
+import { a as actions } from '../../../chunks/_astro_actions_RIKXTNdc.mjs';
 import 'clsx';
 import { $ as $$Currencies } from '../../../chunks/Currencies_Df8hR4o3.mjs';
 import { i as isInputError } from '../../../chunks/shared_DsA9hi-M.mjs';

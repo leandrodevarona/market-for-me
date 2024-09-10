@@ -1,0 +1,95 @@
+---
+import Modal from "@components/common/modals/Modal.astro";
+import { Routes } from "@utils/routes";
+import { Icon } from "astro-icon/components";
+import { actions } from "astro:actions";
+
+interface Props {
+  open: boolean;
+}
+
+const { open } = Astro.props;
+---
+
+<Modal
+  id="buy_confirmation"
+  class="buy_confirmation"
+  open={open}
+  backHref={Routes.cart}
+>
+  <form
+    class="buy_confirmation__content"
+    method="POST"
+    action={Routes.home + actions.cart.completeBuy}
+  >
+    <Icon name="mdi:basket-check" size={100} color="green" />
+    <h3>¿Desea terminar su compra?</h3>
+    <p>
+      Si desea terminar su compra usted debe enviar por <strong>Whatsapp</strong
+      >
+      la factura descargada a este número:
+    </p>
+    <span class="buy_confirmation__phone">+53 59757731</span>
+    <button class:list={["buy_confirmation__button", "primary_button"]}>
+      Terminar compra
+    </button>
+  </form>
+</Modal>
+
+<style>
+  .buy_confirmation {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border: none;
+    border-radius: var(--border-radius);
+
+    padding: 1rem;
+  }
+
+  .buy_confirmation::backdrop {
+    backdrop-filter: blur(3px);
+  }
+
+  .buy_confirmation__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 3rem;
+    padding-top: 1rem;
+
+    text-align: center;
+  }
+
+  .buy_confirmation__phone {
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .buy_confirmation__button {
+    padding: 0.5rem;
+
+    margin-top: 2rem;
+
+    font-size: 30px;
+  }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .buy_confirmation {
+      width: 90%;
+    }
+
+    .buy_confirmation__content {
+      padding: 0.5rem;
+      padding-bottom: 1rem;
+    }
+
+    .buy_confirmation__button {
+      margin-top: 1rem;
+    }
+  }
+</style>

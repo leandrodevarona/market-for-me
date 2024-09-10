@@ -4,8 +4,8 @@ import '@astrojs/internal-helpers/path';
 import { $ as $$Image } from '../../chunks/_astro_assets_B7JGV4pR.mjs';
 /* empty css                                         */
 import 'clsx';
-import { c as $$ProductCard, $ as $$Layout } from '../../chunks/Layout_CaeOUkBe.mjs';
-import { $ as $$AddProductToCart } from '../../chunks/AddProductToCart_CzocyhtH.mjs';
+import { d as $$ProductCard, $ as $$Layout } from '../../chunks/Layout_B-0hZEPU.mjs';
+import { $ as $$AddProductToCart } from '../../chunks/AddProductToCart_C9Z35vp6.mjs';
 import { g as getMarketById } from '../../chunks/markets_e5lH11HN.mjs';
 export { renderers } from '../../renderers.mjs';
 

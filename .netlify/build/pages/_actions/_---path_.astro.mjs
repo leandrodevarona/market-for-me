@@ -1,5 +1,5 @@
 import { h as hasContentType, f as formContentTypes } from '../../chunks/utils_DjK6_1cM.mjs';
-import { getAction } from '../../chunks/get-action_DrBIYLD3.mjs';
+import { getAction } from '../../chunks/get-action_G7kngg67.mjs';
 import { s as serializeActionResult } from '../../chunks/shared_DsA9hi-M.mjs';
 export { renderers } from '../../renderers.mjs';
 

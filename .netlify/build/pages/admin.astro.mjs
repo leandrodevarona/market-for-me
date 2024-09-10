@@ -1,6 +1,6 @@
 import { c as createComponent, r as renderTemplate, a as renderComponent, m as maybeRenderHead } from '../chunks/astro/server_DgnCfmSJ.mjs';
 import 'kleur/colors';
-import { $ as $$AdminLayout } from '../chunks/AdminLayout_CxSOFlco.mjs';
+import { $ as $$AdminLayout } from '../chunks/AdminLayout_DiFKTT-7.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Index = createComponent(($$result, $$props, $$slots) => {

@@ -1,7 +1,7 @@
 import { c as createComponent, r as renderTemplate, f as defineScriptVars, e as renderSlot, d as addAttribute, m as maybeRenderHead, b as createAstro, a as renderComponent } from './astro/server_DgnCfmSJ.mjs';
 import 'kleur/colors';
 import 'clsx';
-import { g as getCartItems } from './cart_CeCDbuUy.mjs';
+import { g as getCartItems } from './cart_Ddh2ty3s.mjs';
 import { $ as $$Icon } from './Icon_Ch9NK6yf.mjs';
 /* empty css                         */
 

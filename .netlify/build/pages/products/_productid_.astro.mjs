@@ -1,11 +1,11 @@
 import { c as createComponent, r as renderTemplate, f as defineScriptVars, a as renderComponent, d as addAttribute, m as maybeRenderHead, b as createAstro } from '../../chunks/astro/server_DgnCfmSJ.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../../chunks/Layout_CaeOUkBe.mjs';
+import { $ as $$Layout } from '../../chunks/Layout_B-0hZEPU.mjs';
 import { d as db } from '../../chunks/server_DBUda-Za.mjs';
 import '@astrojs/internal-helpers/path';
 import { $ as $$Image } from '../../chunks/_astro_assets_B7JGV4pR.mjs';
 /* empty css                                          */
-import { $ as $$AddProductToCart } from '../../chunks/AddProductToCart_CzocyhtH.mjs';
+import { $ as $$AddProductToCart } from '../../chunks/AddProductToCart_C9Z35vp6.mjs';
 export { renderers } from '../../renderers.mjs';
 
 async function getProductById(id) {

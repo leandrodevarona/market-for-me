@@ -1,7 +1,7 @@
 import { c as createComponent, r as renderTemplate, m as maybeRenderHead, d as addAttribute, a as renderComponent, b as createAstro } from './astro/server_DgnCfmSJ.mjs';
 import 'kleur/colors';
 import { $ as $$Icon } from './Icon_Ch9NK6yf.mjs';
-import { a as actions } from './_astro_actions_eApNQ-9a.mjs';
+import { a as actions } from './_astro_actions_RIKXTNdc.mjs';
 /* empty css                              */
 
 const $$Astro = createAstro();

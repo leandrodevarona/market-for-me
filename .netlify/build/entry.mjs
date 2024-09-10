@@ -1,12 +1,12 @@
 import { renderers } from './renderers.mjs';
 import { s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_CvSoi7hX.mjs';
-import { manifest } from './manifest_B8IsF3DI.mjs';
+import { manifest } from './manifest_DiLllSYi.mjs';
 import { onRequest } from './_astro-internal_middleware.mjs';
 import { createExports } from '@astrojs/netlify/ssr-function.js';
 
 const serverIslandMap = new Map([
-	['GoogleSignin', () => import('./chunks/GoogleSignin_DaBp6Zlc.mjs')],
-	['Cart', () => import('./chunks/Cart_DCCrCLSu.mjs')],
+	['GoogleSignin', () => import('./chunks/GoogleSignin_eyOKCFtu.mjs')],
+	['Cart', () => import('./chunks/Cart_CCsZfjSr.mjs')],
 ]);;
 
 const _page0 = () => import('./pages/_actions/_---path_.astro.mjs');
@@ -42,7 +42,7 @@ const _manifest = Object.assign(manifest, {
     middleware: onRequest
 });
 const _args = {
-    "middlewareSecret": "d055836a-86b0-426c-b313-76d9d6bce99b"
+    "middlewareSecret": "74f9a1e2-0155-4c2d-aa03-87d3c52f020e"
 };
 const _exports = createExports(_manifest, _args);
 const __astrojsSsrVirtualEntry = _exports.default;

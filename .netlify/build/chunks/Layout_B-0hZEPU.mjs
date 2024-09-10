@@ -1,23 +1,43 @@
-import { c as createComponent, r as renderTemplate, m as maybeRenderHead, d as addAttribute, a as renderComponent, e as renderSlot, b as createAstro, g as defineStyleVars, h as renderHead } from './astro/server_DgnCfmSJ.mjs';
+import { c as createComponent, r as renderTemplate, f as defineScriptVars, b as createAstro, m as maybeRenderHead, d as addAttribute, a as renderComponent, e as renderSlot, g as defineStyleVars, h as renderHead } from './astro/server_DgnCfmSJ.mjs';
 import 'kleur/colors';
+import 'clsx';
 import { $ as $$Icon } from './Icon_Ch9NK6yf.mjs';
 /* empty css                         */
-import { g as getCartItems, a as getCartSubtotal } from './cart_CeCDbuUy.mjs';
-import 'clsx';
+import { g as getCartItems, a as getCartSubtotal } from './cart_Ddh2ty3s.mjs';
 import { R as Routes } from './routes_DG_8Jzi8.mjs';
 import '@astrojs/internal-helpers/path';
 import { $ as $$Image } from './_astro_assets_B7JGV4pR.mjs';
-import { a as actions } from './_astro_actions_eApNQ-9a.mjs';
+import { a as actions } from './_astro_actions_RIKXTNdc.mjs';
 import { Currency } from '@prisma/client';
-import $$GoogleSignin from './GoogleSignin_DaBp6Zlc.mjs';
-import $$Cart from './Cart_DCCrCLSu.mjs';
+import $$GoogleSignin from './GoogleSignin_eyOKCFtu.mjs';
+import $$Cart from './Cart_CCsZfjSr.mjs';
+
+var __freeze = Object.freeze;
+var __defProp = Object.defineProperty;
+var __template = (cooked, raw) => __freeze(__defProp(cooked, "raw", { value: __freeze(cooked.slice()) }));
+var _a;
+const $$Astro$e = createAstro();
+const $$ModalOpener = createComponent(($$result, $$props, $$slots) => {
+  const Astro2 = $$result.createAstro($$Astro$e, $$props, $$slots);
+  Astro2.self = $$ModalOpener;
+  const { menuId, open: openMenu } = Astro2.props;
+  return renderTemplate(_a || (_a = __template(["<script>(function(){", "\n  if (menuId) {\n    const dialog = document.getElementById(menuId);\n    if (dialog) {\n      if (openMenu) {\n        dialog.showModal();\n      } else {\n        dialog.close();\n      }\n\n      return () => dialog.close();\n    }\n  }\n})();<\/script>"])), defineScriptVars({ menuId, openMenu }));
+}, "C:/Users/leand/Proyectos/market-for-me/src/components/common/modals/ModalOpener.astro", void 0);
+
+const $$Astro$d = createAstro();
+const $$CloseModal = createComponent(($$result, $$props, $$slots) => {
+  const Astro2 = $$result.createAstro($$Astro$d, $$props, $$slots);
+  Astro2.self = $$CloseModal;
+  const { backHref } = Astro2.props;
+  return renderTemplate`${backHref ? renderTemplate`${maybeRenderHead()}<a id="close_modal"${addAttribute([["close_modal", "primary_button", "centered_button"], "astro-jqy3ju3j"], "class:list")} role="button"${addAttribute(backHref, "href")}>${renderComponent($$result, "Icon", $$Icon, { "name": "mdi:close", "size": 20, "class": "astro-jqy3ju3j" })}</a>` : renderTemplate`<button id="close_modal"${addAttribute([["close_modal", "primary_button", "centered_button"], "astro-jqy3ju3j"], "class:list")} type="submit">${renderComponent($$result, "Icon", $$Icon, { "name": "mdi:close", "size": 20, "class": "astro-jqy3ju3j" })}</button>`}`;
+}, "C:/Users/leand/Proyectos/market-for-me/src/components/common/modals/buttons/CloseModal.astro", void 0);
 
 const $$Astro$c = createAstro();
 const $$Modal = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro$c, $$props, $$slots);
   Astro2.self = $$Modal;
-  const { id, class: className, style, title } = Astro2.props;
-  return renderTemplate`${maybeRenderHead()}<dialog${addAttribute(id, "id")}${addAttribute((className ?? "") + " astro-4wnmn37f", "class")}${addAttribute(style, "style")}> <form class="modal_close astro-4wnmn37f" method="dialog"> <span class="astro-4wnmn37f">${title}</span> <button${addAttribute([["close_modal", "primary_button", "centered_button"], "astro-4wnmn37f"], "class:list")} type="submit"> ${renderComponent($$result, "Icon", $$Icon, { "name": "mdi:close", "size": 20, "class": "astro-4wnmn37f" })} </button> </form> <div class="modal_content astro-4wnmn37f"> ${renderSlot($$result, $$slots["default"])} </div> </dialog> `;
+  const { id, class: className, style, open, title, backHref } = Astro2.props;
+  return renderTemplate`${maybeRenderHead()}<dialog${addAttribute(id, "id")}${addAttribute((className ?? "") + " astro-4wnmn37f", "class")}${addAttribute(style, "style")}> ${renderComponent($$result, "ModalOpener", $$ModalOpener, { "menuId": id, "open": open || false, "class": "astro-4wnmn37f" })} <form class="modal_close astro-4wnmn37f" method="dialog"> <span class="astro-4wnmn37f">${title}</span> ${renderComponent($$result, "CloseModal", $$CloseModal, { "backHref": backHref, "class": "astro-4wnmn37f" })} </form> <div class="modal_content astro-4wnmn37f"> ${renderSlot($$result, $$slots["default"])} </div> </dialog> `;
 }, "C:/Users/leand/Proyectos/market-for-me/src/components/common/modals/Modal.astro", void 0);
 
 const $$Astro$b = createAstro();
@@ -130,4 +150,4 @@ const $$Layout = createComponent(($$result, $$props, $$slots) => {
   return renderTemplate`<html lang="en"> <head><meta charset="UTF-8"><meta name="description"${addAttribute(description, "content")}><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator"${addAttribute(Astro2.generator, "content")}><title>${title}</title>${renderHead()}</head> <body> ${header && renderTemplate`${renderComponent($$result, "Header", $$Header, {})}`} ${renderSlot($$result, $$slots["default"])} ${renderComponent($$result, "CartModal", $$CartModal, {})} </body></html>`;
 }, "C:/Users/leand/Proyectos/market-for-me/src/layouts/Layout.astro", void 0);
 
-export { $$Layout as $, $$CartResume as a, $$CartListItems as b, $$ProductCard as c };
+export { $$Layout as $, $$Modal as a, $$CartResume as b, $$CartListItems as c, $$ProductCard as d };

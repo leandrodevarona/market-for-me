@@ -1,7 +1,7 @@
 import { c as createComponent, r as renderTemplate, m as maybeRenderHead, a as renderComponent } from '../../../chunks/astro/server_DgnCfmSJ.mjs';
 import 'kleur/colors';
-import { $ as $$AdminLayout } from '../../../chunks/AdminLayout_CxSOFlco.mjs';
-import { $ as $$GenericFormMarket, a as $$PublishMarket } from '../../../chunks/PublishMarket_Dx09NybO.mjs';
+import { $ as $$AdminLayout } from '../../../chunks/AdminLayout_DiFKTT-7.mjs';
+import { $ as $$GenericFormMarket, a as $$PublishMarket } from '../../../chunks/PublishMarket_BxS2S2nT.mjs';
 /* empty css                                       */
 import { $ as $$Icon } from '../../../chunks/Icon_Ch9NK6yf.mjs';
 export { renderers } from '../../../renderers.mjs';

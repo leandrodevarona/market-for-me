@@ -1,8 +1,8 @@
-import './_astro_actions_eApNQ-9a.mjs';
+import './_astro_actions_RIKXTNdc.mjs';
 import * as z from 'zod';
 import { z as z$1 } from 'zod';
 import { d as db } from './server_DBUda-Za.mjs';
-import { b as getUserCartOrCreate, C as CART_COOKIES_KEY, d as getUserCart, c as currentUser } from './cart_CeCDbuUy.mjs';
+import { b as getUserCartOrCreate, d as CART_COOKIES_KEY, e as getUserCart, c as currentUser } from './cart_Ddh2ty3s.mjs';
 import { A as AstroError, p as ActionCalledFromServerError } from './astro/assets-service_DUhi21d6.mjs';
 import { c as callSafely, a as ActionError, b as ActionInputError } from './shared_DsA9hi-M.mjs';
 import { Currency } from '@prisma/client';
@@ -293,6 +293,30 @@ const cart = {
           "Ocurrió un error al incrementar/decrementar la cantidad de un producto en un carrito. ",
           error
         );
+      }
+    }
+  }),
+  completeBuy: defineAction({
+    accept: "form",
+    handler: async (_, context) => {
+      try {
+        const currCart = await getUserCart(context);
+        const cartItemsToDelete = currCart?.cartItems.map((item) => item.id) || [];
+        await db.cartItem.deleteMany({
+          where: {
+            id: {
+              in: cartItemsToDelete
+            }
+          }
+        });
+        await db.cart.delete({
+          where: {
+            id: currCart?.id
+          }
+        });
+        context.cookies.delete(CART_COOKIES_KEY);
+      } catch (error) {
+        console.error("Hubo un error al terminar una compra. ", error);
       }
     }
   })

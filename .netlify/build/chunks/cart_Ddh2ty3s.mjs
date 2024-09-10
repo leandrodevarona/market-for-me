@@ -7,6 +7,7 @@ async function currentUser(request) {
 }
 
 const CART_COOKIES_KEY = "cartId";
+const CART_CONFIRMATION_KEY = "confirmation";
 
 async function getUserCart(context) {
   try {
@@ -105,4 +106,4 @@ async function getCartSubtotal(context) {
   return subtotalByCurrency;
 }
 
-export { CART_COOKIES_KEY as C, getCartSubtotal as a, getUserCartOrCreate as b, currentUser as c, getUserCart as d, getCartItems as g };
+export { CART_CONFIRMATION_KEY as C, getCartSubtotal as a, getUserCartOrCreate as b, currentUser as c, CART_COOKIES_KEY as d, getUserCart as e, getCartItems as g };
