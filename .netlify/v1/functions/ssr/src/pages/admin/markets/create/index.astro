@@ -1,0 +1,37 @@
+---
+import AdminLayout from "@layouts/AdminLayout.astro";
+import CreateMarket from "@components/admin/markets/forms/CreateMarket.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<AdminLayout>
+  <main class="create_market">
+    <section>
+      <CreateMarket />
+    </section>
+    <section class="create_market__products">
+      <div>
+        <Icon name="mdi:lightbulb-alert" size={30} color="yellow" />
+        <p>Cree el mercado para poder agregar sus productos.</p>
+      </div>
+    </section>
+  </main>
+</AdminLayout>
+
+<style>
+  .create_market {
+    display: grid;
+    grid-template-columns: 0.4fr 1fr;
+    gap: 2rem;
+
+    padding: 2rem;
+  }
+
+  .create_market__products div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+</style>

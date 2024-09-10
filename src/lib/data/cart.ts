@@ -1,7 +1,7 @@
 import type { ActionAPIContext } from "astro/actions/runtime/utils.js";
 import { db } from "../db";
 import { currentUser } from "@auth-astro/session";
-import { CART_COOKIES_KEY } from "@utils/constants";
+import { CART_COOKIES_KEY } from "@utils/constants/cart";
 import { Currency } from "@prisma/client";
 import type { SubtotalByCurrency } from "@customTypes/cart";
 
@@ -98,6 +98,7 @@ export async function getCartSubtotal(context: ActionAPIContext) {
   const subtotalByCurrency: SubtotalByCurrency = {
     USD: `0 ${Currency.USD}`,
     EUR: `0 ${Currency.EUR}`,
+    MLC: `0 ${Currency.MLC}`,
     CUP: `0 ${Currency.CUP}`,
   };
 
@@ -105,38 +106,17 @@ export async function getCartSubtotal(context: ActionAPIContext) {
     const currCart = await getUserCart(context);
 
     if (currCart) {
-      // Subtotal de USD
-      const subtotalUSD = currCart.cartItems.reduce((accumulator, item) => {
-        const value =
-          item.product.currency === Currency.USD
-            ? item.product.price * item.quantity
-            : 0;
-        return accumulator + value;
-      }, 0);
+      Object.values(Currency).map((currency) => {
+        const value = currCart.cartItems.reduce((accumulator, item) => {
+          const value =
+            item.product.currency === currency
+              ? item.product.price * item.quantity
+              : 0;
+          return accumulator + value;
+        }, 0);
 
-      subtotalByCurrency.USD = `${subtotalUSD.toFixed(2)} ${Currency.USD}`;
-
-      // Subtotal de EUR
-      const subtotalEUR = currCart.cartItems.reduce((accumulator, item) => {
-        const value =
-          item.product.currency === Currency.EUR
-            ? item.product.price * item.quantity
-            : 0;
-        return accumulator + value;
-      }, 0);
-
-      subtotalByCurrency.EUR = `${subtotalEUR.toFixed(2)} ${Currency.EUR}`;
-
-      // Subtotal de CUP
-      const subtotalCUP = currCart.cartItems.reduce((accumulator, item) => {
-        const value =
-          item.product.currency === Currency.CUP
-            ? item.product.price * item.quantity
-            : 0;
-        return accumulator + value;
-      }, 0);
-
-      subtotalByCurrency.CUP = `${subtotalCUP.toFixed(2)} ${Currency.CUP}`;
+        subtotalByCurrency[currency] = `${value.toFixed(2)} ${currency}`;
+      });
     }
   } catch (error) {
     console.error("Error al calcular subtotal de carrito de compras. ", error);

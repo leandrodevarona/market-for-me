@@ -1,9 +1,9 @@
 ---
 import type { Product } from "@prisma/client";
 import { actions, isInputError } from "astro:actions";
-import Currencies from "../selects/Currencies.astro";
 import DeleteProduct from "./DeleteProduct.astro";
 import { Routes } from "@utils/routes";
+import Currencies from "@components/common/selects/Currencies.astro";
 
 interface Props {
   product: Product;

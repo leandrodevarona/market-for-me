@@ -2,7 +2,7 @@ import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { db } from "../lib/db";
 import { getUserCart, getUserCartOrCreate } from "@data/cart";
-import { CART_COOKIES_KEY } from "@utils/constants";
+import { CART_COOKIES_KEY } from "@utils/constants/cart";
 
 export const cart = {
   addProductToCart: defineAction({

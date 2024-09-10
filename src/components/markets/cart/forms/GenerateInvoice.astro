@@ -1,4 +1,5 @@
 ---
+import Currencies from "@components/common/selects/Currencies.astro";
 import { Icon } from "astro-icon/components";
 
 interface Props {
@@ -8,19 +9,30 @@ interface Props {
 const { disabled } = Astro.props;
 ---
 
-<form id="generate_invoice">
+<form id="generate_invoice" class="generate_invoice">
   <button
     type="submit"
-    class:list={["generate_invoice", "primary_button", "centered_button"]}
+    class:list={[
+      "generate_invoice__button",
+      "primary_button",
+      "centered_button",
+    ]}
     disabled={disabled}
   >
     <Icon name="mdi:wallet-bifold" size={25} />
     <span>Generar factura</span>
   </button>
+  <Currencies title="Moneda con la que desea pagar" />
 </form>
 
 <style>
   .generate_invoice {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .generate_invoice__button {
     gap: 0.5rem;
 
     padding: 0.6rem;
@@ -31,7 +43,7 @@ const { disabled } = Astro.props;
   }
 
   @media (prefers-color-scheme: dark) {
-    .generate_invoice {
+    .generate_invoice__button {
       background-color: #5a4605;
     }
   }

@@ -4,6 +4,7 @@ import { createMarketSchema, updateMarketSchema } from "src/lib/zod/schemas";
 import { uploadMarketImage } from "@utils/cloudinary";
 import { currentUser } from "@auth-astro/session";
 import { Routes } from "@utils/routes";
+import { getExchangeRate } from "@data/currencies";
 
 export const markets = {
   createMarket: defineAction({
@@ -23,6 +24,8 @@ export const markets = {
 
       if (!user?.id) return context.rewrite(Routes.home);
 
+      const exchangeRates = await getExchangeRate();
+
       try {
         createdMarket = await db.market.create({
           data: {
@@ -34,6 +37,12 @@ export const markets = {
               address,
               phone1,
               phone2,
+            },
+            exchangeRates: {
+              USD: { value: exchangeRates.avg.usd },
+              EUR: { value: exchangeRates.avg.eur },
+              MLC: { value: exchangeRates.avg.mlc },
+              CUP: { value: 1 },
             },
           },
         });
