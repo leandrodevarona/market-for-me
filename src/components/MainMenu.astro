@@ -3,13 +3,15 @@ import DropdownMenu from "./common/menus/DropdownMenu.astro";
 import UserAvatar from "./auth/UserAvatar.astro";
 import Signout from "./auth/buttons/Signout.astro";
 import { Routes } from "../lib/utils/routes";
+import { Role } from "@prisma/client";
 
 interface Props {
   userName?: string | null;
   userImage?: string | null;
+  userRole?: Role | null;
 }
 
-const { userName, userImage } = Astro.props;
+const { userName, userImage, userRole } = Astro.props;
 ---
 
 <DropdownMenu
@@ -21,7 +23,13 @@ const { userName, userImage } = Astro.props;
     <UserAvatar image={userImage} />
   </div>
   <div class="main_menu__container">
-    <a class="primary_button" href={Routes.adminHome}>Panel de control</a>
+    {
+      userRole === Role.MANAGER && (
+        <a class="primary_button" href={Routes.adminHome}>
+          Panel de control
+        </a>
+      )
+    }
     <Signout />
   </div>
 </DropdownMenu>
