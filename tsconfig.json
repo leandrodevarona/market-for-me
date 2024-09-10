@@ -10,6 +10,7 @@
       "@utils/*": ["src/lib/utils/*"],
       "@build/*": ["src/lib/build/*"],
       "@customTypes/*": ["src/lib/customTypes/*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   }
 }

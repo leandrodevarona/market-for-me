@@ -13,6 +13,7 @@ export default defineConfig({
     session({ session, user }) {
       if (session.user) {
         session.user.id = user.id;
+        session.user.role = user.role;
       }
       return session;
     },
