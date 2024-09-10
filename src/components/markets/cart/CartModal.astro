@@ -1,9 +1,9 @@
 ---
 import SlideOutModal from "@components/common/modals/SlideOutModal.astro";
 import { getCartItems, getCartSubtotal } from "@data/cart";
-import CartItem from "./CartItem.astro";
-import { Icon } from "astro-icon/components";
-import CreateAndSendInvoice from "./forms/CreateAndSendInvoice.astro";
+import CartListItems from "./CartListItems.astro";
+import CartResume from "./CartResume.astro";
+import { Routes } from "@utils/routes";
 
 const cartItems = await getCartItems(Astro);
 
@@ -14,32 +14,21 @@ const itemsCount = cartItems?.length || 0;
 
 <SlideOutModal id="cart" title="Productos en el carro">
   <section class="cart_modal__content">
-    {
-      cartItems && cartItems.length > 0 ? (
-        <ul>
-          {cartItems.map((carItem) => (
-            <CartItem cartItem={carItem} />
-          ))}
-        </ul>
-      ) : (
-        <div class="cart_modal__noItems">
-          <Icon name="mdi:cart-off" size={100} />
-          <p>No posees productos en el carro de compras.</p>
-        </div>
-      )
-    }
+    <CartListItems cartItems={cartItems} />
   </section>
-  <section class="cart_modal__actions">
-    <div class="cart_resume">
-      <span>Subtotal ({itemsCount} productos)</span>
-      <div class="cart_resume__subtotal">
-        <span>{subtotalByCurrency.USD}</span>
-        <span>{subtotalByCurrency.EUR}</span>
-        <span>{subtotalByCurrency.CUP}</span>
-      </div>
-    </div>
-    {cartItems && cartItems.length > 0 && <CreateAndSendInvoice />}
-  </section>
+  {
+    cartItems && cartItems.length > 0 && (
+      <section class="cart_modal__actions">
+        <CartResume
+          itemsCount={itemsCount}
+          subtotalByCurrency={subtotalByCurrency}
+        />
+        <a class="primary_button" href={Routes.cart}>
+          Ir al carro
+        </a>
+      </section>
+    )
+  }
 </SlideOutModal>
 
 <style>
@@ -54,38 +43,17 @@ const itemsCount = cartItems?.length || 0;
     scrollbar-width: thin; /* Firefox */
   }
 
-  .cart_modal__noItems {
-    min-height: 80vh;
-
-    padding: 2rem;
-
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-  }
-
   .cart_modal__actions {
     display: flex;
     flex-direction: column;
     gap: 2rem;
   }
 
-  .cart_resume {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .cart_resume__subtotal {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  .cart_modal__actions a {
+    padding: 0.5rem;
 
     font-size: large;
-    font-weight: 600;
+    font-weight: 500;
+    text-align: center;
   }
 </style>

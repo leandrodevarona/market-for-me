@@ -3,6 +3,7 @@ import { db } from "../db";
 import { currentUser } from "@auth-astro/session";
 import { CART_COOKIES_KEY } from "@utils/constants";
 import { Currency } from "@prisma/client";
+import type { SubtotalByCurrency } from "@customTypes/cart";
 
 export async function getUserCart(context: ActionAPIContext) {
   try {
@@ -94,7 +95,7 @@ export async function getCartItems(context: ActionAPIContext) {
 }
 
 export async function getCartSubtotal(context: ActionAPIContext) {
-  const subtotalByCurrency: Record<Currency, string> = {
+  const subtotalByCurrency: SubtotalByCurrency = {
     USD: `0 ${Currency.USD}`,
     EUR: `0 ${Currency.EUR}`,
     CUP: `0 ${Currency.CUP}`,

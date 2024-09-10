@@ -5,4 +5,5 @@ export const Routes = {
   adminHome: "/admin",
   adminMarkets: (marketId: string) => `/admin/markets/${marketId}`,
   adminCreateMarket: "/admin/markets/create",
+  cart: "/cart",
 };
