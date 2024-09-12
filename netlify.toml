@@ -1,2 +1,3 @@
 [functions]
-  included_files = ["./src/lib/utils/email/templates/**.ejs"]
+  # Includes all Markdown files inside the "files/" directory.
+  included_files = ["./src/lib/utils/email/templates/*.ejs"]
