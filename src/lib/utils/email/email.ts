@@ -30,7 +30,47 @@ export async function sendEmail(
     // Build the email message
     const { to, subject, template } = options;
     // Parse email template
-    const html = await parseEmailTemplate(template.name, template.params);
+
+    const params = options.template.params;
+
+    const html = `<div
+  style="
+    max-width: 600px;
+    border: 1px solid #efefef;
+    padding: 16px;
+    font-family:
+      Segoe UI,
+      Tahoma,
+      Geneva,
+      Verdana,
+      sans-serif;
+  "
+>
+  <!-- Header -->
+  <div style="margin-bottom: 32px">
+    <p>Se ha realizado una compra en su tienda.</p>
+    <p><strong>Número:</strong> ${params.invoiceNumber}</p>
+  </div>
+  <!-- Main Content -->
+  <div style="margin-bottom: 32px; color: #222">
+    <p style="margin-bottom: 16px">Hola, ${params.name},</p>
+    <p>
+      Se ha realizado una compra en su tienda. Usted debe esperar a que un
+      cliente lo contacte por <strong>Whatsapp</strong> y le mandé una factura
+      con el mismo número que se muestra en el título de este correo. Si no es
+      así, usted puede <strong>devolver el stock</strong> de productos que usó
+      el usuario. Dichos productos se muestran en la factura adjunta a este
+      correo.
+    </p>
+  </div>
+  <!-- Footer -->
+  <div style="color: #5f5f5f">
+    <p>
+      Si usted no es el destinatario previsto, por favor ignore este correo.
+    </p>
+  </div>
+</div>
+`;
 
     const from =
       import.meta.env.SEND_EMAIL_FROM || "MyApp <noreply@example.com>";
@@ -75,15 +115,15 @@ async function getEmailTransporter(): Promise<Transporter> {
   });
 }
 
-async function parseEmailTemplate(
-  name: TemplateParams["name"],
-  params: TemplateParams["params"]
-): Promise<string> {
-  // Read the raw template file
-  const rawTemplate = fs.readFileSync(
-    `${name}.ejs`,
-    "utf8"
-  );
-  // Run the template through EJS to replace variables with parameter values
-  return ejs.render(rawTemplate, params);
-}
+// async function parseEmailTemplate(
+//   name: TemplateParams["name"],
+//   params: TemplateParams["params"]
+// ): Promise<string> {
+//   // Read the raw template file
+//   const rawTemplate = fs.readFileSync(
+//     `./src/lib/utils/email/templates/${name}.ejs`,
+//     "utf8"
+//   );
+//   // Run the template through EJS to replace variables with parameter values
+//   return ejs.render(rawTemplate, params);
+// }
