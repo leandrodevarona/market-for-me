@@ -81,7 +81,7 @@ async function parseEmailTemplate(
 ): Promise<string> {
   // Read the raw template file
   const rawTemplate = fs.readFileSync(
-    `./src/lib/utils/email/templates/${name}.ejs`,
+    `${name}.ejs`,
     "utf8"
   );
   // Run the template through EJS to replace variables with parameter values
