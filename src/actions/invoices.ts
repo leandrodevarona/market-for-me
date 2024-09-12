@@ -88,22 +88,22 @@ export const invoices = {
 
           const managerName = marketManager.name || "Manager";
 
-          // try {
-          //   await sendEmail({
-          //     subject: invoiceNumber,
-          //     to: marketManager.email,
-          //     template: {
-          //       name: "buyClient",
-          //       params: {
-          //         name: managerName,
-          //         invoiceNumber,
-          //         invoiceBase64: invoice.pdf,
-          //       },
-          //     },
-          //   });
-          // } catch (error) {
-          //   console.error("Error al enviar correo de compra. ", error);
-          // }
+          try {
+            await sendEmail({
+              subject: invoiceNumber,
+              to: marketManager.email,
+              template: {
+                name: "buyClient",
+                params: {
+                  name: managerName,
+                  invoiceNumber,
+                  invoiceBase64: invoice.pdf,
+                },
+              },
+            });
+          } catch (error) {
+            console.error("Error al enviar correo de compra. ", error);
+          }
 
           // Eliminando carrito
           const cartItemsToDelete =

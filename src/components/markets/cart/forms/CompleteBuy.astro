@@ -74,6 +74,6 @@ const { disabled } = Astro.props;
 
     if (loaderSpan) loaderSpan.innerHTML = "Generar factura";
 
-    if (!error) navigate(`${Routes.cart}?${BUY_SUCCESS_KEY}=true`);
+    if (!error) navigate(`${Routes.home}?${BUY_SUCCESS_KEY}=true`);
   });
 </script>

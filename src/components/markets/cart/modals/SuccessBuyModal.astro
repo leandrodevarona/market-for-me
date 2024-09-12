@@ -11,7 +11,7 @@ interface Props {
 const { open, marketPhone } = Astro.props;
 ---
 
-<Modal id="success_buy" class="success_buy" open={open} backHref={Routes.cart}>
+<Modal id="success_buy" class="success_buy" open={open} backHref={Routes.home}>
   <div class="success_buy__content">
     <Icon name="mdi:basket-check" size={100} color="green" />
     <h3>¡Felicitaciones! Ha completado su compra.</h3>
