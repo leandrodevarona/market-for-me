@@ -1,3 +1,45 @@
 [functions]
   # Includes all Markdown files inside the "files/" directory.
-  included_files = ["./src/lib/utils/email/templates/*.ejs"]
+  included_files = ["./src/lib/utils/email/templates/**.ejs"]
+
+[images]
+remote_images = [
+  "https?://lh3\\.googleusercontent\\.com/.*",
+  "https?://res\\.cloudinary\\.com/.*"
+]
+
+[[headers]]
+for = "/_astro/*"
+
+  [headers.values]
+  Cache-Control = "public, max-age=31536000, immutable"
+
+[context]
+
+  [context.deploy-preview]
+
+    [context.deploy-preview.images]
+    remote_images = [
+      "https?://lh3\\.googleusercontent\\.com/.*",
+      "https?://res\\.cloudinary\\.com/.*"
+    ]
+
+    [[context.deploy-preview.headers]]
+    for = "/_astro/*"
+
+      [context.deploy-preview.headers.values]
+      Cache-Control = "public, max-age=31536000, immutable"
+
+  [context.fixing-netlify-toml]
+
+    [context.fixing-netlify-toml.images]
+    remote_images = [
+      "https?://lh3\\.googleusercontent\\.com/.*",
+      "https?://res\\.cloudinary\\.com/.*"
+    ]
+
+    [[context.fixing-netlify-toml.headers]]
+    for = "/_astro/*"
+
+      [context.fixing-netlify-toml.headers.values]
+      Cache-Control = "public, max-age=31536000, immutable"
