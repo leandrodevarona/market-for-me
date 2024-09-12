@@ -72,7 +72,7 @@ const { disabled } = Astro.props;
       easyinvoice.download("myInvoice.pdf", data);
     }
 
-    if (loaderSpan) loaderSpan.innerHTML = "Generar factura";
+    if (loaderSpan) loaderSpan.innerHTML = "Terminar compra";
 
     if (!error) navigate(`${Routes.home}?${BUY_SUCCESS_KEY}=true`);
   });
