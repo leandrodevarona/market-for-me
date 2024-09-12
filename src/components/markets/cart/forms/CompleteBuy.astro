@@ -9,19 +9,19 @@ interface Props {
 const { disabled } = Astro.props;
 ---
 
-<form id="generate_invoice" class="generate_invoice">
+<form id="complete_buy" class="complete_buy">
   <button
-    id="generate_invoice__button"
+    id="complete_buy__button"
     type="submit"
     class:list={[
-      "generate_invoice__button",
+      "complete_buy__button",
       "primary_button",
       "centered_button",
     ]}
     disabled={disabled}
   >
     <Icon name="mdi:wallet-bifold" size={25} />
-    <span class="loader">Generar factura</span>
+    <span class="loader">Terminar compra</span>
   </button>
   <Currencies title="Moneda con la que desea pagar" />
   <p>
@@ -31,13 +31,13 @@ const { disabled } = Astro.props;
 </form>
 
 <style>
-  .generate_invoice {
+  .complete_buy {
     display: flex;
     align-items: center;
     gap: 1rem;
   }
 
-  .generate_invoice__button {
+  .complete_buy__button {
     gap: 0.5rem;
 
     padding: 0.6rem;
@@ -48,32 +48,32 @@ const { disabled } = Astro.props;
   }
 
   @media (prefers-color-scheme: dark) {
-    .generate_invoice__button {
+    .complete_buy__button {
       background-color: #5a4605;
     }
   }
 </style>
 
 <script>
-  import { CART_CONFIRMATION_KEY } from "@utils/constants/cart";
+  import { BUY_SUCCESS_KEY } from "@utils/constants/cart";
   import { Routes } from "@utils/routes";
   import { actions } from "astro:actions";
   import { navigate } from "astro:transitions/client";
   import easyinvoice from "easyinvoice";
   import { showLoaderOnContainer } from "@utils/utils";
 
-  const form = document.getElementById("generate_invoice") as HTMLFormElement;
+  const form = document.getElementById("complete_buy") as HTMLFormElement;
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = new FormData(form);
-    const loaderSpan = showLoaderOnContainer("generate_invoice__button");
-    const { data, error } = await actions.invoices.generateInvoice(formData);
+    const loaderSpan = showLoaderOnContainer("complete_buy__button");
+    const { data, error } = await actions.invoices.createInvoice(formData);
     if (data) {
       easyinvoice.download("myInvoice.pdf", data);
     }
 
     if (loaderSpan) loaderSpan.innerHTML = "Generar factura";
 
-    if (!error) navigate(`${Routes.cart}?${CART_CONFIRMATION_KEY}=true`);
+    if (!error) navigate(`${Routes.home}?${BUY_SUCCESS_KEY}=true`);
   });
 </script>

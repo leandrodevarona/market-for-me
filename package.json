@@ -17,11 +17,15 @@
     "@fontsource-variable/montserrat": "^5.0.19",
     "@iconify-json/mdi": "^1.1.68",
     "@prisma/client": "^5.19.1",
+    "@types/ejs": "^3.1.5",
+    "@types/nodemailer": "^6.4.15",
     "astro": "^4.15.3",
     "astro-icon": "^1.1.0",
     "auth-astro": "^4.1.2",
     "cloudinary": "^2.4.0",
     "easyinvoice": "^3.0.47",
+    "ejs": "^3.1.10",
+    "nodemailer": "^6.9.15",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
