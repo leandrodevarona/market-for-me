@@ -2,7 +2,6 @@
 import Modal from "@components/common/modals/Modal.astro";
 import { Routes } from "@utils/routes";
 import { Icon } from "astro-icon/components";
-import { actions } from "astro:actions";
 
 interface Props {
   open: boolean;
@@ -12,33 +11,26 @@ interface Props {
 const { open, marketPhone } = Astro.props;
 ---
 
-<Modal
-  id="buy_confirmation"
-  class="buy_confirmation"
-  open={open}
-  backHref={Routes.cart}
->
-  <form
-    class="buy_confirmation__content"
-    method="POST"
-    action={Routes.home + actions.cart.completeBuy}
-  >
+<Modal id="success_buy" class="success_buy" open={open} backHref={Routes.cart}>
+  <div class="success_buy__content">
     <Icon name="mdi:basket-check" size={100} color="green" />
-    <h3>¿Desea terminar su compra?</h3>
+    <h3>¡Felicitaciones! Ha completado su compra.</h3>
     <p>
-      Si desea terminar su compra usted debe enviar por <strong>Whatsapp</strong
-      >
+      Usted debe enviar por <strong>Whatsapp</strong>
       la factura descargada a este número:
     </p>
-    <span class="buy_confirmation__phone">{marketPhone}</span>
-    <button class:list={["buy_confirmation__button", "primary_button"]}>
-      Terminar compra
-    </button>
-  </form>
+    <span class="success_buy__phone">{marketPhone}</span>
+    <a
+      class:list={["success_buy__button", "primary_button"]}
+      href={Routes.home}
+    >
+      Aceptar
+    </a>
+  </div>
 </Modal>
 
 <style>
-  .buy_confirmation {
+  .success_buy {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -49,11 +41,11 @@ const { open, marketPhone } = Astro.props;
     padding: 1rem;
   }
 
-  .buy_confirmation::backdrop {
+  .success_buy::backdrop {
     backdrop-filter: blur(3px);
   }
 
-  .buy_confirmation__content {
+  .success_buy__content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -65,12 +57,12 @@ const { open, marketPhone } = Astro.props;
     text-align: center;
   }
 
-  .buy_confirmation__phone {
+  .success_buy__phone {
     font-size: 32px;
     font-weight: 700;
   }
 
-  .buy_confirmation__button {
+  .success_buy__button {
     padding: 0.5rem;
 
     margin-top: 2rem;
@@ -80,16 +72,16 @@ const { open, marketPhone } = Astro.props;
 
   /* Mobile */
   @media (max-width: 700px) {
-    .buy_confirmation {
+    .success_buy {
       width: 90%;
     }
 
-    .buy_confirmation__content {
+    .success_buy__content {
       padding: 0.5rem;
       padding-bottom: 1rem;
     }
 
-    .buy_confirmation__button {
+    .success_buy__button {
       margin-top: 1rem;
     }
   }

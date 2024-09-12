@@ -76,11 +76,6 @@ export async function uploadProductImage(image: File) {
   return result?.fileUrl;
 }
 
-export async function uploadClientInvoice(pdfFile: File) {
-  const result = await upload(pdfFile, "client_invoices", "raw", "pdf");
-  return result?.publicId;
-}
-
 export async function deleteImage(imageUrl?: string | null) {
   try {
     if (imageUrl) {

@@ -1,12 +1,12 @@
 ---
 import CartListItems from "@components/markets/cart/CartListItems.astro";
 import CartResume from "@components/markets/cart/CartResume.astro";
-import GenerateInvoice from "@components/markets/cart/forms/GenerateInvoice.astro";
-import BuyConfirmationModal from "@components/markets/cart/modals/BuyConfirmationModal.astro";
+import CompleteBuy from "@components/markets/cart/forms/CompleteBuy.astro";
+import SuccessBuyModal from "@components/markets/cart/modals/SuccessBuyModal.astro";
 import { getCartItems, getCartSubtotal } from "@data/cart";
 import { getMarketByProductId } from "@data/markets";
 import Layout from "@layouts/Layout.astro";
-import { CART_CONFIRMATION_KEY } from "@utils/constants/cart";
+import { BUY_SUCCESS_KEY } from "@utils/constants/cart";
 import { Routes } from "@utils/routes";
 
 const cartItems = await getCartItems(Astro);
@@ -19,7 +19,7 @@ const itemsCount = cartItems?.length || 0;
 
 const params = Astro.url.searchParams;
 
-const confirmation = Boolean(params.get(CART_CONFIRMATION_KEY));
+const success = Boolean(params.get(BUY_SUCCESS_KEY));
 
 const productId = cartItems[0].productId;
 
@@ -37,16 +37,13 @@ if (!market || !market.contact) return Astro.redirect(Routes.home);
       />
     </section>
     <section class="cart_actions">
-      <GenerateInvoice disabled={itemsCount <= 0} />
+      <CompleteBuy disabled={itemsCount <= 0} />
     </section>
     <section class="cart_items">
       <h3 class="cart_items__title">Productos</h3>
       <CartListItems cartItems={cartItems} />
     </section>
-    <BuyConfirmationModal
-      open={confirmation}
-      marketPhone={market.contact.phone1}
-    />
+    <SuccessBuyModal open={success} marketPhone={market.contact.phone1} />
   </main>
 </Layout>
 

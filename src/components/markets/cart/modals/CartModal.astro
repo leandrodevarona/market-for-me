@@ -1,8 +1,8 @@
 ---
 import SlideOutModal from "@components/common/modals/SlideOutModal.astro";
 import { getCartItems, getCartSubtotal } from "@data/cart";
-import CartListItems from "./CartListItems.astro";
-import CartResume from "./CartResume.astro";
+import CartListItems from "../CartListItems.astro";
+import CartResume from "../CartResume.astro";
 import { Routes } from "@utils/routes";
 
 const cartItems = await getCartItems(Astro);
@@ -33,7 +33,7 @@ const itemsCount = cartItems?.length || 0;
 
 <style>
   .cart_modal__content {
-    height: 70vh;
+    height: 65vh;
 
     padding-right: 1rem;
 
