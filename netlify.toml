@@ -1,4 +1,0 @@
-[images]
-  remote_images = ["https://lh3.googleusercontent.com/.*", "https://res.cloudinary.com/.*"]
-[functions]
-  included_files = ["./src/lib/utils/email/templates/**.ejs"]
