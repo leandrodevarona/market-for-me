@@ -19,7 +19,7 @@ const message = params.get(BUY_ERROR_KEY);
 const error = Boolean(message);
 ---
 
-<Layout title="Market for me">
+<Layout title="Markets for me">
   <main class="home"></main>
   <SuccessBuyModal open={success} marketPhone={phone} />
   <ErrorBuyModal open={error} errorMessage={message} />
