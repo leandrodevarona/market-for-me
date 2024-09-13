@@ -25,15 +25,19 @@ const markets = await getMarketsByUser(userId);
     </a>
   </summary>
   <div>
-    <ol class="sidebar_markets__list">
-      {
-        markets &&
-          markets.length > 0 &&
-          markets.map((market) => (
+    {
+      markets && markets.length > 0 ? (
+        <ol class="sidebar_markets__list">
+          {markets.map((market) => (
             <SidebarMarketItem marketId={market.id} marketName={market.name} />
-          ))
-      }
-    </ol>
+          ))}
+        </ol>
+      ) : (
+        <a class="sidebar_markets__firstmarket" href={Routes.adminCreateMarket}>
+          Crear mercado
+        </a>
+      )
+    }
   </div>
 </details>
 
@@ -58,5 +62,13 @@ const markets = await getMarketsByUser(userId);
   .sidebar_markets__list {
     margin-top: 1rem;
     padding-left: 1rem;
+  }
+
+  .sidebar_markets__firstmarket {
+    padding: 1rem;
+    margin-top: 1rem;
+
+    font-size: medium;
+    font-weight: 500;
   }
 </style>

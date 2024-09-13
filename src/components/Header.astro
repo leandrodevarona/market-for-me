@@ -1,17 +1,23 @@
 ---
+import { Routes } from "@utils/routes";
 import GoogleSignin from "./auth/buttons/GoogleSignin.astro";
 import SkeletonBox from "./common/loaders/SkeletonBox.astro";
 import Cart from "./markets/cart/Cart.astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <header class="header">
-  <section></section>
+  <section>
+    <a href={Routes.home}>
+      <Icon name="mdi:shopping-outline" size={50} />
+    </a>
+  </section>
   <section class="header_rigth">
     <GoogleSignin server:defer>
       <SkeletonBox slot="fallback" width="180px" />
     </GoogleSignin>
     <Cart server:defer>
-      <SkeletonBox slot="fallback" width="50px" height="30px"/>
+      <SkeletonBox slot="fallback" width="50px" height="30px" />
     </Cart>
   </section>
 </header>

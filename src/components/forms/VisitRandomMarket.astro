@@ -1,0 +1,29 @@
+---
+import { actions } from "astro:actions";
+---
+
+<>
+  <form
+    class="visit_random__market"
+    method="POST"
+    action={actions.markets.visitRandomMarket}
+  >
+    <button class="primary_button"> Ver un mercado </button>
+  </form>
+</>
+
+<style>
+  .visit_random__market button {
+    padding: 0.8rem;
+
+    font-size: larger;
+    font-weight: 500;
+  }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .visit_random__market button {
+      padding: 0.3rem;
+    }
+  }
+</style>

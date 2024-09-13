@@ -1,4 +1,4 @@
-import { defineAction } from "astro:actions";
+import { ActionError, defineAction } from "astro:actions";
 import { db } from "../lib/db";
 import { createMarketSchema, updateMarketSchema } from "src/lib/zod/schemas";
 import { uploadMarketImage } from "@utils/cloudinary";
@@ -95,6 +95,28 @@ export const markets = {
       }
 
       return mutateMarket ?? 0;
+    },
+  }),
+  visitRandomMarket: defineAction({
+    accept: "form",
+    handler: async () => {
+      try {
+        const count = await db.market.count();
+
+        const randomIndex = Math.floor(Math.random() * count);
+
+        const randomMarket = await db.market.findMany({
+          take: 1,
+          skip: randomIndex,
+        });
+        
+        return { id: randomMarket[0].id };
+      } catch (error) {
+        throw new ActionError({
+          code: "CONFLICT",
+          message: "No se puede visitar un mercado en estos momentos.",
+        });
+      }
     },
   }),
 };
