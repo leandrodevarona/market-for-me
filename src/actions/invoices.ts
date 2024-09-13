@@ -5,7 +5,7 @@ import { getUserByMarketId } from "@data/users";
 import { Currency } from "@prisma/client";
 import { CART_COOKIES_KEY } from "@utils/constants/cart";
 import { convertCurrency } from "@utils/currencies";
-import { sendEmail } from "@utils/email/email";
+import { sendBuyClientEmail } from "@utils/email/buyClient";
 import { generateUniqueId } from "@utils/utils";
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
@@ -89,11 +89,10 @@ export const invoices = {
           const managerName = marketManager.name || "Manager";
 
           try {
-            await sendEmail({
+            await sendBuyClientEmail({
               subject: invoiceNumber,
               to: marketManager.email,
               template: {
-                name: "buyClient",
                 params: {
                   name: managerName,
                   invoiceNumber,
