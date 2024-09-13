@@ -1,0 +1,134 @@
+---
+import { currentUser } from "@auth-astro/session";
+import { getMarketByInvoiceNumber } from "@data/markets";
+import Layout from "@layouts/Layout.astro";
+import { Routes } from "@utils/routes";
+import { Icon } from "astro-icon/components";
+import { actions } from "astro:actions";
+import { SignIn } from "auth-astro/components";
+
+const { invoiceNumber } = Astro.params;
+
+if (!invoiceNumber) {
+  return Astro.redirect(Routes.home);
+}
+
+let isAuthorized = true;
+
+const user = await currentUser(Astro.request);
+
+const market = await getMarketByInvoiceNumber(invoiceNumber);
+
+if (!market) {
+  return Astro.redirect(Routes.home);
+}
+
+if (!user) isAuthorized = false;
+if (market.userId !== user?.id) isAuthorized = false;
+
+const action = actions.products.returnStock;
+
+const result = Astro.getActionResult(action);
+---
+
+<Layout title="Devolver stock">
+  <main class="return_stock">
+    {
+      isAuthorized ? (
+        <>
+          {!result?.data ? (
+            <form class="return_stock__form" method="POST" action={action}>
+              <Icon name="mdi:store-check" size={100} color="green" />
+              <p>Presione el botón a continuación para terminar el proceso.</p>
+              <input
+                type="text"
+                name="invoiceNumber"
+                value={invoiceNumber}
+                hidden
+              />
+              <button class="primary_button">Devolver stock</button>
+            </form>
+          ) : (
+            <div class="return_stock__success">
+              <p>
+                <Icon name="mdi:check-circle" size={30} color="green" />{" "}
+                ¡Proceso completado satisfactoriamente!
+              </p>
+              <a class="primary_button" href={Routes.adminHome}>
+                Regresar al inicio
+              </a>
+            </div>
+          )}
+        </>
+      ) : (
+        <div class="return_stock__noaccess">
+          <Icon name="mdi:alarm-light-off" size={100} color="red" />
+          <p>Usted no está autorizado a realizar esta acción.</p>
+          {!user ? (
+            <>
+              <p>Inicie sesión y vuelva a intentarlo.</p>
+              <SignIn class="primary_button" provider="google">
+                Iniciar sesión
+              </SignIn>
+            </>
+          ) : (
+            <a class="primary_button" href={Routes.home}>
+              Regresar al inicio
+            </a>
+          )}
+        </div>
+      )
+    }
+    {
+      result?.error && (
+        <p class="return_stock__error">
+          <Icon name="mdi:close-octagon" size={30} color="red" />{" "}
+          {result.error.message}
+        </p>
+      )
+    }
+  </main>
+</Layout>
+
+<style>
+  .return_stock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .return_stock p {
+    font-size: large;
+  }
+
+  .return_stock button,
+  .return_stock a {
+    padding: 0.5rem;
+
+    font-size: larger;
+  }
+
+  .return_stock__form,
+  .return_stock__noaccess {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .return_stock__success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .return_stock__success p,
+  .return_stock__error {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+</style>

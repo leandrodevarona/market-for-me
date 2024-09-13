@@ -6,4 +6,6 @@ export const Routes = {
   adminMarkets: (marketId: string) => `/admin/markets/${marketId}`,
   adminCreateMarket: "/admin/markets/create",
   cart: "/cart",
+  returnStock: (invoiceNumber: string) =>
+    `/admin/return-stock/${invoiceNumber}`,
 };

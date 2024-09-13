@@ -1,4 +1,4 @@
-import { defineAction } from "astro:actions";
+import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { db } from "../lib/db";
 import { updateProductSchema } from "src/lib/zod/schemas";
@@ -92,6 +92,68 @@ export const products = {
       }
 
       return deletedProduct ?? 0;
+    },
+  }),
+  returnStock: defineAction({
+    accept: "form",
+    input: z.object({
+      invoiceNumber: z.string(),
+    }),
+    handler: async ({ invoiceNumber }) => {
+      let buy = null;
+      try {
+        buy = await db.buy.findUnique({
+          where: {
+            invoiceNumber,
+          },
+        });
+      } catch (error) {
+        throw new ActionError({
+          code: "BAD_REQUEST",
+          message:
+            "Hubo un problema al devolver el stock. Puede realizarlo manualmente desde un Panel de Administrador.",
+        });
+      }
+
+      if (buy) {
+        if (buy.returnedStock)
+          throw new ActionError({
+            code: "BAD_REQUEST",
+            message: "El stock de esta factura ya ha sido devuelto.",
+          });
+
+        const updatePromises = buy.products.map((product) => {
+          return db.product.update({
+            where: { id: product.productId },
+            data: {
+              stock: {
+                increment: product.quantity,
+              },
+            },
+          });
+        });
+
+        try {
+          await db.$transaction(updatePromises);
+
+          await db.buy.update({
+            data: {
+              returnedStock: true,
+            },
+            where: {
+              id: buy.id,
+            },
+          });
+        } catch (error) {
+          throw new ActionError({
+            code: "BAD_REQUEST",
+            message:
+              "Hubo un problema al devolver el stock. Puede realizarlo manualmente desde un Panel de Administrador.",
+          });
+        }
+
+        return invoiceNumber;
+      }
     },
   }),
 };
