@@ -5,7 +5,7 @@ import AdminLayout from "@layouts/AdminLayout.astro";
 import { getMarketById } from "@data/markets";
 import MarketProductList from "@components/admin/markets/products/MarketProductList.astro";
 import CreateProduct from "@components/admin/markets/products/forms/CreateProduct.astro";
-import { currentUser, isManager } from "@auth-astro/session";
+import { currentUser } from "@auth-astro/session";
 import { Routes } from "@utils/routes";
 import { Role } from "@prisma/client";
 
