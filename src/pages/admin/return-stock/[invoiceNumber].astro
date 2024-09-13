@@ -101,6 +101,7 @@ const result = Astro.getActionResult(action);
 
   .return_stock p {
     font-size: large;
+    text-align: center;
   }
 
   .return_stock button,
@@ -130,5 +131,12 @@ const result = Astro.getActionResult(action);
     display: flex;
     align-items: center;
     gap: 0.5rem;
+  }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .return_stock {
+      padding: 1rem;
+    }
   }
 </style>
