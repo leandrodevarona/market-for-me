@@ -2,11 +2,9 @@
 import CartListItems from "@components/markets/cart/CartListItems.astro";
 import CartResume from "@components/markets/cart/CartResume.astro";
 import CompleteBuy from "@components/markets/cart/forms/CompleteBuy.astro";
-import SuccessBuyModal from "@components/markets/cart/modals/SuccessBuyModal.astro";
 import { getCartItems, getCartSubtotal } from "@data/cart";
 import { getMarketByProductId } from "@data/markets";
 import Layout from "@layouts/Layout.astro";
-import { BUY_SUCCESS_KEY } from "@utils/constants/cart";
 import { Routes } from "@utils/routes";
 
 const cartItems = await getCartItems(Astro);
