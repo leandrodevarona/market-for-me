@@ -79,7 +79,7 @@ export const cart = {
         }
       } catch (error) {
         console.error(
-          "Ocurrió un error al agregar un producto al carrito. ",
+          "Ocurrió un error al agregar un producto al carro. ",
           error
         );
       }
@@ -117,7 +117,7 @@ export const cart = {
         }
       } catch (error) {
         console.error(
-          "Ocurrió un error al eliminar un producto de un carrito. ",
+          "Ocurrió un error al eliminar un producto de un carro. ",
           error
         );
       }
@@ -194,7 +194,7 @@ export const cart = {
         }
       } catch (error) {
         console.error(
-          "Ocurrió un error al incrementar/decrementar la cantidad de un producto en un carrito. ",
+          "Ocurrió un error al incrementar/decrementar la cantidad de un producto en un carro. ",
           error
         );
       }

@@ -62,7 +62,7 @@ export async function getUserCartOrCreate(context: ActionAPIContext) {
 
     let currCart = await getUserCart(context);
 
-    // Si no tiene carrito le creo uno vacío aunque esté autenticado o no
+    // Si no tiene carro le creo uno vacío aunque esté autenticado o no
     if (!currCart) {
       currCart = await db.cart.create({
         include: {
@@ -119,7 +119,7 @@ export async function getCartSubtotal(context: ActionAPIContext) {
       });
     }
   } catch (error) {
-    console.error("Error al calcular subtotal de carrito de compras. ", error);
+    console.error("Error al calcular subtotal de carro de compras. ", error);
   }
 
   return subtotalByCurrency;
