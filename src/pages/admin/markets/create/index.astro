@@ -2,6 +2,12 @@
 import AdminLayout from "@layouts/AdminLayout.astro";
 import CreateMarket from "@components/admin/markets/forms/CreateMarket.astro";
 import { Icon } from "astro-icon/components";
+import { isManager } from "@auth-astro/session";
+import { Routes } from "@utils/routes";
+
+const manager = await isManager(Astro.request);
+
+if (!manager) return Astro.redirect(Routes.home);
 ---
 
 <AdminLayout>
