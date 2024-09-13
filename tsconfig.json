@@ -11,6 +11,6 @@
       "@build/*": ["src/lib/build/*"],
       "@customTypes/*": ["src/lib/customTypes/*"]
     },
-    "typeRoots": ["./node_modules/@types", "./src/types"]
+    "typeRoots": ["./node_modules/@types", "./src/types.d.ts"]
   }
 }

@@ -5,14 +5,23 @@ import AdminLayout from "@layouts/AdminLayout.astro";
 import { getMarketById } from "@data/markets";
 import MarketProductList from "@components/admin/markets/products/MarketProductList.astro";
 import CreateProduct from "@components/admin/markets/products/forms/CreateProduct.astro";
+import { currentUser, isManager } from "@auth-astro/session";
+import { Routes } from "@utils/routes";
+import { Role } from "@prisma/client";
 
 const { marketId } = Astro.params;
 
-if (!marketId) return;
+if (!marketId) return Astro.redirect(Routes.adminHome);
+
+const user = await currentUser(Astro.request);
+
+if (!user || user.role !== Role.MANAGER) return Astro.redirect(Routes.home);
 
 const market = await getMarketById(marketId);
 
-if (!market) return;
+if (!market) return Astro.redirect(Routes.adminHome);
+
+if (market.userId !== user.id) return Astro.redirect(Routes.home);
 ---
 
 <AdminLayout>

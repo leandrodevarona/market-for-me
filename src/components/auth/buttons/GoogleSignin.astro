@@ -4,12 +4,18 @@ import { getSession } from "auth-astro/server";
 import MainMenu from "../../MainMenu.astro";
 
 const session = await getSession(Astro.request);
+
+const user = session?.user;
 ---
 
 <div class="google_signin">
   {
     session ? (
-      <MainMenu userName={session.user?.name} userImage={session.user?.image} />
+      <MainMenu
+        userName={user?.name}
+        userImage={user?.image}
+        userRole={user?.role}
+      />
     ) : (
       <SignIn
         class:list={["primary_button", "centered_button", "google_signin"]}

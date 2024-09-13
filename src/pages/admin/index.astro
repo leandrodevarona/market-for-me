@@ -1,5 +1,11 @@
 ---
+import { Routes } from "@utils/routes";
 import AdminLayout from "../../layouts/AdminLayout.astro";
+import { isManager } from "@auth-astro/session";
+
+const manager = await isManager(Astro.request);
+
+if (!manager) return Astro.redirect(Routes.home);
 ---
 
 <AdminLayout>
