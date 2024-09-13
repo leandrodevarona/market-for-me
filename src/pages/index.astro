@@ -1,7 +1,26 @@
 ---
+import ErrorBuyModal from "@components/markets/cart/modals/ErrorBuyModal.astro";
+import SuccessBuyModal from "@components/markets/cart/modals/SuccessBuyModal.astro";
 import Layout from "@layouts/Layout.astro";
+import {
+  BUY_ERROR_KEY,
+  BUY_PHONE_KEY,
+  BUY_SUCCESS_KEY,
+} from "@utils/constants/cart";
+
+const params = Astro.url.searchParams;
+
+// Success buy
+const phone = params.get(BUY_PHONE_KEY) || "";
+const success = phone ? Boolean(params.get(BUY_SUCCESS_KEY)) : false;
+
+// Error buy
+const message = params.get(BUY_ERROR_KEY);
+const error = Boolean(message);
 ---
 
 <Layout title="Market for me">
   <main class="home"></main>
+  <SuccessBuyModal open={success} marketPhone={phone} />
+  <ErrorBuyModal open={error} errorMessage={message} />
 </Layout>

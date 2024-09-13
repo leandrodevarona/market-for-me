@@ -8,7 +8,7 @@ export const server = {
   markets,
   // Productos
   products,
-  // Carrito de compras
+  // Carro de compras
   cart,
   // Facturas
   invoices,
