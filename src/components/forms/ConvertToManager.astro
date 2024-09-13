@@ -1,0 +1,79 @@
+---
+import { currentUser } from "@auth-astro/session";
+import { Routes } from "@utils/routes";
+import { Icon } from "astro-icon/components";
+import { actions } from "astro:actions";
+import { SignIn } from "auth-astro/components";
+
+interface Props {
+  color?: string;
+}
+
+const user = await currentUser(Astro.request);
+
+const isAuth = user !== undefined;
+
+const { color = "rgb(var(--highlighted-rgb))" } = Astro.props;
+---
+
+<>
+  {
+    isAuth ? (
+      <form
+        class="convert_manager"
+        method="POST"
+        action={Routes.adminCreateMarket + actions.users.createManager}
+      >
+        <input type="text" name="userId" value={user.id} hidden />
+        <button
+          class:list={[
+            "convert_manager__button",
+            "primary_button",
+            "centered_button",
+          ]}
+        >
+          <slot />
+        </button>
+      </form>
+    ) : (
+      <div class="convert_manager">
+        <SignIn
+          class:list={[
+            "convert_manager__button",
+            "primary_button",
+            "centered_button",
+          ]}
+          provider="google"
+        >
+          <slot />
+        </SignIn>
+      </div>
+    )
+  }
+
+</>
+
+<style define:vars={{ color }}>
+  .convert_manager__button {
+    gap: 0.5rem;
+
+    padding: 0.8rem;
+    padding-inline: 3rem;
+
+    background-color: var(--color);
+
+    font-size: larger;
+  }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .convert_manager__button {
+      gap: 0.2rem;
+
+      padding: 0.5rem;
+      padding-inline: 1rem;
+
+      font-size: medium;
+    }
+  }
+</style>

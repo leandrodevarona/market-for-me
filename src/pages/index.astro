@@ -1,4 +1,7 @@
 ---
+import SkeletonBox from "@components/common/loaders/SkeletonBox.astro";
+import ConvertToManager from "@components/forms/ConvertToManager.astro";
+import VisitRandomMarket from "@components/forms/VisitRandomMarket.astro";
 import ErrorBuyModal from "@components/markets/cart/modals/ErrorBuyModal.astro";
 import SuccessBuyModal from "@components/markets/cart/modals/SuccessBuyModal.astro";
 import Layout from "@layouts/Layout.astro";
@@ -7,6 +10,10 @@ import {
   BUY_PHONE_KEY,
   BUY_SUCCESS_KEY,
 } from "@utils/constants/cart";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import { actions } from "astro:actions";
+import { Routes } from "@utils/routes";
 
 const params = Astro.url.searchParams;
 
@@ -17,10 +24,172 @@ const success = phone ? Boolean(params.get(BUY_SUCCESS_KEY)) : false;
 // Error buy
 const message = params.get(BUY_ERROR_KEY);
 const error = Boolean(message);
+
+const resultManager = Astro.getActionResult(actions.users.createManager);
+
+const resultMarket = Astro.getActionResult(actions.markets.visitRandomMarket);
+if (resultMarket && !resultMarket.error)
+  return Astro.redirect(Routes.markets(resultMarket.data.id));
 ---
 
-<Layout title="Market for me">
-  <main class="home"></main>
+<Layout title="Markets for me">
+  <main class="home">
+    <header class="home_header">
+      <h1>Markets for me</h1>
+      <div class="home_actions">
+        <p>Soy una empresa</p>
+        <ConvertToManager server:defer>
+          <span>Crear mi mercado</span>
+          <Icon name="mdi:arrow-right-thin-circle-outline" size={25} />
+          <SkeletonBox slot="fallback" width="280px" height="50" />
+        </ConvertToManager>
+      </div>
+    </header>
+    <section class="home_image">
+      <Image
+        src="/presentation.jpeg"
+        alt="Market for me presentation"
+        width={1200}
+        height={500}
+      />
+    </section>
+    <section class="home_information">
+      <div>
+        <p>
+          <strong>Crea tus mercados online con Market for me. </strong>
+          Si usted posee una pequeña empresa, este puede ser el sitio ideal para
+          comenzar a ampliar su negocio y hacerlo más fructifero.
+        </p>
+      </div>
+      <div class="home_information__actions">
+        <ConvertToManager server:defer color="rgb(var(--card-rgb))">
+          Empezar
+          <SkeletonBox slot="fallback" width="170px" height="47" />
+        </ConvertToManager>
+        {
+          resultManager?.error && (
+            <p class="return_stock__error">
+              <Icon name="mdi:close-octagon" size={30} color="red" />{" "}
+              {resultManager.error.message}
+            </p>
+          )
+        }
+        <VisitRandomMarket server:defer />
+        {
+          resultMarket?.error && (
+            <p class="return_stock__error">
+              <Icon name="mdi:close-octagon" size={30} color="red" />{" "}
+              {resultMarket.error.message}
+            </p>
+          )
+        }
+      </div>
+    </section>
+  </main>
   <SuccessBuyModal open={success} marketPhone={phone} />
   <ErrorBuyModal open={error} errorMessage={message} />
 </Layout>
+
+<style>
+  .home {
+    --font-mono: "geistMonoFont", ui-monospace, Apple Color Emoji,
+      Segoe UI Emoji, Segoe UI Symbol, SFMono-Regular, Roboto Mono, Menlo,
+      Monaco, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
+
+    --font-mono-fallback: "Roboto Mono", Menlo, Monaco, Lucida Console,
+      Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New,
+      monospace max-width: 1200px;
+
+    max-width: 1300px;
+    width: 100%;
+    margin: 0 auto;
+    padding-inline: 1rem;
+    padding-top: 3rem;
+    padding-bottom: 10rem;
+  }
+
+  .home_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .home_actions p {
+    text-transform: uppercase;
+    text-align: end;
+
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+
+    margin-bottom: 0.6rem;
+
+    font-family: var(--font-mono, var(--font-mono-fallback)), ui-monospace,
+      SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+      monospace;
+  }
+
+  .home h1 {
+    font-size: 57px;
+    letter-spacing: -5px;
+    font-weight: 600;
+  }
+
+  .home_image {
+    padding-block: 3rem;
+  }
+
+  .home_image img {
+    width: 100%;
+
+    object-fit: cover;
+  }
+
+  .home_information {
+    max-width: 90%;
+
+    display: grid;
+    grid-template-columns: 1fr 0.7fr;
+    gap: 4rem;
+
+    margin: 0 auto;
+  }
+
+  .home_information p {
+    color: #666666;
+
+    font-size: large;
+    font-weight: 500;
+
+    line-height: 1.8;
+
+    text-wrap: pretty;
+  }
+
+  .home_information strong {
+    color: #171717;
+  }
+
+  .home_information__actions {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .home h1 {
+      font-size: 26px;
+      letter-spacing: -2px;
+    }
+
+    .home_information {
+      max-width: 100%;
+      gap: 0.5rem;
+    }
+
+    .home_information__actions {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
