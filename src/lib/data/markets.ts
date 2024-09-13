@@ -70,3 +70,18 @@ export async function getMarketByProductId(productId: string) {
     return null;
   }
 }
+
+export async function getMarketByInvoiceNumber(invoiceNumber: string) {
+  try {
+    const buy = await db.buy.findUnique({
+      select: { market: true },
+      where: {
+        invoiceNumber,
+      },
+    });
+
+    return buy?.market;
+  } catch (error) {
+    return null;
+  }
+}

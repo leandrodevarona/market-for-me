@@ -92,6 +92,8 @@ model Market {
   userId String @db.ObjectId
 
   products Product[]
+
+  buys Buy[]
 }
 
 // Address is an embedded document
@@ -156,4 +158,23 @@ model CartItem {
   cartId    String  @db.ObjectId
 
   @@unique([cartId, productId])
+}
+
+type BuyProduct {
+  productId String
+  quantity  Int
+}
+
+model Buy {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  market   Market @relation(fields: [marketId], references: [id])
+  marketId String @db.ObjectId
+
+  products BuyProduct[]
+
+  invoiceNumber    String @unique
+  invoicePdfBase64 String
+
+  returnedStock Boolean @default(false)
 }

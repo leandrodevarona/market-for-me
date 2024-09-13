@@ -2,7 +2,7 @@ import { getUserCart } from "@data/cart";
 import { getExchangeRateByMarket } from "@data/currencies";
 import { getMarketByProductId } from "@data/markets";
 import { getUserByMarketId } from "@data/users";
-import { Currency } from "@prisma/client";
+import { Currency, type BuyProduct } from "@prisma/client";
 import { CART_COOKIES_KEY } from "@utils/constants/cart";
 import { convertCurrency } from "@utils/currencies";
 import { sendBuyClientEmail } from "@utils/email/buyClient";
@@ -81,9 +81,7 @@ export const invoices = {
             message: "Debe añadir productos al carro.",
           });
 
-        const invoiceId = generateUniqueId();
-
-        const invoiceNumber = `Factura ${invoiceId}`;
+        const invoiceNumber = generateUniqueId();
 
         const data: InvoiceData = {
           apiKey: import.meta.env.INVOICES_API_KEY,
@@ -126,6 +124,24 @@ export const invoices = {
             code: "BAD_REQUEST",
             message: "Hubo problemas al completar su compra.",
           });
+        }
+
+        try {
+          const products: BuyProduct[] = currCart.cartItems.map((item) => ({
+            productId: item.product.id,
+            quantity: item.quantity,
+          }));
+
+          await db.buy.create({
+            data: {
+              marketId: market.id,
+              products,
+              invoiceNumber,
+              invoicePdfBase64: invoice.pdf,
+            },
+          });
+        } catch (error) {
+          console.error("Error al crear registro de compra. ", error);
         }
 
         // Eliminando carro

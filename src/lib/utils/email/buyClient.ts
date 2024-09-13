@@ -1,3 +1,4 @@
+import { Routes } from "@utils/routes";
 import { createTransport, type Transporter } from "nodemailer";
 
 type BuyClientTemplateParams = {
@@ -71,17 +72,14 @@ async function getEmailTransporter(): Promise<Transporter> {
 }
 
 function parseEmailTemplate(params: BuyClientTemplateParams["params"]): string {
+  const baseUrl = import.meta.env.SITE.slice(0, -1);
+
   return `<div
   style="
     max-width: 600px;
     border: 1px solid #efefef;
     padding: 16px;
-    font-family:
-      Segoe UI,
-      Tahoma,
-      Geneva,
-      Verdana,
-      sans-serif;
+    font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
   "
 >
   <!-- Header -->
@@ -93,13 +91,23 @@ function parseEmailTemplate(params: BuyClientTemplateParams["params"]): string {
   <div style="margin-bottom: 32px; color: #222">
     <p style="margin-bottom: 16px">Hola, ${params.name},</p>
     <p>
-      Se ha realizado una compra en su tienda. Usted debe esperar a que un
-      cliente lo contacte por <strong>Whatsapp</strong> y le mandé una factura
-      con el mismo número que se muestra en el título de este correo. Si no es
-      así, usted puede <strong>devolver el stock</strong> de productos que usó
-      el usuario. Dichos productos se muestran en la factura adjunta a este
-      correo.
+      Se realizó una compra en su tienda. Usted debe esperar a que un
+      cliente lo contacte por <strong>Whatsapp</strong> y le envíe una factura de número: ${params.invoiceNumber}. 
+      Si no es así, usted puede <strong>devolver el stock</strong> de productos que usó
+      el usuario dando click en el siguiente botón:
     </p>
+    <a
+      href="${baseUrl}${Routes.returnStock(params.invoiceNumber)}"
+      target="_blank"
+      style="
+        text-decoration: none;
+        padding: 0.5rem;
+        background-color: #4b484830;
+        font-size: larger;
+      "
+    >
+      Devolver stock
+    </a>
   </div>
   <!-- Footer -->
   <div style="color: #5f5f5f">
