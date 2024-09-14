@@ -1,0 +1,32 @@
+---
+import { Routes } from "@utils/routes";
+import SidebarMarkets from "./markets/SidebarMarkets.astro";
+---
+
+<>
+  <header class="sidebar_header">
+    <a href={Routes.adminHome}>
+      <h1>Dashboard</h1>
+    </a>
+  </header>
+  <nav class="sidebar_nav">
+    <SidebarMarkets />
+  </nav>
+</>
+
+<style>
+  .sidebar_header {
+    width: 100%;
+    background-color: rgb(var(--tile-start-rgb));
+
+    padding: 1rem;
+  }
+
+  .sidebar_header h1 {
+    font-size: larger;
+  }
+
+  .sidebar_nav {
+    padding: 1rem;
+  }
+</style>

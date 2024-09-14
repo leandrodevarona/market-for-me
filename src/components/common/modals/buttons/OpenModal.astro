@@ -2,24 +2,19 @@
 interface Props {
   class?: string;
   modalId?: string;
-  href?: string;
 }
 
-const { class: className, modalId, href } = Astro.props;
+const { class: className, modalId } = Astro.props;
 ---
 
-<button id="open_modal" class={className}>
+<button id={"open_modal" + modalId} class={className}>
   <slot />
 </button>
 
-<script is:inline define:vars={{ modalId, href }}>
-  const button = document.getElementById("open_modal");
+<script is:inline define:vars={{ modalId }}>
+  const button = document.getElementById("open_modal" + modalId);
 
   button.addEventListener("click", () => {
-    if (href) {
-      Astro.redirect(href);
-    }
-
     if (modalId) {
       const dialog = document.getElementById(modalId);
       if (dialog) {

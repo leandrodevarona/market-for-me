@@ -123,6 +123,7 @@ const { product } = Astro.props;
 
     display: grid;
     grid-template-rows: 0.2fr 1fr;
+    gap: 1rem;
 
     line-height: 1.4;
     padding: calc(1.5rem - 1px);
@@ -157,6 +158,11 @@ const { product } = Astro.props;
     flex-direction: column;
   }
 
+  .update_product__form input,
+  .update_product__form textarea {
+    width: 100%;
+  }
+
   .update_product__form textarea {
     resize: none;
   }
@@ -175,5 +181,14 @@ const { product } = Astro.props;
 
   .update_product__currencyAndStock input {
     max-width: 65px;
+  }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .update_product__form {
+      grid-template-columns: none;
+      grid-template-rows: 1fr 1fr;
+      gap: 1rem;
+    }
   }
 </style>
