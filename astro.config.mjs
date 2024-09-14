@@ -15,7 +15,7 @@ export default defineConfig({
     serverIslands: true,
   },
   integrations: [auth(), icon()],
-  site: isProd ? "https://marketsforme.netlify.app/" : "http://localhost:4321/",
+  site: isProd ? "https://marketsforme.store/" : "http://localhost:4321/",
   image: {
     domains: ["lh3.googleusercontent.com", "res.cloudinary.com"],
   },
