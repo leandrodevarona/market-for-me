@@ -5,14 +5,14 @@ import { actions } from "astro:actions";
 import { SignIn } from "auth-astro/components";
 
 interface Props {
-  color?: string;
+  class?: string;
 }
 
 const user = await currentUser(Astro.request);
 
 const isAuth = user !== undefined;
 
-const { color = "rgb(var(--highlighted-rgb))" } = Astro.props;
+const { class: classNames } = Astro.props;
 ---
 
 <>
@@ -24,26 +24,13 @@ const { color = "rgb(var(--highlighted-rgb))" } = Astro.props;
         action={Routes.adminCreateMarket + actions.users.createManager}
       >
         <input type="text" name="userId" value={user.id} hidden />
-        <button
-          class:list={[
-            "convert_manager__button",
-            "primary_button",
-            "centered_button",
-          ]}
-        >
+        <button class:list={classNames}>
           <slot />
         </button>
       </form>
     ) : (
       <div class="convert_manager">
-        <SignIn
-          class:list={[
-            "convert_manager__button",
-            "primary_button",
-            "centered_button",
-          ]}
-          provider="google"
-        >
+        <SignIn class:list={classNames} provider="google">
           <slot />
         </SignIn>
       </div>
@@ -51,27 +38,8 @@ const { color = "rgb(var(--highlighted-rgb))" } = Astro.props;
   }
 </>
 
-<style define:vars={{ color }}>
-  .convert_manager__button {
-    gap: 0.5rem;
-
-    padding: 0.8rem;
-    padding-inline: 3rem;
-
-    background-color: var(--color);
-
-    font-size: larger;
-  }
-
-  /* Mobile */
-  @media (max-width: 700px) {
-    .convert_manager__button {
-      gap: 0.2rem;
-
-      padding: 0.5rem;
-      padding-inline: 1rem;
-
-      font-size: medium;
-    }
+<style>
+  .convert_manager button {
+    cursor: pointer;
   }
 </style>
