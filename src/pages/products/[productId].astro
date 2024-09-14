@@ -13,7 +13,7 @@ const product = await getProductById(productId);
 if (!product) return;
 ---
 
-<Layout title={product.name}>
+<Layout title={product.name} description={product.description}>
   <main class="product">
     <section>
       <ProductImageViewer imageUrls={product.imageUrls} />
