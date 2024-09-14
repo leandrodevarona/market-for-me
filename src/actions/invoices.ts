@@ -164,7 +164,11 @@ export const invoices = {
 
         context.cookies.delete(CART_COOKIES_KEY);
 
-        return { pdf: invoice.pdf, phone: market.contact.phone1 };
+        return {
+          number: invoiceNumber,
+          pdf: invoice.pdf,
+          phone: market.contact.phone1,
+        };
       }
 
       // Si no hay carro retorno un error
