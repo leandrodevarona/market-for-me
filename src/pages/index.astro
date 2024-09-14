@@ -14,6 +14,7 @@ import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import { actions } from "astro:actions";
 import { Routes } from "@utils/routes";
+import { SignIn } from "auth-astro/components";
 
 const params = Astro.url.searchParams;
 
@@ -38,7 +39,10 @@ if (resultMarket && !resultMarket.error)
       <h1>Markets for me</h1>
       <div class="home_actions">
         <p>Soy una empresa</p>
-        <ConvertToManager server:defer>
+        <ConvertToManager
+          server:defer
+          class="home_convert__manager primary_button centered_button"
+        >
           <span>Crear mi mercado</span>
           <Icon name="mdi:arrow-right-thin-circle-outline" size={25} />
           <SkeletonBox slot="fallback" width="280px" height="50" />
@@ -62,7 +66,10 @@ if (resultMarket && !resultMarket.error)
         </p>
       </div>
       <div class="home_information__actions">
-        <ConvertToManager server:defer color="rgb(var(--card-rgb))">
+        <ConvertToManager
+          server:defer
+          class="home_information__convert-manager primary_button centered_button"
+        >
           Empezar
           <SkeletonBox slot="fallback" width="170px" height="47" />
         </ConvertToManager>
@@ -85,6 +92,29 @@ if (resultMarket && !resultMarket.error)
         }
       </div>
     </section>
+    <section class="home_steps">
+      <div>
+        <h2>Obtén un mercado online y comienza a vender en solo tres pasos</h2>
+        <p class="home_steps__free">¡Todo completamente gratis!</p>
+      </div>
+      <div class="home_steps__content">
+        <div class="home_steps__item">
+          <Icon class="home_steps__icon" name="mdi:account-check" size={100} />
+          <p>Inicie sesión para completar el registro</p>
+        </div>
+        <div class="home_steps__item">
+          <Icon class="home_steps__icon" name="mdi:basket-unfill" size={100} />
+          <p>
+            Crea tu mercado online desde
+            <ConvertToManager>aqui</ConvertToManager>
+          </p>
+        </div>
+        <div class="home_steps__item">
+          <Icon class="home_steps__icon" name="mdi:share-variant" size={100} />
+          <p>Comparte el link de tu mercado con tus clientes</p>
+        </div>
+      </div>
+    </section>
   </main>
   <SuccessBuyModal open={success} marketPhone={phone} />
   <ErrorBuyModal open={error} errorMessage={message} />
@@ -100,6 +130,10 @@ if (resultMarket && !resultMarket.error)
       Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New,
       monospace max-width: 1200px;
 
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
     max-width: 1300px;
     width: 100%;
     margin: 0 auto;
@@ -112,6 +146,18 @@ if (resultMarket && !resultMarket.error)
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .home_convert__manager,
+  .home_information__convert-manager {
+    gap: 0.5rem;
+
+    padding: 0.8rem;
+    padding-inline: 3rem;
+
+    background-color: rgb(var(--highlighted-rgb));
+
+    font-size: larger;
   }
 
   .home_actions p {
@@ -134,10 +180,6 @@ if (resultMarket && !resultMarket.error)
     font-weight: 600;
   }
 
-  .home_image {
-    padding-block: 3rem;
-  }
-
   .home_image img {
     width: 100%;
 
@@ -152,6 +194,7 @@ if (resultMarket && !resultMarket.error)
     gap: 4rem;
 
     margin: 0 auto;
+    margin-top: 5rem;
   }
 
   .home_information p {
@@ -169,10 +212,93 @@ if (resultMarket && !resultMarket.error)
     color: #171717;
   }
 
+  @media (prefers-color-scheme: dark) {
+    .home_information strong {
+      color: #9e9c9c;
+    }
+  }
+
   .home_information__actions {
     display: flex;
     align-items: flex-start;
     gap: 1rem;
+  }
+
+  .home_information__convert-manager {
+    background-color: #666666;
+  }
+
+  .home_steps {
+    max-width: 90%;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 3rem;
+
+    margin: 0 auto;
+    margin-top: 5rem;
+  }
+
+  .home_steps h2 {
+    font-size: 38px;
+    line-height: 1.25;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+    color: var(--accents-8);
+
+    margin-bottom: 2rem;
+
+    text-wrap: balance;
+  }
+
+  .home_steps__free {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #888;
+  }
+
+  .home_steps__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .home_steps__content > div {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .home_steps__content button {
+    all: unset;
+
+    font-size: 1.25rem;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .home_steps__content p {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+
+    text-wrap: pretty;
+  }
+
+  .home_steps__icon {
+    min-width: 100px;
+    min-height: 100px;
+
+    border-radius: 50%;
+    border: 2px solid rgb(var(--foreground-rgb));
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    aspect-ratio: 1 / 1;
+
+    padding: 1rem;
   }
 
   /* Mobile */
@@ -182,14 +308,64 @@ if (resultMarket && !resultMarket.error)
       letter-spacing: -2px;
     }
 
+    .home_convert__manager,
+    .home_information__convert-manager {
+      gap: 0.2rem;
+
+      padding: 0.5rem;
+      padding-inline: 1rem;
+
+      font-size: medium;
+    }
+
     .home_information {
       max-width: 100%;
       gap: 0.5rem;
+
+      margin-top: 2rem;
     }
 
     .home_information__actions {
       flex-direction: column;
       align-items: center;
+    }
+
+    .home_steps {
+      max-width: 100%;
+
+      gap: 1rem;
+
+      margin-top: 2rem;
+    }
+
+    .home_steps h2 {
+      font-size: 25px;
+    }
+
+    .home_steps__free {
+      font-size: 1.2rem;
+    }
+
+    .home_steps__content > div {
+      flex-direction: column;
+
+      text-align: center;
+    }
+
+    .home_steps__content button {
+      font-size: 1rem;
+    }
+
+    .home_steps__content p {
+      font-size: 1rem;
+    }
+
+    .home_steps__icon {
+      min-width: 70px;
+      min-height: 70px;
+
+      width: 70px;
+      height: 70px;
     }
   }
 </style>
