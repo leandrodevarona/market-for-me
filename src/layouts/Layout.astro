@@ -10,7 +10,11 @@ interface Props {
   header?: boolean;
 }
 
-const { title, description = "Astro description", header = true } = Astro.props;
+const {
+  title,
+  description = "An online marketplace creator for small businesses",
+  header = true,
+} = Astro.props;
 ---
 
 <!doctype html>
