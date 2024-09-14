@@ -22,7 +22,11 @@ const { image } = Astro.props;
 <style>
   .user_avatar {
     width: 40px;
+    min-width: 40px;
     height: 40px;
+    min-height: 40px;
+
+    aspect-ratio: 1;
 
     display: flex;
     align-items: center;
