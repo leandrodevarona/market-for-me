@@ -68,7 +68,7 @@ const { disabled } = Astro.props;
       return;
     }
 
-    easyinvoice.download("myInvoice.pdf", data.pdf);
+    easyinvoice.download(`myInvoice-${data.number}.pdf`, data.pdf);
 
     if (loaderSpan) loaderSpan.innerHTML = "Terminar compra";
 
