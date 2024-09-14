@@ -12,7 +12,7 @@ if (!manager) return Astro.redirect(Routes.home);
 
 <AdminLayout>
   <main class="create_market">
-    <section>
+    <section class="create_market__form-container">
       <CreateMarket />
     </section>
     <section class="create_market__products">
@@ -39,5 +39,21 @@ if (!manager) return Astro.redirect(Routes.home);
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+  }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .create_market {
+      grid-template-columns: none;
+      grid-template-rows: 0.1fr 0.9fr;
+    }
+
+    .create_market__form-container {
+      grid-row: 2;
+    }
+
+    .create_market__products {
+      grid-row: 1;
+    }
   }
 </style>

@@ -1,21 +1,30 @@
 ---
-import { Routes } from "@utils/routes";
-import SidebarMarkets from "./markets/SidebarMarkets.astro";
+import SlideOutModal from "@components/common/modals/SlideOutModal.astro";
+import SidebarContent from "./SidebarContent.astro";
+import OpenModal from "@components/common/modals/buttons/OpenModal.astro";
+import { Icon } from "astro-icon/components";
 ---
 
-<div class="sidebar">
-  <header class="sidebar_header">
-    <a href={Routes.adminHome}>
-      <h1>Dashboard</h1>
-    </a>
-  </header>
-  <nav class="sidebar_nav">
-    <SidebarMarkets />
-  </nav>
+<div class="sidebar_container">
+  <div class="sidebar">
+    <SidebarContent />
+  </div>
+  <SlideOutModal id="sidebar_modal" class="sidebar_modal" position="left">
+    <SidebarContent />
+  </SlideOutModal>
+  <OpenModal class="sidebar_modal__button" modalId="sidebar_modal">
+    <Icon name="mdi:chevron-right-box" size={30} />
+  </OpenModal>
 </div>
 
 <style>
+  .sidebar_container {
+    position: relative;
+  }
+
   .sidebar {
+    min-height: 91.3vh;
+
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -23,18 +32,38 @@ import SidebarMarkets from "./markets/SidebarMarkets.astro";
     background-color: rgb(var(--callout-rgb));
   }
 
-  .sidebar_header {
-    width: 100%;
-    background-color: rgb(var(--tile-start-rgb));
-
-    padding: 1rem;
+  .sidebar_modal__button {
+    display: none;
   }
 
-  .sidebar_header h1 {
-    font-size: larger;
-  }
+  /* Mobile */
+  @media (max-width: 700px) {
+    .sidebar_container {
+      width: 0;
+    }
 
-  .sidebar_nav {
-    padding: 1rem;
+    .sidebar {
+      display: none;
+    }
+
+    .sidebar_modal {
+      width: 70%;
+    }
+
+    .sidebar_modal__button {
+      display: block;
+
+      width: 30px;
+      height: 30px;
+
+      position: absolute;
+
+      top: -15px;
+      right: -30px;
+
+      background-color: transparent;
+      border: none;
+      padding: 0;
+    }
   }
 </style>
