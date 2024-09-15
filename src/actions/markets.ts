@@ -22,7 +22,7 @@ export const markets = {
 
       const user = await currentUser(context.request);
 
-      if (!user?.id) return context.rewrite(Routes.home);
+      if (!user?.id) return { id: undefined };
 
       const exchangeRates = await getExchangeRate();
 
@@ -50,7 +50,7 @@ export const markets = {
         console.error(error);
       }
 
-      return createdMarket ?? 0;
+      return { id: createdMarket?.id };
     },
   }),
   updateMarket: defineAction({
@@ -94,7 +94,7 @@ export const markets = {
         console.error(error);
       }
 
-      return mutateMarket ?? 0;
+      return { id: mutateMarket?.id };
     },
   }),
   visitRandomMarket: defineAction({
@@ -109,7 +109,7 @@ export const markets = {
           take: 1,
           skip: randomIndex,
         });
-        
+
         return { id: randomMarket[0].id };
       } catch (error) {
         throw new ActionError({
