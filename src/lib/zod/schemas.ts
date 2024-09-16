@@ -3,7 +3,7 @@ import { z } from "astro:schema";
 
 export const createMarketSchema = z.object({
   name: z.string({ required_error: "The name is required" }).max(30),
-  description: z.string().max(100).optional(),
+  description: z.string().max(250).optional(),
   image: z.instanceof(File).optional(),
   address: z.string().max(100).optional(),
   phone1: z.string().max(20),
