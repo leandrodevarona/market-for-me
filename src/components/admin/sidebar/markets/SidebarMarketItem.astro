@@ -1,6 +1,6 @@
 ---
 import { Routes } from "@utils/routes";
-import DeployedMarketInfo from "@components/admin/markets/info/DeployedMarketInfo.astro";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   marketId: string;
@@ -8,11 +8,20 @@ interface Props {
 }
 
 const { marketId, marketName } = Astro.props;
+
+const pathname = Astro.url.pathname;
 ---
 
 <li class="sidebar_market__item">
   <a href={Routes.adminMarkets(marketId)}>{marketName}</a>
-  <DeployedMarketInfo class="sidebar_market__point" marketId={marketId} />
+  <a
+    href={pathname + `?deleteMarket=${marketId}`}
+    aria-label="Eliminar mercado"
+    title="Eliminar mercado"
+    class="sidebar_market__delete"
+  >
+    <Icon name="mdi:delete" size={20} />
+  </a>
 </li>
 
 <style>
@@ -22,10 +31,13 @@ const { marketId, marketName } = Astro.props;
     display: flex;
     align-items: center;
 
+    justify-content: space-between;
+
     margin-bottom: 0.5rem;
   }
 
-  .sidebar_market__point {
-    margin-left: auto;
+  .sidebar_market__delete {
+    display: flex;
+    align-items: center;
   }
 </style>

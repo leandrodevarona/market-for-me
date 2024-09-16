@@ -1,10 +1,11 @@
 import { ActionError, defineAction } from "astro:actions";
 import { db } from "../lib/db";
 import { createMarketSchema, updateMarketSchema } from "src/lib/zod/schemas";
-import { uploadMarketImage } from "@utils/cloudinary";
+import { deleteMultipleImages, uploadMarketImage } from "@utils/cloudinary";
 import { currentUser } from "@auth-astro/session";
-import { Routes } from "@utils/routes";
 import { getExchangeRate } from "@data/currencies";
+import { z } from "astro:schema";
+import { getMarketById } from "@data/markets";
 
 export const markets = {
   createMarket: defineAction({
@@ -95,6 +96,47 @@ export const markets = {
       }
 
       return { id: mutateMarket?.id };
+    },
+  }),
+  deleteMarket: defineAction({
+    accept: "form",
+    input: z.object({
+      marketId: z.string(),
+    }),
+    handler: async ({ marketId }) => {
+      try {
+        const market = await getMarketById(marketId);
+
+        if (!market)
+          throw new ActionError({
+            code: "CONFLICT",
+            message: "Mercado no encontrado.",
+          });
+
+        const products = market.products;
+
+        const imageUrls = products.flatMap((product) => product.imageUrls);
+        if (market.imageUrl) imageUrls.push(market.imageUrl);
+
+        await deleteMultipleImages(imageUrls);
+
+        await db.product.deleteMany({
+          where: {
+            marketId,
+          },
+        });
+
+        await db.market.delete({
+          where: {
+            id: marketId,
+          },
+        });
+      } catch (error) {
+        throw new ActionError({
+          code: "CONFLICT",
+          message: "No se pudo eliminar el mercado.",
+        });
+      }
     },
   }),
   visitRandomMarket: defineAction({

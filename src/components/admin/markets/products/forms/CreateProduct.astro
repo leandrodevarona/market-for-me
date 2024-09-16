@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { actions } from "astro:actions";
 
 interface Props {
@@ -14,11 +15,18 @@ const { marketId } = Astro.props;
   action={actions.products.createProduct}
 >
   <input type="text" name="marketId" value={marketId} hidden />
-  <button class="primary_button">Crear producto</button>
+  <button class:list={["primary_button", "centered_button"]}>
+    <Icon name="mdi:plus" size={25} />
+    <span>Crear producto</span>
+  </button>
 </form>
 
 <style>
   .create_product__form button {
     padding: 0.5rem;
+
+    gap: 0.5rem;
+
+    font-size: large;
   }
 </style>

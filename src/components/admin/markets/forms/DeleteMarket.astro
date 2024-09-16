@@ -1,0 +1,27 @@
+---
+import { actions } from "astro:actions";
+
+interface Props {
+  marketId: string;
+  callbackUrl: string;
+}
+
+const { marketId, callbackUrl } = Astro.props;
+---
+
+<form
+  class="delete_market"
+  action={callbackUrl + actions.markets.deleteMarket}
+  method="POST"
+>
+  <input type="text" name="marketId" value={marketId} hidden />
+  <button class="primary_button">Eliminar</button>
+</form>
+
+<style>
+  .delete_market button {
+    padding: 0.5rem;
+
+    font-size: large;
+  }
+</style>

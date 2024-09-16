@@ -1,6 +1,13 @@
 ---
 import Layout from "./Layout.astro";
 import Sidebar from "../components/admin/sidebar/Sidebar.astro";
+import DeleteMarket from "@components/admin/markets/modals/DeleteMarket.astro";
+
+const params = Astro.url.searchParams;
+
+const deleteMarket = params.get("deleteMarket")?.toString();
+
+const open = Boolean(deleteMarket);
 ---
 
 <Layout
@@ -11,6 +18,7 @@ import Sidebar from "../components/admin/sidebar/Sidebar.astro";
     <Sidebar />
     <slot />
   </div>
+  <DeleteMarket open={open} marketId={deleteMarket} />
 </Layout>
 
 <style>

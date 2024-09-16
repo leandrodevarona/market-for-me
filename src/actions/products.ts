@@ -2,7 +2,7 @@ import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { db } from "../lib/db";
 import { updateProductSchema } from "src/lib/zod/schemas";
-import { uploadProductImage } from "@utils/cloudinary";
+import { deleteMultipleImages, uploadProductImage } from "@utils/cloudinary";
 
 export const products = {
   createProduct: defineAction({
@@ -87,6 +87,8 @@ export const products = {
             id: productId,
           },
         });
+
+        await deleteMultipleImages(deletedProduct.imageUrls);
       } catch (error) {
         console.error(error);
       }
