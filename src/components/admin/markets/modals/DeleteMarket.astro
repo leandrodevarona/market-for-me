@@ -1,0 +1,93 @@
+---
+import Modal from "@components/common/modals/Modal.astro";
+import { Routes } from "@utils/routes";
+import { Icon } from "astro-icon/components";
+import DeleteMarketForm from "../forms/DeleteMarket.astro";
+
+interface Props {
+  open: boolean;
+  marketId?: string;
+}
+
+const { open, marketId } = Astro.props;
+
+const pathname = Astro.url.pathname;
+
+if (!marketId) return;
+---
+
+<Modal id="delete_market" class="delete_market" open={open} backHref={pathname}>
+  <div class="delete_market__content">
+    <Icon name="mdi:cloud-question" size={100} color="yellow" />
+    <h3>¿Está seguro que desea eliminar este mercado?</h3>
+    <p>Si elimina el mercado no podrá recuperarlo.</p>
+    <div class="delete_market__actions">
+      <a
+        class:list={["delete_market__button", "primary_button"]}
+        href={pathname}
+      >
+        Cancelar
+      </a>
+      <DeleteMarketForm marketId={marketId} callbackUrl={pathname} />
+    </div>
+  </div>
+</Modal>
+
+<style>
+  .delete_market {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border: none;
+    border-radius: var(--border-radius);
+
+    padding: 1rem;
+  }
+
+  .delete_market::backdrop {
+    backdrop-filter: blur(3px);
+  }
+
+  .delete_market__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 3rem;
+    padding-top: 1rem;
+
+    text-align: center;
+  }
+
+  .delete_market__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    margin-top: 2rem;
+  }
+
+  .delete_market__button {
+    padding: 0.5rem;
+
+    font-size: large;
+  }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .delete_market {
+      width: 90%;
+    }
+
+    .delete_market__content {
+      padding: 0.5rem;
+      padding-bottom: 1rem;
+    }
+
+    .delete_market__button {
+      margin-top: 1rem;
+    }
+  }
+</style>

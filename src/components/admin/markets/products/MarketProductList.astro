@@ -10,12 +10,16 @@ const { products } = Astro.props;
 ---
 
 {
-  products && products.length > 0 && (
+  products && products.length > 0 ? (
     <ul class="market_product__list">
       {products.map((product) => (
         <UpdateProduct product={product} />
       ))}
     </ul>
+  ) : (
+    <div class="market_product__list-noProducts">
+      <p>No hay productos</p>
+    </div>
   )
 }
 
@@ -23,6 +27,14 @@ const { products } = Astro.props;
   .market_product__list {
     padding: 2rem;
     padding-left: 0;
+  }
+
+  .market_product__list-noProducts {
+    padding: 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /* Mobile */

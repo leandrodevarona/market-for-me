@@ -152,7 +152,7 @@ model Cart {
 model CartItem {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
   quantity  Int
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String  @db.ObjectId
   cart      Cart    @relation(fields: [cartId], references: [id])
   cartId    String  @db.ObjectId
@@ -168,8 +168,8 @@ type BuyProduct {
 model Buy {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  market   Market @relation(fields: [marketId], references: [id])
-  marketId String @db.ObjectId
+  market   Market? @relation(fields: [marketId], references: [id], onDelete: SetNull)
+  marketId String? @db.ObjectId
 
   products BuyProduct[]
 
