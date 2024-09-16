@@ -29,6 +29,12 @@ export async function getMarketById(
   productsInStock: boolean = false
 ) {
   try {
+    const orderBy = {
+      orderBy: {
+        id: "desc" as any,
+      },
+    };
+
     const query = productsInStock
       ? {
           where: {
@@ -36,8 +42,9 @@ export async function getMarketById(
               gt: 0,
             },
           },
+          ...orderBy,
         }
-      : true;
+      : orderBy;
 
     const market = await db.market.findUnique({
       where: {
