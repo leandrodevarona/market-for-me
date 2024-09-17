@@ -1,0 +1,68 @@
+---
+import { Routes } from "@utils/routes";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  id: string;
+  class?: string;
+  marketId: string;
+}
+
+const { id, class: className, marketId } = Astro.props;
+
+const baseUrl = import.meta.env.SITE.slice(0, -1);
+
+const link = baseUrl + Routes.markets(marketId);
+---
+
+<button
+  id={id}
+  class:list={[className, "primary_button", "centered_button"]}
+  aria-label="Compartir mercado"
+  title="Compartir mercado"
+>
+  <div class="copy_market__link-content">
+    <slot />
+  </div>
+  <div class="copy_market__copied-content">
+    <slot name="copied" />
+  </div>
+</button>
+
+<style>
+  .copy_market__link-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .copy_market__copied-content {
+    display: none;
+  }
+
+  .copy_market__copied {
+    .copy_market__link-content {
+      display: none;
+    }
+
+    .copy_market__copied-content {
+      display: block;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ id, link }} type="module">
+  const button = document.getElementById(id);
+
+  if (button) {
+    button.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(link);
+
+        const newClass = "copy_market__copied";
+
+        button.classList.add(newClass);
+      } catch (error) {}
+    };
+  }
+</script>

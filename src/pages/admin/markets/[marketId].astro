@@ -8,6 +8,8 @@ import CreateProduct from "@components/admin/markets/products/forms/CreateProduc
 import { currentUser } from "@auth-astro/session";
 import { Routes } from "@utils/routes";
 import { Role } from "@prisma/client";
+import CopyMarketLink from "@components/admin/markets/buttons/CopyMarketLink.astro";
+import { Icon } from "astro-icon/components";
 
 const { marketId } = Astro.params;
 
@@ -27,6 +29,23 @@ if (market.userId !== user.id) return Astro.redirect(Routes.home);
 <AdminLayout>
   <main class="update_market">
     <section class="update_market__buttons">
+      <CopyMarketLink
+        id="update_market__copy"
+        class="update_market__copy"
+        marketId={marketId}
+      >
+        <span>Copiar link del mercado </span>
+        <Icon name="mdi:share-variant" size={20} />
+        <div class="update_market__copy-copied" slot="copied">
+          <span>Link copiado en el portapapeles </span>
+          <Icon
+            class="copy_market__copied-content"
+            name="mdi:clipboard-check"
+            size={20}
+            color="green"
+          />
+        </div>
+      </CopyMarketLink>
       <MarketLink />
     </section>
     <section class="update_market__content">
@@ -48,6 +67,20 @@ if (market.userId !== user.id) return Astro.redirect(Routes.home);
       align-items: center;
       justify-content: flex-end;
       gap: 1rem;
+    }
+
+    .update_market__copy {
+      gap: 0.5rem;
+
+      padding: 0.5rem;
+
+      font-size: medium;
+    }
+
+    .update_market__copy-copied {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .update_market__content {
