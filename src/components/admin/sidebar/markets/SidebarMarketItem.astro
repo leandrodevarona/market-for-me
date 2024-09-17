@@ -29,6 +29,7 @@ const pathname = Astro.url.pathname;
         slot="copied"
         color="green"
       />
+      <Icon name="mdi:clipboard-remove" size={20} color="red" slot="error" />
     </CopyMarketLink>
     <a
       href={pathname + `?deleteMarket=${marketId}`}

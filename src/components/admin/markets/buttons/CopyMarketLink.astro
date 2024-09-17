@@ -1,6 +1,5 @@
 ---
 import { Routes } from "@utils/routes";
-import { Icon } from "astro-icon/components";
 
 interface Props {
   id: string;
@@ -27,6 +26,9 @@ const link = baseUrl + Routes.markets(marketId);
   <div class="copy_market__copied-content">
     <slot name="copied" />
   </div>
+  <div class="copy_market__error-content">
+    <slot name="error" />
+  </div>
 </button>
 
 <style>
@@ -40,6 +42,10 @@ const link = baseUrl + Routes.markets(marketId);
     display: none;
   }
 
+  .copy_market__error-content {
+    display: none;
+  }
+
   .copy_market__copied {
     .copy_market__link-content {
       display: none;
@@ -47,6 +53,24 @@ const link = baseUrl + Routes.markets(marketId);
 
     .copy_market__copied-content {
       display: block;
+    }
+
+    .copy_market__error-content {
+      display: none;
+    }
+  }
+
+  .copy_market__error {
+    .copy_market__link-content {
+      display: none;
+    }
+
+    .copy_market__error-content {
+      display: block;
+    }
+
+    .copy_market__copied-content {
+      display: none;
     }
   }
 </style>
@@ -58,11 +82,12 @@ const link = baseUrl + Routes.markets(marketId);
     button.onclick = async () => {
       try {
         await navigator.clipboard.writeText(link);
+        throw new Error();
 
-        const newClass = "copy_market__copied";
-
-        button.classList.add(newClass);
-      } catch (error) {}
+        button.classList.add("copy_market__copied");
+      } catch (error) {
+        button.classList.add("copy_market__error");
+      }
     };
   }
 </script>
