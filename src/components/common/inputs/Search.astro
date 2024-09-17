@@ -1,0 +1,50 @@
+---
+interface Props {
+  class?: string;
+  placeholder?: string;
+}
+
+const { class: className, placeholder } = Astro.props;
+---
+
+<input
+  class={className}
+  id="search_input"
+  type="search"
+  placeholder={placeholder}
+/>
+
+<script>
+  import { debounce } from "@utils/utils";
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("search_input") as HTMLInputElement;
+    if (input) {
+      input.focus();
+
+      // Check if the current URL has any query params
+      const url = new URL(window.location.href);
+      const params = new URLSearchParams(url.search);
+      const query = params.get("q");
+
+      // If query exists on page load
+      if (query && input) {
+        input.value = query;
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+      }
+
+      const excecuteSearch = () => {
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+        if (input.value) params.set("q", input.value);
+        else params.delete("q");
+
+        window.history.replaceState({}, "", `${url.pathname}?${params}`);
+        location.reload();
+      };
+
+      // Add Listener to update the URL when the input changes
+      input.addEventListener("input", debounce(excecuteSearch, 500));
+    }
+  });
+</script>

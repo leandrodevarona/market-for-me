@@ -3,12 +3,17 @@ import MarketHeader from "@components/markets/presentation/MarketHeader.astro";
 import MarketProductList from "@components/markets/products/MarketProductList.astro";
 import Layout from "@layouts/Layout.astro";
 import { getMarketById } from "@data/markets";
+import Search from "@components/common/inputs/Search.astro";
 
 const { marketId } = Astro.params;
 
 if (!marketId) return;
 
-const market = await getMarketById(marketId, true);
+const params = Astro.url.searchParams;
+
+const query = params.get("q")?.toString();
+
+const market = await getMarketById(marketId, true, query);
 
 if (!market) return;
 
@@ -18,6 +23,10 @@ const marketProducts = market.products;
 <Layout title={market.name} description={market.description}>
   <main class="market">
     <MarketHeader market={market} />
+    <Search
+      class="market_search primary_text__input"
+      placeholder="Buscar productos..."
+    />
     <MarketProductList products={marketProducts} />
   </main>
 </Layout>
@@ -43,5 +52,13 @@ const marketProducts = market.products;
 
   .market::-webkit-scrollbar {
     display: none;
+  }
+
+  .market_search {
+    min-width: 400px;
+    width: 50%;
+
+    margin: 0 auto;
+    margin-block: 1rem;
   }
 </style>

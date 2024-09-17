@@ -23,3 +23,14 @@ export function generateUniqueId(): string {
   const uniqueId = `${part1.toString().padStart(2, "0")}-${part2.toString().padStart(2, "0")}-${part3.toString().padStart(2, "0")}`;
   return uniqueId;
 }
+
+export const debounce = (fn: CallableFunction, delay: number) => {
+  let timer: NodeJS.Timeout | null = null;
+
+  return () => {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn();
+    }, delay);
+  };
+};
