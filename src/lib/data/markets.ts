@@ -26,9 +26,17 @@ export async function getMarketsByUser(userId: string) {
 
 export async function getMarketById(
   id: string,
-  productsInStock: boolean = false
+  productsInStock: boolean = false,
+  key?: string
 ) {
   try {
+    const filter = {
+      name: {
+        contains: key,
+        mode: "insensitive" as any,
+      },
+    };
+
     const orderBy = {
       orderBy: {
         id: "desc" as any,
@@ -37,14 +45,26 @@ export async function getMarketById(
 
     const query = productsInStock
       ? {
-          where: {
-            stock: {
-              gt: 0,
-            },
-          },
           ...orderBy,
+          where: {
+            AND: [
+              {
+                stock: {
+                  gt: 0,
+                },
+              },
+              {
+                ...filter,
+              },
+            ],
+          },
         }
-      : orderBy;
+      : {
+          ...orderBy,
+          where: {
+            ...filter,
+          },
+        };
 
     const market = await db.market.findUnique({
       where: {
