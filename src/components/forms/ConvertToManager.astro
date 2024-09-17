@@ -30,7 +30,11 @@ const { class: classNames } = Astro.props;
       </form>
     ) : (
       <div class="convert_manager">
-        <SignIn class:list={classNames} provider="google">
+        <SignIn
+          class:list={classNames}
+          provider="google"
+          options={{ callbackUrl: Routes.convertToManager }}
+        >
           <slot />
         </SignIn>
       </div>
