@@ -1,4 +1,5 @@
 ---
+import CopyMarketLink from "@components/admin/markets/buttons/CopyMarketLink.astro";
 import { Routes } from "@utils/routes";
 import { Icon } from "astro-icon/components";
 
@@ -14,14 +15,30 @@ const pathname = Astro.url.pathname;
 
 <li class="sidebar_market__item">
   <a href={Routes.adminMarkets(marketId)}>{marketName}</a>
-  <a
-    href={pathname + `?deleteMarket=${marketId}`}
-    aria-label="Eliminar mercado"
-    title="Eliminar mercado"
-    class="sidebar_market__delete"
-  >
-    <Icon name="mdi:delete" size={20} />
-  </a>
+  <div class="sidebar_market__item-actions">
+    <CopyMarketLink
+      id="sidebar_market__copy"
+      class="sidebar_market__copy"
+      marketId={marketId}
+    >
+      <Icon name="mdi:share-variant" size={20} />
+      <Icon
+        class="copy_market__copied-content"
+        name="mdi:clipboard-check"
+        size={20}
+        slot="copied"
+        color="green"
+      />
+    </CopyMarketLink>
+    <a
+      href={pathname + `?deleteMarket=${marketId}`}
+      aria-label="Eliminar mercado"
+      title="Eliminar mercado"
+      class="sidebar_market__delete"
+    >
+      <Icon name="mdi:delete" size={20} />
+    </a>
+  </div>
 </li>
 
 <style>
@@ -34,6 +51,17 @@ const pathname = Astro.url.pathname;
     justify-content: space-between;
 
     margin-bottom: 0.5rem;
+  }
+
+  .sidebar_market__item-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .sidebar_market__copy {
+    background-color: transparent;
+    border: none;
   }
 
   .sidebar_market__delete {
