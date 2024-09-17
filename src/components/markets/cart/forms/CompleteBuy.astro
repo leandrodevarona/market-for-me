@@ -19,10 +19,14 @@ const { disabled } = Astro.props;
     <Icon name="mdi:wallet-bifold" size={25} />
     <span class="loader">Terminar compra</span>
   </button>
+  <label class="complete_buy__phone">
+    Teléfono
+    <input type="tel" name="phone" required maxlength={50} />
+  </label>
   <Currencies title="Moneda con la que desea pagar" />
-  <p>
+  <p class="complete_buy__warning">
     <Icon name="mdi:lightbulb-question" size={25} color="yellow" />
-    Se hará el cambio a esta moneda según la tasa de cambio actual.
+    Se hará el cambio a la moneda seleccionada según la tasa de cambio actual.
   </p>
 </form>
 
@@ -33,6 +37,14 @@ const { disabled } = Astro.props;
     gap: 1rem;
   }
 
+  .complete_buy__phone {
+    max-width: 200px;
+  }
+
+  .complete_buy__phone input {
+    width: 100%;
+  }
+
   .complete_buy__button {
     gap: 0.5rem;
 
@@ -41,6 +53,23 @@ const { disabled } = Astro.props;
     font-size: larger;
 
     background-color: rgb(var(--highlighted-rgb));
+  }
+
+  .complete_buy__warning {
+    text-wrap: pretty;
+  }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .complete_buy {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+
+    .complete_buy__warning {
+      grid-column: 1 / 4;
+    }
   }
 </style>
 

@@ -5,10 +5,10 @@ import { Icon } from "astro-icon/components";
 
 interface Props {
   open: boolean;
-  marketPhone: string;
+  phone: string;
 }
 
-const { open, marketPhone } = Astro.props;
+const { open, phone } = Astro.props;
 ---
 
 <Modal id="success_buy" class="success_buy" open={open} backHref={Routes.home}>
@@ -16,10 +16,11 @@ const { open, marketPhone } = Astro.props;
     <Icon name="mdi:basket-check" size={100} color="green" />
     <h3>¡Felicitaciones! Ha completado su compra.</h3>
     <p>
-      Usted debe enviar por <strong>Whatsapp</strong>
-      la factura descargada a este número:
+      Un trabajador del mercado se pondrá en contacto con usted muy pronto a
+      través del número de teléfono:
     </p>
-    <span class="success_buy__phone">{marketPhone}</span>
+    <span class="success_buy__phone">{phone}</span>
+    <p>Se descargó en su dispositivo una factura de la compra.</p>
     <a
       class:list={["success_buy__button", "primary_button"]}
       href={Routes.home}
@@ -55,6 +56,12 @@ const { open, marketPhone } = Astro.props;
     padding-top: 1rem;
 
     text-align: center;
+  }
+
+  .success_buy__content p {
+    max-width: 500px;
+
+    text-wrap: pretty;
   }
 
   .success_buy__phone {

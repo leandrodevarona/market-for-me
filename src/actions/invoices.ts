@@ -21,9 +21,10 @@ export const invoices = {
   createInvoice: defineAction({
     accept: "form",
     input: z.object({
+      phone: z.string().max(50),
       currency: z.nativeEnum(Currency).default(Currency.USD),
     }),
-    handler: async ({ currency }, context) => {
+    handler: async ({ phone, currency }, context) => {
       const currCart = await getUserCart(context);
 
       if (currCart) {
@@ -113,6 +114,7 @@ export const invoices = {
             template: {
               params: {
                 name: managerName,
+                phone,
                 invoiceNumber,
                 invoiceBase64: invoice.pdf,
               },
@@ -167,7 +169,7 @@ export const invoices = {
         return {
           number: invoiceNumber,
           pdf: invoice.pdf,
-          phone: market.contact.phone1,
+          phone,
         };
       }
 
