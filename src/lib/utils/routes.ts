@@ -8,4 +8,5 @@ export const Routes = {
   cart: "/cart",
   returnStock: (invoiceNumber: string) =>
     `/admin/return-stock/${invoiceNumber}`,
+  convertToManager: "/admin/convert-to-manager",
 };

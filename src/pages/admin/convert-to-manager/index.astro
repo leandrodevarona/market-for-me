@@ -1,0 +1,44 @@
+---
+import { currentUser } from "@auth-astro/session";
+import Layout from "@layouts/Layout.astro";
+import { Routes } from "@utils/routes";
+import { Icon } from "astro-icon/components";
+import { actions } from "astro:actions";
+
+const user = await currentUser(Astro.request);
+
+if (!user || !user.id) return Astro.redirect(Routes.home);
+
+const formData = new FormData();
+formData.set("userId", user.id);
+
+const { data, error } = await Astro.callAction(
+  actions.users.createManager,
+  formData
+);
+
+if (data && !error) return Astro.redirect(Routes.adminCreateMarket);
+else return Astro.redirect(Routes.home);
+---
+
+<Layout title="Creando usuario administrador">
+  <main class="create_manager">
+    <Icon name="mdi:account-cog" size={120} />
+    <p>Creando su usuario Administrador...</p>
+  </main>
+</Layout>
+
+<style>
+  .create_manager {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .create_manager p {
+    font-size: larger;
+    text-align: center;
+  }
+</style>
