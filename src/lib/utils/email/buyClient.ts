@@ -4,6 +4,7 @@ import { createTransport, type Transporter } from "nodemailer";
 type BuyClientTemplateParams = {
   params: {
     name: string;
+    phone: string;
     invoiceNumber: string;
     invoiceBase64: string;
   };
@@ -85,16 +86,16 @@ function parseEmailTemplate(params: BuyClientTemplateParams["params"]): string {
   <!-- Header -->
   <div style="margin-bottom: 32px">
     <p>Se ha realizado una compra en su tienda.</p>
-    <p><strong>Número:</strong> ${params.invoiceNumber}</p>
+    <p><strong>Número de factura:</strong> ${params.invoiceNumber}</p>
   </div>
   <!-- Main Content -->
   <div style="margin-bottom: 32px; color: #222">
     <p style="margin-bottom: 16px">Hola, ${params.name},</p>
     <p>
-      Se realizó una compra en su tienda. Usted debe esperar a que un
-      cliente lo contacte por <strong>Whatsapp</strong> y le envíe una factura de número: ${params.invoiceNumber}. 
-      Si no es así, usted puede <strong>devolver el stock</strong> de productos que usó
-      el usuario dando click en el siguiente botón:
+      Se realizó una compra en su tienda. Usted debe <strong>contactar al cliente</strong> 
+      a traves del número de teléfono: ${params.phone}. 
+      Si no logra contactar al cliente, usted puede <strong>devolver el stock</strong> de productos que este usó 
+      dando click en el siguiente botón:
     </p>
     <a
       href="${baseUrl}${Routes.returnStock(params.invoiceNumber)}"
