@@ -4,6 +4,7 @@ import { actions, isInputError } from "astro:actions";
 import DeleteProduct from "./DeleteProduct.astro";
 import { Routes } from "@utils/routes";
 import Currencies from "@components/common/selects/Currencies.astro";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   product: Product;
@@ -19,8 +20,23 @@ const { product } = Astro.props;
 
 <li class="update_product">
   <header class="update_product__header">
-    <a href={Routes.products(product.id)}>Ver producto</a>
-    <DeleteProduct productId={product.id} />
+    {
+      !product.isUpdated && (
+        <div class="update_product__new">
+          <Icon
+            class="update_product__new-icon"
+            name="mdi:octagram"
+            size={60}
+            color="#04bd04"
+          />
+          <span>Nuevo</span>
+        </div>
+      )
+    }
+    <div class="update_product__actions">
+      <a href={Routes.products(product.id)}>Ver producto</a>
+      <DeleteProduct productId={product.id} />
+    </div>
   </header>
   <form
     class="update_product__form"
@@ -137,8 +153,37 @@ const { product } = Astro.props;
   .update_product__header {
     display: flex;
     align-items: center;
+  }
+
+  .update_product__new {
+    width: 60px;
+    height: 60px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .update_product__new span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%) rotate(-45deg);
+    transform-origin: center;
+
+    font-size: small;
+  }
+
+  .update_product__actions {
+    display: flex;
+    align-items: center;
     justify-content: flex-end;
     gap: 1rem;
+
+    margin-left: auto;
   }
 
   .update_product__form {
