@@ -38,12 +38,11 @@ if (market.userId !== user.id) return Astro.redirect(Routes.home);
         <Icon name="mdi:share-variant" size={20} />
         <div class="update_market__copy-copied" slot="copied">
           <span>Link copiado en el portapapeles </span>
-          <Icon
-            class="copy_market__copied-content"
-            name="mdi:clipboard-check"
-            size={20}
-            color="green"
-          />
+          <Icon name="mdi:clipboard-check" size={20} color="green" />
+        </div>
+        <div class="update_market__copy-error" slot="error">
+          <span>No se pudo copiar el link </span>
+          <Icon name="mdi:clipboard-remove" size={20} color="red" />
         </div>
       </CopyMarketLink>
       <MarketLink />
@@ -77,7 +76,8 @@ if (market.userId !== user.id) return Astro.redirect(Routes.home);
       font-size: medium;
     }
 
-    .update_market__copy-copied {
+    .update_market__copy-copied,
+    .update_market__copy-error {
       display: flex;
       align-items: center;
       gap: 0.5rem;
