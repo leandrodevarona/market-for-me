@@ -40,18 +40,32 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
         name="name"
         maxlength={30}
         value={market?.name}
+        aria-describedby="error_name"
       />
     </label>
-    {inputErrors.name && <p class="error">{inputErrors.name.join(",")}</p>}
+    {
+      inputErrors.name && (
+        <p id="error_name" class="error">
+          {inputErrors.name.join(",")}
+        </p>
+      )
+    }
     <label>
       Descripción
-      <textarea class="primary_text__input" name="description" maxlength={250}>
+      <textarea
+        class="primary_text__input"
+        name="description"
+        maxlength={250}
+        aria-describedby="error_description"
+      >
         {market?.description}
       </textarea>
     </label>
     {
       inputErrors.description && (
-        <p class="error">{inputErrors.description.join(",")}</p>
+        <p id="error_description" class="error">
+          {inputErrors.description.join(",")}
+        </p>
       )
     }
     <label>
@@ -61,9 +75,16 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
         type="file"
         name="image"
         accept="image/*"
+        aria-describedby="error_image"
       />
     </label>
-    {inputErrors.image && <p class="error">{inputErrors.image.join(",")}</p>}
+    {
+      inputErrors.image && (
+        <p id="error_image" class="error">
+          {inputErrors.image.join(",")}
+        </p>
+      )
+    }
   </section>
   <section>
     <h4>Contacto</h4>
@@ -75,11 +96,14 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
         name="address"
         maxlength={100}
         value={contact?.address}
+        aria-describedby="error_address"
       />
     </label>
     {
       inputErrors.address && (
-        <p class="error">{inputErrors.address.join(",")}</p>
+        <p id="error_address" class="error">
+          {inputErrors.address.join(",")}
+        </p>
       )
     }
     <label>
@@ -91,9 +115,16 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
         maxlength={20}
         value={contact?.phone1}
         required
+        aria-describedby="error_phone1"
       />
     </label>
-    {inputErrors.phone1 && <p class="error">{inputErrors.phone1.join(",")}</p>}
+    {
+      inputErrors.phone1 && (
+        <p id="error_phone1" class="error">
+          {inputErrors.phone1.join(",")}
+        </p>
+      )
+    }
     <label>
       Teléfono 2
       <input
@@ -102,9 +133,16 @@ const inputErrors = isInputError(result?.error) ? result.error.fields : {};
         name="phone2"
         maxlength={20}
         value={contact?.phone2}
+        aria-describedby="error_phone2"
       />
     </label>
-    {inputErrors.phone2 && <p class="error">{inputErrors.phone2.join(",")}</p>}
+    {
+      inputErrors.phone2 && (
+        <p id="error_phone2" class="error">
+          {inputErrors.phone2.join(",")}
+        </p>
+      )
+    }
   </section>
   <button class:list={["primary_button", "centered_button"]} type="submit">
     <span>Publicar mercado</span>

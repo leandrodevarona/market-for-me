@@ -49,6 +49,10 @@ export const markets = {
         });
       } catch (error) {
         console.error(error);
+        throw new ActionError({
+          code: "BAD_REQUEST",
+          message: "No se pudo crear el mercado.",
+        });
       }
 
       return { id: createdMarket?.id };
@@ -93,6 +97,10 @@ export const markets = {
         });
       } catch (error) {
         console.error(error);
+        throw new ActionError({
+          code: "BAD_REQUEST",
+          message: "No se puedo actualizar el mercado.",
+        });
       }
 
       return { id: mutateMarket?.id };

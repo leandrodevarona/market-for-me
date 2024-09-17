@@ -61,9 +61,16 @@ const { product } = Astro.props;
           required
           maxlength={150}
           value={product.name}
+          aria-describedby="error_name"
         />
       </label>
-      {inputErrors.name && <p class="error">{inputErrors.name.join(",")}</p>}
+      {
+        inputErrors.name && (
+          <p id="error_name" class="error">
+            {inputErrors.name.join(",")}
+          </p>
+        )
+      }
       <label>
         Precio
         <input
@@ -74,9 +81,16 @@ const { product } = Astro.props;
           min={0}
           step=".01"
           value={product.price}
+          aria-describedby="error_price"
         />
       </label>
-      {inputErrors.price && <p class="error">{inputErrors.price.join(",")}</p>}
+      {
+        inputErrors.price && (
+          <p id="error_price" class="error">
+            {inputErrors.price.join(",")}
+          </p>
+        )
+      }
       <div class="update_product__currencyAndStock">
         <Currencies value={product.currency} />
         {
@@ -93,8 +107,16 @@ const { product } = Astro.props;
             min={0}
             value={product.stock}
             required
+            aria-describedby="error_stock"
           />
         </label>
+        {
+          inputErrors.stock && (
+            <p id="error_stock" class="error_stock">
+              {inputErrors.stock.join(",")}
+            </p>
+          )
+        }
       </div>
     </section>
     <section>
@@ -103,12 +125,13 @@ const { product } = Astro.props;
         <textarea
           class="secondary_text__input"
           name="description"
-          maxlength={1000}>{product.description}</textarea
+          maxlength={1000}
+          aria-describedby="error_description">{product.description}</textarea
         >
       </label>
       {
         inputErrors.description && (
-          <p class="error">{inputErrors.description.join(",")}</p>
+          <p class="error_description">{inputErrors.description.join(",")}</p>
         )
       }
       <label>
@@ -119,11 +142,14 @@ const { product } = Astro.props;
           name="images"
           multiple
           accept="image/*"
+          aria-describedby="error_images"
         />
       </label>
       {
         inputErrors.images && (
-          <p class="error">{inputErrors.images.join(",")}</p>
+          <p id="error_images" class="error">
+            {inputErrors.images.join(",")}
+          </p>
         )
       }
     </section>
