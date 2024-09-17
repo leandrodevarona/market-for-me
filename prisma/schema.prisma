@@ -130,6 +130,8 @@ model Product {
   market   Market @relation(fields: [marketId], references: [id])
   marketId String @db.ObjectId
 
+  isUpdated Boolean @default(false)
+
   cartItems CartItem[]
 }
 

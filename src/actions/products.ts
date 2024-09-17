@@ -64,6 +64,7 @@ export const products = {
             imageUrls: {
               push: imageUrls,
             },
+            isUpdated: true,
           },
         });
       } catch (error) {
