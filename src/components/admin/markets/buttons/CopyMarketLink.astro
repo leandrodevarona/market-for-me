@@ -82,7 +82,6 @@ const link = baseUrl + Routes.markets(marketId);
     button.onclick = async () => {
       try {
         await navigator.clipboard.writeText(link);
-        throw new Error();
 
         button.classList.add("copy_market__copied");
       } catch (error) {
