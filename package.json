@@ -24,6 +24,7 @@
     "cloudinary": "^2.4.0",
     "easyinvoice": "^3.0.47",
     "nodemailer": "^6.9.15",
+    "pdf-lib": "^1.17.1",
     "typescript": "^5.5.4"
   },
   "devDependencies": {

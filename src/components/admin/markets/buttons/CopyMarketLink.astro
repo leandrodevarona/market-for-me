@@ -76,6 +76,8 @@ const link = baseUrl + Routes.markets(marketId);
 </style>
 
 <script is:inline define:vars={{ id, link }} type="module">
+  import { debounce } from "../../src/lib/utils/utils.ts";
+
   const button = document.getElementById(id);
 
   if (button) {
@@ -87,6 +89,13 @@ const link = baseUrl + Routes.markets(marketId);
       } catch (error) {
         button.classList.add("copy_market__error");
       }
+
+      const resetStatus = debounce(() => {
+        button.classList.remove("copy_market__copied");
+        button.classList.remove("copy_market__error");
+      }, 5000);
+
+      resetStatus();
     };
   }
 </script>
