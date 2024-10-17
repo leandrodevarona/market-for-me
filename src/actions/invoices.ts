@@ -1,3 +1,4 @@
+import { currentUser } from "@auth-astro/session";
 import { getUserCart } from "@data/cart";
 import { getExchangeRateByMarket } from "@data/currencies";
 import { getMarketByProductId } from "@data/markets";
@@ -6,15 +7,16 @@ import { Currency, type BuyProduct } from "@prisma/client";
 import { CART_COOKIES_KEY } from "@utils/constants/cart";
 import { convertCurrency } from "@utils/currencies";
 import { sendBuyClientEmail } from "@utils/email/buyClient";
+import {
+  createInvoice,
+  type InvoiceData,
+  type InvoiceProduct,
+  type InvoiceSender,
+} from "@utils/invoices";
 import { generateUniqueId } from "@utils/utils";
 import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
 
-import easyinvoice, {
-  type InvoiceData,
-  type InvoiceProduct,
-  type InvoiceSenderOrClient,
-} from "easyinvoice";
 import { db } from "src/lib/db";
 
 export const invoices = {
@@ -50,7 +52,8 @@ export const invoices = {
         const sender = {
           address: market.contact?.address,
           company: market.name,
-        } as InvoiceSenderOrClient;
+          phone: market.contact.phone1,
+        } as InvoiceSender;
 
         const exchangeRates = await getExchangeRateByMarket(market.id);
 
@@ -73,6 +76,7 @@ export const invoices = {
             description: item.product.name,
             taxRate: 0,
             price,
+            amount: price * item.quantity,
           };
         });
 
@@ -84,20 +88,25 @@ export const invoices = {
 
         const invoiceNumber = generateUniqueId();
 
+        const user = await currentUser(context.request);
+
         const data: InvoiceData = {
-          apiKey: import.meta.env.INVOICES_API_KEY,
-          mode: import.meta.env.INVOICES_MODE,
           sender,
+          client: {
+            name: user?.name,
+            phone,
+          },
           products,
           settings: {
             currency,
           },
           information: {
             number: invoiceNumber,
+            date: new Date().toISOString(),
           },
         };
 
-        const invoice = await easyinvoice.createInvoice(data);
+        const invoice = await createInvoice(data);
 
         if (!invoice)
           throw new ActionError({
@@ -106,6 +115,8 @@ export const invoices = {
           });
 
         const managerName = marketManager.name || "Manager";
+
+        const pdfBase64 = invoice.toString("base64");
 
         try {
           await sendBuyClientEmail({
@@ -116,7 +127,7 @@ export const invoices = {
                 name: managerName,
                 phone,
                 invoiceNumber,
-                invoiceBase64: invoice.pdf,
+                invoiceBase64: pdfBase64,
               },
             },
           });
@@ -139,7 +150,7 @@ export const invoices = {
               marketId: market.id,
               products,
               invoiceNumber,
-              invoicePdfBase64: invoice.pdf,
+              invoicePdfBase64: pdfBase64,
             },
           });
         } catch (error) {
@@ -168,7 +179,7 @@ export const invoices = {
 
         return {
           number: invoiceNumber,
-          pdf: invoice.pdf,
+          pdf: pdfBase64,
           phone,
         };
       }
